@@ -1,3 +1,11 @@
+reportbug (7.5.2) UNRELEASED; urgency=medium
+
+  * bin/reportbug
+    - automatically add ftbfs tag for does-not-build severity, patch by Logan
+      Rosen; Closes: #903865
+
+ -- Sandro Tosi <morph@debian.org>  Sat, 08 Dec 2018 12:23:53 -0500
+
 reportbug (7.5.1) unstable; urgency=medium
 
   * debian/control
