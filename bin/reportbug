@@ -2075,6 +2075,10 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             ewrite('Adding security tag to this report.\n')
             taglist += ['security']
 
+        if justification and 'ftbfs' not in taglist and 'fails to build from source' in justification:
+            ewrite('Adding ftbfs tag to this report.\n')
+            taglist += ['ftbfs']
+
         if taglist:
             tags = ' '.join(taglist)
         else:
