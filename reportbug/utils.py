@@ -848,7 +848,7 @@ CONFIG_ARGS = (
     'sign', 'nocc', 'nocompress', 'dontquery', 'noconf', 'mirrors', 'keyid',
     'headers', 'interface', 'template', 'mode', 'check_available', 'query_src',
     'printonly', 'offline', 'check_uid', 'smtptls', 'smtpuser', 'smtppasswd',
-    'paranoid', 'mbox_reader_cmd', 'max_attachment_size')
+    'paranoid', 'mbox_reader_cmd', 'max_attachment_size', 'listccme')
 
 
 class Mua:
