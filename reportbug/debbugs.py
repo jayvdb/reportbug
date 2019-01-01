@@ -25,7 +25,6 @@ from . import utils
 import sys
 import mailbox
 import email
-import email.parser
 import email.errors
 import io
 import glob
@@ -1156,9 +1155,7 @@ def get_report(number, timeout, system='debian', mirrors=None,
         # add Date/Subject/From headers to the msg bodies
         bodies = []
         for l in log:
-            f = email.parser.FeedParser()
-            f.feed(l['header'])
-            h = f.close()
+            h = l['message']
             hdrs = []
             for i in ['Date', 'Subject', 'From']:
                 if i in h:
