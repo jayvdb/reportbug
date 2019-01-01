@@ -1318,6 +1318,45 @@ def get_lsm_info():
     return lsminfo
 
 
+def get_kernel_taint_flags():
+    """Determines the kernel taint flags"""
+
+    # https://github.com/torvalds/linux/blob/cedc5b6aab493f6b1b1d381dccc0cc082da7d3d8/include/linux/kernel.h#L582
+    # this is going to need updating (but maybe not that often)
+    TAINT_FLAGS = ['TAINT_PROPRIETARY_MODULE',
+                   'TAINT_FORCED_MODULE',
+                   'TAINT_CPU_OUT_OF_SPEC',
+                   'TAINT_FORCED_RMMOD',
+                   'TAINT_MACHINE_CHECK',
+                   'TAINT_BAD_PAGE',
+                   'TAINT_USER',
+                   'TAINT_DIE',
+                   'TAINT_OVERRIDDEN_ACPI_TABLE',
+                   'TAINT_WARN',
+                   'TAINT_CRAP',
+                   'TAINT_FIRMWARE_WORKAROUND',
+                   'TAINT_OOT_MODULE',
+                   'TAINT_UNSIGNED_MODULE',
+                   'TAINT_SOFTLOCKUP',
+                   'TAINT_LIVEPATCH',
+                   'TAINT_AUX',
+                   'TAINT_RANDSTRUCT',
+    ]
+
+    flags = []
+
+    if os.path.exists('/proc/sys/kernel/tainted'):
+        tainted = int(open('/proc/sys/kernel/tainted').read())
+
+        # tainted is an integer representing a bitmask, so logical-AND against the list of
+        # flags and if it's a TRUE, then append it to the list of flags enabled
+        for i, flag in enumerate(TAINT_FLAGS):
+            if tainted & 2**i:
+                flags.append(flag)
+
+    return flags
+
+
 def is_security_update(pkgname, pkgversion):
     """Determine whether a given package is a security update.
 

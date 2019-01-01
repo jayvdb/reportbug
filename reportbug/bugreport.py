@@ -84,6 +84,7 @@ class bugreport(object):
         shellpath = utils.realpath('/bin/sh')
         init = utils.get_init_system()
         lsminfo = utils.get_lsm_info()
+        taint_flags = utils.get_kernel_taint_flags()
 
         locinfo = []
         langsetting = os.environ.get('LANG', 'C')
@@ -173,6 +174,8 @@ class bugreport(object):
 
         if uname_string:
             debinfo += 'Kernel: %s\n' % uname_string
+        if taint_flags:
+            debinfo += 'Kernel taint flags: %s\n' % ', '.join(taint_flags)
 
         if locinfo:
             debinfo += 'Locale: %s\n' % locinfo
