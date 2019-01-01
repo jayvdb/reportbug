@@ -1847,9 +1847,11 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             showpkgs = package
             if reportwith:
                 showpkgs += ' ' + ' '.join(reportwith)
-            (status, output) = subprocess.getstatusoutput(
+            r = subprocess.run(
                 'DEBCONF_SYSTEMRC=1 DEBCONF_NOWARNINGS=yes '
-                '/usr/bin/debconf-show %s' % showpkgs)
+                '/usr/bin/debconf-show %s' % showpkgs,
+                shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            (status, output) = r.returncode, r.stdout.decode(errors='backslashreplace').rstrip()
             if status:
                 conftext += '\n-- debconf-show failed\n'
             elif output:
