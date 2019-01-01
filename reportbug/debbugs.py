@@ -270,6 +270,9 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
             section, priority = info[16], info[10]
 
     if tag == 'override':
+        headers.append('X-Debbugs-CC: debian-boot@lists.debian.org')
+        ui.log_message('Your report will be carbon-copied to debian-boot.\n')
+
         # we handle here the override change request
         new_section = ui.menu('Select the new section', {
             'admin': "", 'cli-mono': "", 'comm': "", 'database': "",
