@@ -30,6 +30,8 @@ UIS = {'text': 'A text-oriented console user interface',
 
 # Only the available UIs
 AVAILABLE_UIS = {}
+# Reasons a UI is unavailable
+UNAVAILABLE_UIS = {}
 
 # List of already loaded ui, we can give back to requestors
 __LOADED_UIS = {}
@@ -43,9 +45,9 @@ for uis in list(UIS.keys()):
         # then we can finally add it to AVAILABLE_UIS
         AVAILABLE_UIS[uis] = UIS[uis]
         __LOADED_UIS[uis] = ui
-    except:
-        # we can't import uis, so just skip it
-        pass
+    except Exception as e:
+        # we can't import uis, so just add it to the list of unavailable UIs
+        UNAVAILABLE_UIS[uis] = str(e)
 
 
 def getUI(ui):

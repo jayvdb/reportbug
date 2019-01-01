@@ -67,7 +67,7 @@ from reportbug import checkbuildd
 import reportbug.ui.text_ui as ui
 
 from reportbug.ui import (
-    UIS, AVAILABLE_UIS, getUI
+    UIS, AVAILABLE_UIS, getUI, UNAVAILABLE_UIS
 )
 
 # ui = getUI('text')
@@ -755,6 +755,8 @@ def verify_option(option, opt, value, parser, *args):
         sys.exit(1)
     elif value in valid:
         setattr(parser.values, option.dest, value)
+    elif opt in ['-u', '--interface', '--ui'] and value in UNAVAILABLE_UIS:
+        ewrite('Cannot use UI %s because of "%s", defaulting to "text"\n' % (value, UNAVAILABLE_UIS[value]))
     else:
         ewrite('Ignored bogus setting for %s: %s\n' % (opt, value))
 
