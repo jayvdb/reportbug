@@ -1218,13 +1218,13 @@ def get_running_kernel_pkg():
         return None
 
 
-def exec_and_parse_bugscript(handler, bugscript):
+def exec_and_parse_bugscript(handler, bugscript, runner=os.system):
     """Execute and parse the output of the package bugscript, in particular
     identifying the headers and pseudo-headers blocks, if present"""
 
     fh, filename = TempFile()
     fh.close()
-    rc = os.system('LC_ALL=C %s %s %s' % (handler, pipes.quote(bugscript),
+    rc = runner('LC_ALL=C %s %s %s' % (handler, pipes.quote(bugscript),
                                           pipes.quote(filename)))
 
     isheaders = False
