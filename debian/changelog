@@ -14,6 +14,8 @@ reportbug (7.5.2) UNRELEASED; urgency=medium
       object, so dont parse them again
     - copy debian-boot@ ml for every ftp.debian.org override bugs;
       Closes: #893873
+    - dont force binary->source package conversion in ftp.debian.org bug
+      handling; Closes: #908650
   * bin/reportbug, reportbug/ui/__init__.py
     - be explicit on why a UI is unavailable when passing -u XYZ on the
       command-line; Closes: #876372
@@ -21,7 +23,7 @@ reportbug (7.5.2) UNRELEASED; urgency=medium
     - add kernel taint flags information to bug report "System Information"
       section; Closes: #865153
 
- -- Sandro Tosi <morph@debian.org>  Tue, 01 Jan 2019 18:33:42 -0500
+ -- Sandro Tosi <morph@debian.org>  Tue, 01 Jan 2019 21:32:25 -0500
 
 reportbug (7.5.1) unstable; urgency=medium
 

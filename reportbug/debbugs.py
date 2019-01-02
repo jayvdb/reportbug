@@ -239,7 +239,7 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
     if tag == 'other':
         return
     else:
-        prompt = 'Please enter the name(s) of the package(s): '
+        prompt = 'Please enter the name of the package (either source of binary package): '
         package = ui.get_string(prompt)
         if not package:
             ui.log_message('You seem to want to report a generic bug, not request a removal\n')
@@ -262,12 +262,8 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
                        'n': 'Exit without filing a report.'})
             if cont == 'n':
                 sys.exit(1)
-        else:
-            # don't try to convert it to source if it's an 'override'
-            if tag != 'override':
-                package = info[12] or package
-            # get package section and priority, for override
-            section, priority = info[16], info[10]
+
+        section, priority = info[16], info[10]
 
     if tag == 'override':
         headers.append('X-Debbugs-CC: debian-boot@lists.debian.org')
