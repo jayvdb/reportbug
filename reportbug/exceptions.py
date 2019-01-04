@@ -1,7 +1,7 @@
 # Exceptions for reportbug
 #   Written by Chris Lawrence <lawrencc@debian.org>
 #   (C) 2002-04 Chris Lawrence
-#   Copyright (C) 2008-2018 Sandro Tosi <morph@debian.org>
+#   Copyright (C) 2008-2019 Sandro Tosi <morph@debian.org>
 #
 # This program is freely distributable per the following license:
 #
