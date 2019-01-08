@@ -9,6 +9,8 @@ debian/python3-reportbug.substvars
 debian/python3-reportbug/
 debian/reportbug.substvars
 debian/reportbug/
+debian/reportbug-gtk.substvars
+debian/reportbug-gtk/
 man/querybts.fr.1
 man/reportbug.fr.1
 .todo
