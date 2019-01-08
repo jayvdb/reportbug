@@ -30,3 +30,10 @@ pyflakes:
 
 pylint:
 	pylint --output-format=colorized  bin/* reportbug/ checks/* test/ setup.py
+
+.PHONY: clean
+clean:
+	find . -type f -name '*.pyc' -delete
+	find . -type d -name '__pycache__' -delete
+	rm -rf build
+	rm -rf reportbug.egg-info
