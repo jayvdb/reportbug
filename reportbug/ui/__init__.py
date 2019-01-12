@@ -22,11 +22,11 @@
 #  SOFTWARE.
 
 
-__all__ = ['text_ui', 'urwid_ui', 'gtk2_ui']
+__all__ = ['text_ui', 'urwid_ui', 'gtk_ui']
 
 UIS = {'text': 'A text-oriented console user interface',
        'urwid': 'A menu-based console user interface',
-       'gtk2': 'A graphical (GTK+) user interface.'}
+       'gtk': 'A graphical (GTK+) user interface.'}
 
 # Only the available UIs
 AVAILABLE_UIS = {}

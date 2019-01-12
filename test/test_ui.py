@@ -9,7 +9,7 @@ from reportbug.ui import __LOADED_UIS as LOADED_UIS
 class TestUI(unittest.TestCase):
 
     def test_ui(self):
-        self.assertCountEqual(ui.AVAILABLE_UIS, ['text', 'urwid', 'gtk2'])
+        self.assertCountEqual(ui.AVAILABLE_UIS, ['text', 'urwid', 'gtk'])
 
     def test_getUI(self):
         for loaded_ui in list(LOADED_UIS.keys()):
