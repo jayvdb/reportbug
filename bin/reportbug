@@ -753,7 +753,9 @@ def verify_option(option, opt, value, parser, *args):
     if value == 'help':
         ewrite('%s:\n %s\n' % (heading, '\n '.join(valid)))
         sys.exit(1)
-    elif value in valid:
+    if opt in ['-u', '--interface', '--ui'] and value == 'gtk2':
+        value = 'gtk'
+    if value in valid:
         setattr(parser.values, option.dest, value)
     elif opt in ['-u', '--interface', '--ui'] and value in UNAVAILABLE_UIS:
         ewrite('Cannot use UI %s because of "%s", defaulting to "text"\n' % (value, UNAVAILABLE_UIS[value]))

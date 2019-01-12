@@ -53,6 +53,8 @@ for uis in list(UIS.keys()):
 def getUI(ui):
     """Returns the requested UI, or default to text if not available"""
 
+    if ui == 'gtk2':
+        ui = 'gtk'
     if ui in __LOADED_UIS:
         print("loading %s" % ui)
         return __LOADED_UIS[ui]

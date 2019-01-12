@@ -99,6 +99,10 @@ def main():
 
     # check options for consistency
 
+    # the gtk2 ui has been renamed to gtk, stay compatible
+    if options.interface and options.interface == 'gtk2':
+        options.interface = 'gtk'
+
     # interface must be one of those supported
     if options.interface not in AVAILABLE_UIS:
         parser.error('Allowed arguments to --ui: \n' +
