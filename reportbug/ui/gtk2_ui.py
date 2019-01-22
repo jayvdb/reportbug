@@ -1487,9 +1487,9 @@ class SystemPage(Page):
 
         return hbox
 
-    def on_child_exited(self, terminal):
+    def on_child_exited(self, terminal, exitstatus):
         _assert_context(ui_context)
-        self.application.set_next_value(None)
+        self.application.set_next_value(exitstatus)
         self.assistant.forward_page()
 
     def execute(self, cmdline):
