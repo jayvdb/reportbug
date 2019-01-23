@@ -2104,7 +2104,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             # we get the return code of the script, headers and pseudo- set
             # by the script, and last the text output of the script
             (rc, bugscript_hdrs, bugscript_pseudo, text, bugscript_attachments) = \
-                utils.exec_and_parse_bugscript(handler, bugexec)
+                utils.exec_and_parse_bugscript(handler, bugexec, ui.system)
 
             if rc and not notatty:
                 if not ui.yes_no('The package bug script %s exited with an error status (return '
