@@ -1,4 +1,4 @@
-reportbug (7.5.2) UNRELEASED; urgency=medium
+reportbug (7.5.2) unstable; urgency=medium
 
   * bin/reportbug
     - automatically add ftbfs tag for does-not-build severity, patch by Logan
@@ -37,7 +37,7 @@ reportbug (7.5.2) UNRELEASED; urgency=medium
       Nis Martensen; Closes: #669038, #803675
   * Rename gtk2 UI to gtk, patch by Nis Martensen; Closes: #848207
 
- -- Sandro Tosi <morph@debian.org>  Thu, 31 Jan 2019 20:25:10 -0500
+ -- Sandro Tosi <morph@debian.org>  Thu, 31 Jan 2019 20:57:49 -0500
 
 reportbug (7.5.1) unstable; urgency=medium
 
