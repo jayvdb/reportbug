@@ -170,6 +170,8 @@ class TestMiscFunctions(unittest.TestCase):
 
         # we removed base from reportbug
         del bdo_list['base']
+        # remove debian-maintainers pseudo, it's been deprecated
+        del bdo_list['debian-maintainers']
         # uniform reportbug customized descriptions
         for customized in ['ftp.debian.org', ]:
             bdo_list[customized] = debbugs.debother[customized]
