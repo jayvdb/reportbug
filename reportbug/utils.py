@@ -1018,6 +1018,8 @@ def parse_config_files():
                         args['sign'] = ''
                 elif token == 'ui':
                     token = lex.get_token().lower()
+                    if token == 'gtk2':
+                        token = 'gtk'
                     if token in list(AVAILABLE_UIS.keys()):
                         args['interface'] = token
                 elif token == 'mode':

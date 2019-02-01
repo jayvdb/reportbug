@@ -36,23 +36,14 @@ appear in the first one).
 
 Thanks to: Sandro Tosi <morph@debian.org>
 
-How to Use New GTK+ User Interface
+How to Use the GTK+ User Interface
 ==================================
 
-If you tried to set the new GTK+ UI (named in reportbug as gtk2 ui)
-and it fails to start (falling back to text mode, hopefully), chances
-are that you are missing some of the packages listed as Suggests, in
-particular:
+If you tried to set the GTK+ UI (named in reportbug as gtk ui)
+and it fails to start (falling back to text mode, hopefully), then
+please install the reportbug-gtk package to get the needed dependencies.
 
- - python3-gi
- - python3-gi-cairo
- - gir1.2-gtk-3.0
- - gir1.2-vte-2.91
- - python3-gtkspellcheck
-
-or, install the reportbug-gtk package to get the needed dependencies.
-
-If after installing both of them still GTK+ UI doesn't show up, please
+If after installing this the GTK+ UI still doesn't show up, please
 file a report (in text ui :) ).
 
 Thanks to: Sandro Tosi <morph@debian.org>
