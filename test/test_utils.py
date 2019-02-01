@@ -289,7 +289,7 @@ class TestSourcePackages(unittest.TestCase):
     def test_get_source_package(self):
         src = 'reportbug'
         binpkgs = utils.get_source_package(src)
-        self.assertCountEqual([bin[0] for bin in binpkgs], ['python3-reportbug', 'reportbug'])
+        self.assertCountEqual([bin[0] for bin in binpkgs], ['python3-reportbug', 'reportbug', 'reportbug-gtk'])
 
         bin = 'python3-reportbug'
         binpkgs_frombin = utils.get_source_package(bin)
@@ -343,6 +343,7 @@ class TestSystemInformation(unittest.TestCase):
         os.path.isfile = mock.MagicMock(return_value=True)
         os.path.islink = mock.MagicMock(return_value=False)
         init = utils.get_init_system()
+        print(init)
         self.assertTrue(init.startswith('sysvinit'))
         os.path.isfile = __save1
         os.path.islink = __save2
@@ -519,7 +520,7 @@ class TestConfig(unittest.TestCase):
             'envelopefrom': 'debian-reportbug@lists.debian.org',
             'headers': ['X-Reportbug-Testsuite: this is the test suite'],
             'http_proxy': 'http://proxy.example.com:3128/',
-            'interface': 'gtk2',
+            'interface': 'gtk',
             'keyid': 'deadbeef',
             'max_attachment_size': 1024000,
             'mbox_reader_cmd': 'mutt -f %s',

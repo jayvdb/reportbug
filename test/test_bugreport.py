@@ -18,7 +18,6 @@ class TestBugreport(unittest.TestCase):
 
         self.assertIn(self.body, self.text)
         self.assertIn(self.package, self.text)
-        self.assertIn(utils.NEWBIELINE, self.text)
 
     # verify that for special packages, we don't add the report template
     def test_bts643785(self):
