@@ -1936,7 +1936,6 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             detected_addr = self.options.email or utils.get_email()[1]
             if not detected_addr:
                 efail("list-cc-me option specified but email address not detected")
-            ewrite("list-cc-me DEBUG: {}".format(detected_addr))
             listcc += [detected_addr]
 
         if not listcc and mode > MODE_STANDARD and rtype == 'debbugs' and not self.options.testmode and not self.options.template and self.options.ccmenu:
