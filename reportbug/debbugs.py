@@ -261,8 +261,8 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
                        'n': 'Exit without filing a report.'})
             if cont == 'n':
                 sys.exit(1)
-
-        section, priority = info[16], info[10]
+        else:
+            section, priority = info[16], info[10]
 
     if tag == 'override':
         headers.append('X-Debbugs-CC: debian-boot@lists.debian.org')
