@@ -1,3 +1,10 @@
+reportbug (7.5.3) UNRELEASED; urgency=medium
+
+  * debian/control
+    - replace emacs* Suggests with emacs-bin-common; Closes: #925422
+
+ -- Sandro Tosi <morph@debian.org>  Tue, 26 Mar 2019 19:23:30 -0400
+
 reportbug (7.5.2) unstable; urgency=medium
 
   * bin/reportbug
