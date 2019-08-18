@@ -570,7 +570,7 @@ def get_package_info(packages, skip_notfound=False):
         return []
 
     packinfo = get_dpkg_database()
-    pkgname = r'(?:[\S]+(?:$|,\s+))'
+    pkgname = r'(?:[\S]+(?:\s+\(=[^()]+\))?(?:$|,\s+))'
 
     groupfor = {}
     searchpkgs = []
@@ -578,7 +578,7 @@ def get_package_info(packages, skip_notfound=False):
     for (group, package) in packages:
         groupfor[package] = group
         escpkg = re.escape(package)
-        searchpkgs.append(escpkg)
+        searchpkgs.append(escpkg + r'(?:\s+\(=[^()]+\))?')
 
     searchbits = [
         # Package regular expression
@@ -614,7 +614,7 @@ def get_package_info(packages, skip_notfound=False):
                     continue
 
                 if m.group('hdr') == 'Provides':
-                    provides = m.group('pkg')
+                    provides = m.group('pkg').split()[0]
                 else:
                     provides = None
 
