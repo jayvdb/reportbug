@@ -462,7 +462,10 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
         # FIXME: pu/rm should lookup the version elsewhere
         version = info and info[0]
         if online and tag.endswith('-pu'):
-            version = list(checkversions.get_versions_available(package, timeout, (tag[:-3],)).values())[0]
+            try:
+                version = list(checkversions.get_versions_available(package, timeout, (tag[:-3],)).values())[0]
+            except IndexError:
+                pass
         if version:
             cont = ui.select_options(
                 "Latest version seems to be %s, is this the proper one ?" % (version),
