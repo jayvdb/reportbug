@@ -13,8 +13,10 @@ reportbug (7.5.3) UNRELEASED; urgency=medium
     - update release names, following Buster releases, patch by Nicolas
       Braud-Santoni; Closes: #932524, #931609
     - recognize versioned Provides; patch by Nis Martensen; Closes: #934472
+  * man/reportbug.1
+    - add default for --draftpath; patch by laokz
 
- -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:24:03 -0400
+ -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:41:30 -0400
 
 reportbug (7.5.2) unstable; urgency=medium
 
