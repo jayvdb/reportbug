@@ -1,4 +1,4 @@
-reportbug (7.5.3) UNRELEASED; urgency=medium
+reportbug (7.5.3) unstable; urgency=medium
 
   * debian/control
     - replace emacs* Suggests with emacs-bin-common; Closes: #925422
@@ -18,7 +18,7 @@ reportbug (7.5.3) UNRELEASED; urgency=medium
   * man/reportbug.1
     - add default for --draftpath; patch by laokz
 
- -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:50:38 -0400
+ -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:54:08 -0400
 
 reportbug (7.5.2) unstable; urgency=medium
 
