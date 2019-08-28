@@ -5,13 +5,15 @@ reportbug (7.5.3) UNRELEASED; urgency=medium
   * reportbug/debbugs.py
     - when handling ftp.d.o, dont look up package information if the package
       doesnt exist, fixing a crash; Closes: #923631
+    - fix a crash with stable version lookup, patch by Nis Martensen;
+      Closes: #935602
   * bin/reportbug
     - remove debug code when handling list-cc-me, patch by Josh Triplett
   * reportbug/utils.py
     - update release names, following Buster releases, patch by Nicolas
       Braud-Santoni; Closes: #932524, #931609
 
- -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:05:53 -0400
+ -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:16:49 -0400
 
 reportbug (7.5.2) unstable; urgency=medium
 
