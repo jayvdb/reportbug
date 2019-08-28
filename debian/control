@@ -3,7 +3,7 @@ Section: utils
 Priority: standard
 Maintainer: Reportbug Maintainers <debian-reportbug@lists.debian.org>
 Uploaders: Sandro Tosi <morph@debian.org>
-Standards-Version: 4.1.2
+Standards-Version: 4.4.0
 Build-Depends: debhelper (>= 10), python3, dh-python
 Build-Depends-Indep: python3-nose, python3-setuptools, python3-mock
 Vcs-Git: https://salsa.debian.org/reportbug-team/reportbug.git
