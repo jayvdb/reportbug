@@ -3,6 +3,7 @@ reportbug (7.5.3) UNRELEASED; urgency=medium
   * debian/control
     - replace emacs* Suggests with emacs-bin-common; Closes: #925422
     - bump Standards-Version to 4.4.0 (no changes needed)
+    - add sensible-utils dep, patch by Nis Martensen
   * reportbug/debbugs.py
     - when handling ftp.d.o, dont look up package information if the package
       doesnt exist, fixing a crash; Closes: #923631
@@ -17,7 +18,7 @@ reportbug (7.5.3) UNRELEASED; urgency=medium
   * man/reportbug.1
     - add default for --draftpath; patch by laokz
 
- -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:43:40 -0400
+ -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:50:38 -0400
 
 reportbug (7.5.2) unstable; urgency=medium
 
