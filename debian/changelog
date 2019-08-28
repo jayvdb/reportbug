@@ -7,8 +7,11 @@ reportbug (7.5.3) UNRELEASED; urgency=medium
       doesnt exist, fixing a crash; Closes: #923631
   * bin/reportbug
     - remove debug code when handling list-cc-me, patch by Josh Triplett
+  * reportbug/utils.py
+    - update release names, following Buster releases, patch by Nicolas
+      Braud-Santoni; Closes: #932524, #931609
 
- -- Sandro Tosi <morph@debian.org>  Tue, 26 Mar 2019 19:45:11 -0400
+ -- Sandro Tosi <morph@debian.org>  Wed, 28 Aug 2019 19:05:53 -0400
 
 reportbug (7.5.2) unstable; urgency=medium
 
