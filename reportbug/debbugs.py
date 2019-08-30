@@ -412,7 +412,7 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                       'britney': "testing migration script bugs",
                       'transition': "transition tracking",
                       'unblock': "unblock requests",
-                      #oldstable_pu: "%s proposed updates requests" % oldstable,
+                      oldstable_pu: "%s proposed updates requests" % oldstable,
                       stable_pu: "%s proposed updates requests" % stable,
                       'rm': "Stable/Testing removal requests",
                       'other': "None of the other options",
