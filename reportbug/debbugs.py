@@ -581,9 +581,30 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
         body = textwrap.dedent("""\
                 Please unblock package %s
 
-                (explain the reason for the unblock here)
+                (Please provide enough (but not too much) information to help
+                the release team to judge the request efficiently. E.g. by
+                filling in the sections below.)
 
-                (include/attach the debdiff against the package in testing)
+                [ Reason ]
+                (Explain what the reason for the unblock request is.)
+
+                [ Impact ]
+                (What is the impact for the user if the unblock isn't granted?)
+
+                [ Tests ]
+                (What automated or manual tests cover the affected code?)
+
+                [ Risks ]
+                (Discussion of the risks involved. E.g. code is trivial or
+                complex, key package vs leaf package, alternatives available.)
+
+                [ Checklist ]
+                  [ ] all changes are documented in the d/changelog
+                  [ ] I reviewed all changes and I approve them
+                  [ ] attach debdiff against the package in testing
+
+                [ Other info ]
+                (Anything else the release team should know.)
 
                 unblock %s/%s
                 """ % (package, package, version))
