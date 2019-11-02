@@ -1,7 +1,7 @@
 import unittest
+from unittest import mock
 
 from nose.plugins.attrib import attr
-import mock
 from reportbug import utils
 from reportbug import debbugs
 from reportbug import urlutils
