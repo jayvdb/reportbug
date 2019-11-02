@@ -20,16 +20,9 @@ coverage:
 coverhtml: NOSETESTS_OPTS += --cover-html
 coverhtml: coverage
 
-codechecks: pep8 pyflakes pylint
-
-pep8:
-	pep8 --verbose --repeat --show-source --filename=*.py,reportbug,querybts . --statistics --ignore=E501
-
-pyflakes:
-	pyflakes . bin/*
-
-pylint:
-	pylint --output-format=colorized  bin/* reportbug/ checks/* test/ setup.py
+.PHONY: lint
+lint:
+	flake8 . bin/*
 
 .PHONY: clean
 clean:
