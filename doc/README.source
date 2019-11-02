@@ -77,21 +77,11 @@ tasks.
   information, then reports the current statement coverage using an HTML
   output format.
 
-* ``make pyflakes`` runs the `pyflakes` static code checker on all
-  Python files found in the project tree.
+* ``make lint`` runs the `flake8` code checker on all code modules and
+  programs.
 
-  This requires the `pyflakes` package to be installed. See its
+  This requires the `flake8` package to be installed. See its
   documentation for more about its operation.
-
-* ``make pylint`` runs the `pylint` code checker on all code modules
-  and programs.
-
-  This requires the `pylint` package to be installed. See its
-  documentation for more about its operation.
-
-* ``make pep8`` runs the `pep8` static code checker.
-
-  This requires the `pep8` package to be installed.
 
 ..
     Local Variables:
