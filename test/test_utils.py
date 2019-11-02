@@ -1,10 +1,11 @@
 # coding=utf-8
 import unittest
 
+import pytest
+
 from reportbug import utils
 import os.path
 import platform
-from nose.plugins.attrib import attr
 import debianbts
 import mock
 import subprocess
@@ -465,7 +466,7 @@ Shell: /bin/sh linked to /bin/bash"""
         for ph in pseudos:
             self.assertIn(ph, pseudo)
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_generate_blank_report(self):
 
         report = utils.generate_blank_report('reportbug', '1.2.3', 'normal',

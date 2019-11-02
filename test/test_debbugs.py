@@ -1,7 +1,8 @@
 import unittest
 
-from nose.plugins.attrib import attr
 import mock
+import pytest
+
 from reportbug import utils
 from reportbug import debbugs
 from reportbug import urlutils
@@ -157,7 +158,7 @@ class TestMiscFunctions(unittest.TestCase):
         for type, severity, value in sevs:
             self.assertEqual(debbugs.convert_severity(severity, type), value)
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_pseudopackages_in_sync(self):
 
         dictparse = re.compile(r'([^\s]+)\s+(.+)', re.IGNORECASE)
@@ -181,12 +182,12 @@ class TestMiscFunctions(unittest.TestCase):
 
 class TestGetReports(unittest.TestCase):
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_get_reports(self):
         data = debbugs.get_reports('reportbug', timeout=60)
         self.assertGreater(data[0], 0)
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_get_report(self):
         buginfo, bodies = debbugs.get_report(415801, 120)
         self.assertEqual(buginfo.bug_num, 415801)
@@ -197,7 +198,7 @@ class TestGetReports(unittest.TestCase):
         buginfo, bodies = debbugs.get_report(503300, 120)
         self.assertGreater(len(bodies), 0)
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_bts796759(self):
         # verify accessing WNPP happens correctly, now that BTS
         # access has to be done in batches

@@ -1,7 +1,8 @@
 import unittest
 
+import pytest
+
 from reportbug import checkversions
-from nose.plugins.attrib import attr
 
 import mock
 
@@ -70,27 +71,27 @@ Source: aaa
 
 
 class TestVersionAvailable(unittest.TestCase):
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_bts642032(self):
         vers = checkversions.get_versions_available('reportbug', 60)
         # check stable version is lower than unstable
         chk = checkversions.compare_versions(vers['stable'], vers['unstable'])
         self.assertGreaterEqual(chk, 0)
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_bts649649(self):
         # checking for non-existing package should not generate a traceback
         vers = checkversions.get_versions_available('blablabla', 60)
         self.assertEqual(vers, {})
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_bts673204(self):
         vers = checkversions.get_versions_available('texlive-xetex', 60)
         # squeeze (stable at this time) is the first suite where texlive-xetex
         # is arch:all
         self.assertIn('stable', vers)
 
-    @attr('network')
+    @pytest.mark.network  # marking the test as using network
     def test_codenames(self):
         vers = checkversions.get_versions_available('reportbug', 60, ['sid'])
         self.assertEqual(1, len(vers))

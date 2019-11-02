@@ -1,10 +1,12 @@
 import unittest
 
+import pytest
+
 from reportbug import utils
 from reportbug import debbugs
 from reportbug.bugreport import bugreport
-from nose.plugins.attrib import attr
 import debianbts
+
 
 
 class TestBugreport(unittest.TestCase):
@@ -26,7 +28,7 @@ class TestBugreport(unittest.TestCase):
             self.text = self.report.__unicode__()
             self.assertNotIn(utils.NEWBIELINE, self.text)
 
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_followup(self):
         self.body = 'test'
         self.package = 'reportbug'

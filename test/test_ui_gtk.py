@@ -2,14 +2,14 @@
 
 import unittest
 
-from nose.plugins.attrib import attr
+import pytest
 
 from reportbug.ui import gtk_ui as ui
 import debianbts
 
 
 class TestUIGTK(unittest.TestCase):
-    @attr('network')  # marking the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_bug_class(self):
         bug = debianbts.get_status(415801)[0]
 
