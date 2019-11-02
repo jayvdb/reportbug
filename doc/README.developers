@@ -213,7 +213,8 @@ The following ``make`` targets are useful for testing and related
 tasks.
 
 * ``make test`` runs the unit test suite, preceded by a timestamp
-  banner, and reports any test failures or "OK" if all tests pass.
+  banner, and reports any test failures or "OK" if all tests pass. Coverage
+  reports are generated automatically.
 
 * ``make test-continuous`` starts a loop which clears the screen, runs
   ``make test``, then waits for any of the tests or source code to
@@ -227,13 +228,6 @@ tasks.
 
   This uses the ``inotifywait`` command from the `inotify-tools`
   package to wait for `create` and `modify` events.
-
-* ``make coverage`` runs the test suite and collects test coverage
-  information, then reports the current statement coverage of the test
-  suite.
-
-  This requires the `python-coverage` package to be installed. See its
-  documentation for more about its operation.
 
 * ``make pyflakes`` runs the `pyflakes` static code checker on all
   Python files found in the project tree.
