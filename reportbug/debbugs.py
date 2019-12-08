@@ -841,6 +841,9 @@ def get_tags(severity='', mode=utils.MODE_NOVICE):
 
     if mode > utils.MODE_STANDARD:
         tags.update(EXPERT_TAGS)
+    elif mode < utils.MODE_STANDARD and 'newcomer' in tags:
+        # do not show the newcomer tag in novice mode
+        del tags['newcomer']
 
     return tags
 
