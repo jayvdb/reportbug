@@ -215,7 +215,14 @@ def query_dpkg_for(filename, use_dlocate=True):
     pipe.close()
     # Try again without dlocate if no packages found
     if not packages and dlocate_used:
-        return query_dpkg_for(filename, use_dlocate=False)
+        _, packages = query_dpkg_for(filename, use_dlocate=False)
+
+    # still not found?
+    # dpkg and merged /usr do not work well together
+    if not packages and filename[0:8] in ('/usr/bin', '/usr/lib', '/usr/sbi'):
+        # try without '/usr'
+        filename = filename[4:]
+        return query_dpkg_for(filename)
 
     return filename, packages
 
