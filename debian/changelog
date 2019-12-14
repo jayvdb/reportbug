@@ -3,7 +3,11 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
   [ Bastian Venthur ]
   * Update to debianbts 2.10
 
- -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:08:43 -0500
+  [ Salvatore Bonaccorso ]
+  * reportbug/debbugs.py
+    - allow to fill stretch-pu updates against release.d.o; Closes: #938941
+
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:12:06 -0500
 
 reportbug (7.5.3) unstable; urgency=medium
 
