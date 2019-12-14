@@ -1066,10 +1066,9 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
     if system == 'debian':
         if isinstance(package, str):
             if source:
-                pkg_filter = 'src'
+                bugs = debianbts.get_bugs(src=package)
             else:
-                pkg_filter = 'package'
-            bugs = debianbts.get_bugs(pkg_filter, package)
+                bugs = debianbts.get_bugs(package=package)
         else:
             bugs = list(map(int, package))
 
@@ -1150,7 +1149,7 @@ def get_report(number, timeout, system='debian', mirrors=None,
     number = int(number)
 
     if system == 'debian':
-        status = debianbts.get_status(number)[0]
+        status = debianbts.get_status([number])[0]
         log = debianbts.get_bug_log(number)
 
         # add Date/Subject/From headers to the msg bodies

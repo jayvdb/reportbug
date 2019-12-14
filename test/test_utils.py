@@ -487,7 +487,7 @@ Shell: /bin/sh linked to /bin/bash"""
                                              exinfo=123456)
         self.assertIn('Followup-For: Bug #123456', report)
 
-        bug = debianbts.get_status(123456)[0]
+        bug = debianbts.get_status([123456])[0]
         report = utils.generate_blank_report('reportbug', '1.2.3', 'normal',
                                              '', '', '', type='debbugs',
                                              exinfo=bug)
