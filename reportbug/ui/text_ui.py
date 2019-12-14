@@ -762,8 +762,8 @@ def browse_bugs(hierarchy, count, bugs, bts, queryonly, mirrors,
                                 ewrite('Invalid report number: %s\n',
                                        number)
 
-            startcount = endcount + 1
-            scount = 0
+                startcount = endcount + 1
+                scount = 0
 
             # these now empty
 
