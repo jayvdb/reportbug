@@ -1,12 +1,12 @@
 # coding=utf-8
 import unittest
+from unittest import mock
 
 from reportbug import utils
 import os.path
 import platform
 from nose.plugins.attrib import attr
 import debianbts
-import mock
 import subprocess
 
 

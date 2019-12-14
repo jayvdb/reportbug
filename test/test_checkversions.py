@@ -1,9 +1,8 @@
 import unittest
+from unittest import mock
 
 from reportbug import checkversions
 from nose.plugins.attrib import attr
-
-import mock
 
 
 class TestCheckversions(unittest.TestCase):
