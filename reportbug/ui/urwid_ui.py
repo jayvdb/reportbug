@@ -42,7 +42,7 @@ try:
     import urwid.raw_display
     import urwid
 except ImportError:
-    raise UINotImportable('Please install the python-urwid package to use this interface.')
+    raise UINotImportable('Please install the python3-urwid package to use this interface.')
 
 ISATTY = sys.stdin.isatty()
 
