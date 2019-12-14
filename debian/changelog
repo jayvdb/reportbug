@@ -1,4 +1,4 @@
-reportbug (7.5.4) UNRELEASED; urgency=medium
+reportbug (7.6.0) unstable; urgency=medium
 
   [ Bastian Venthur ]
   * Update to debianbts 2.10
@@ -36,7 +36,7 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
     - add a section describing why bugscripts are executed with LC_ALL=C;
       Closes: #946326
 
- -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 13:15:55 -0500
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 13:18:07 -0500
 
 reportbug (7.5.3) unstable; urgency=medium
 
