@@ -14,6 +14,8 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
 
   [ Nis Martensen ]
   * show name of output file in GTK+ ui; Closes: #941257
+  * reportbug/debbugs.py
+    - do not show `newcomer` tag in novice mode; Closes: #941961
 
   [ Fabrice BAUZAC ]
   * reportbug/ui/urwid_ui.py
@@ -21,7 +23,7 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
   * reportbug/ui/gtk_ui.py
     - suggest to install reportbug-gtk for the GTK+ UI; Closes: #944515
 
- -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 12:34:11 -0500
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 12:37:25 -0500
 
 reportbug (7.5.3) unstable; urgency=medium
 
