@@ -49,7 +49,7 @@ try:
 
     gi.require_foreign('cairo')
 except ImportError:
-    raise UINotImportable('Please install the python3-gi and gir1.2-gtk-3.0 packages to use this interface.')
+    raise UINotImportable('Please install the reportbug-gtk package to use this interface.')
 
 global Vte
 
