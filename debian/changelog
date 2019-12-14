@@ -2,6 +2,7 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
 
   [ Bastian Venthur ]
   * Update to debianbts 2.10
+  * replace mock w/ unittest.mock (available since py3.3)
 
   [ Salvatore Bonaccorso ]
   * reportbug/debbugs.py
@@ -11,7 +12,7 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
   * reportbug/debbugs.py
     - Add template to unblock release.debian.org bugs
 
- -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:16:29 -0500
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:22:45 -0500
 
 reportbug (7.5.3) unstable; urgency=medium
 
