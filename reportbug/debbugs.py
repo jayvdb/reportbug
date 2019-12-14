@@ -878,11 +878,11 @@ def yn_bool(setting):
         return 'no'
 
 
-def cgi_report_url(system, number, archived=False, mbox=False):
+def cgi_report_url(system, number, archived=False, mbox=False, mboxmaint=False):
     root = SYSTEMS[system].get('cgiroot')
     if root:
-        return '%sbugreport.cgi?bug=%d&archived=%s&mbox=%s' % (
-            root, number, archived, yn_bool(mbox))
+        return '%sbugreport.cgi?bug=%d&archived=%s&mbox=%s&mboxmaint=%s' % (
+            root, number, archived, yn_bool(mbox), yn_bool(mboxmaint))
     return None
 
 
@@ -933,7 +933,7 @@ def get_package_url(system, package, mirrors=None, source=False,
             package_url(system, package, mirrors, source, repeatmerged))
 
 
-def get_report_url(system, number, mirrors=None, archived=False, mbox=False):
+def get_report_url(system, number, mirrors=None, archived=False, mbox=False, mboxmaint=True):
     return (cgi_report_url(system, number, archived, mbox) or
             report_url(system, number, mirrors))
 
