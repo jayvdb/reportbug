@@ -15,7 +15,11 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
   [ Nis Martensen ]
   * show name of output file in GTK+ ui; Closes: #941257
 
- -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:30:16 -0500
+  [ Fabrice BAUZAC ]
+  * reportbug/ui/urwid_ui.py
+    - suggest to install python3-urwid for the urwid UI; Closes: #944562
+
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 12:31:19 -0500
 
 reportbug (7.5.3) unstable; urgency=medium
 
