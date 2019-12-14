@@ -7,7 +7,11 @@ reportbug (7.5.4) UNRELEASED; urgency=medium
   * reportbug/debbugs.py
     - allow to fill stretch-pu updates against release.d.o; Closes: #938941
 
- -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:12:06 -0500
+  [ Paul Gevers ]
+  * reportbug/debbugs.py
+    - Add template to unblock release.debian.org bugs
+
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 11:16:29 -0500
 
 reportbug (7.5.3) unstable; urgency=medium
 
