@@ -38,7 +38,7 @@ class TestBugreport(unittest.TestCase):
         self.assertNotIn('Severity: ', self.text)
 
         # test also a bugreport instance, and a datatype unconvertible to int
-        bug = debianbts.get_status(123456)[0]
+        bug = debianbts.get_status([123456])[0]
         self.report = bugreport(package=self.package, body=self.body,
                                 followup=bug)
         self.text = self.report.__unicode__()
