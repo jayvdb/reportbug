@@ -142,6 +142,17 @@ close blocks, else the parser could produce undesired results. Also note that
 those headers are added to the ones already presente so a header with the same
 name will appear twice, since it won't replace the existing one.
 
+Bugscripts and locale information
+=================================
+
+Please be aware that reportbug runs every bugscript in a shell forcing
+`LC_ALL=C`, this is to prevent the commands output in the script to be
+unintelligible when sent via email.
+
+Part of reportbug "System Information" section of a bug template, already
+contains the locale information, no need for your bugscript to re-discover that
+information again.
+
 Add attachments from the bugscript
 ==================================
 

@@ -416,7 +416,7 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
             pipe.write(message)
             pipe.flush()
             if msgname:
-                ewrite("Bug report written as %s\n", msgname)
+                ui.long_message("Bug report written as %s\n", msgname)
         except IOError:
             failed = True
             pipe.close()

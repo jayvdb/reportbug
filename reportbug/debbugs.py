@@ -412,7 +412,7 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                       'britney': "testing migration script bugs",
                       'transition': "transition tracking",
                       'unblock': "unblock requests",
-                      #oldstable_pu: "%s proposed updates requests" % oldstable,
+                      oldstable_pu: "%s proposed updates requests" % oldstable,
                       stable_pu: "%s proposed updates requests" % stable,
                       'rm': "Stable/Testing removal requests",
                       'other': "None of the other options",
@@ -581,9 +581,30 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
         body = textwrap.dedent("""\
                 Please unblock package %s
 
-                (explain the reason for the unblock here)
+                (Please provide enough (but not too much) information to help
+                the release team to judge the request efficiently. E.g. by
+                filling in the sections below.)
 
-                (include/attach the debdiff against the package in testing)
+                [ Reason ]
+                (Explain what the reason for the unblock request is.)
+
+                [ Impact ]
+                (What is the impact for the user if the unblock isn't granted?)
+
+                [ Tests ]
+                (What automated or manual tests cover the affected code?)
+
+                [ Risks ]
+                (Discussion of the risks involved. E.g. code is trivial or
+                complex, key package vs leaf package, alternatives available.)
+
+                [ Checklist ]
+                  [ ] all changes are documented in the d/changelog
+                  [ ] I reviewed all changes and I approve them
+                  [ ] attach debdiff against the package in testing
+
+                [ Other info ]
+                (Anything else the release team should know.)
 
                 unblock %s/%s
                 """ % (package, package, version))
@@ -841,6 +862,9 @@ def get_tags(severity='', mode=utils.MODE_NOVICE):
 
     if mode > utils.MODE_STANDARD:
         tags.update(EXPERT_TAGS)
+    elif mode < utils.MODE_STANDARD and 'newcomer' in tags:
+        # do not show the newcomer tag in novice mode
+        del tags['newcomer']
 
     return tags
 
@@ -854,11 +878,11 @@ def yn_bool(setting):
         return 'no'
 
 
-def cgi_report_url(system, number, archived=False, mbox=False):
+def cgi_report_url(system, number, archived=False, mbox=False, mboxmaint=False):
     root = SYSTEMS[system].get('cgiroot')
     if root:
-        return '%sbugreport.cgi?bug=%d&archived=%s&mbox=%s' % (
-            root, number, archived, yn_bool(mbox))
+        return '%sbugreport.cgi?bug=%d&archived=%s&mbox=%s&mboxmaint=%s' % (
+            root, number, archived, yn_bool(mbox), yn_bool(mboxmaint))
     return None
 
 
@@ -909,7 +933,7 @@ def get_package_url(system, package, mirrors=None, source=False,
             package_url(system, package, mirrors, source, repeatmerged))
 
 
-def get_report_url(system, number, mirrors=None, archived=False, mbox=False):
+def get_report_url(system, number, mirrors=None, archived=False, mbox=False, mboxmaint=True):
     return (cgi_report_url(system, number, archived, mbox) or
             report_url(system, number, mirrors))
 
@@ -1066,10 +1090,9 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
     if system == 'debian':
         if isinstance(package, str):
             if source:
-                pkg_filter = 'src'
+                bugs = debianbts.get_bugs(src=package)
             else:
-                pkg_filter = 'package'
-            bugs = debianbts.get_bugs(pkg_filter, package)
+                bugs = debianbts.get_bugs(package=package)
         else:
             bugs = list(map(int, package))
 
@@ -1150,7 +1173,7 @@ def get_report(number, timeout, system='debian', mirrors=None,
     number = int(number)
 
     if system == 'debian':
-        status = debianbts.get_status(number)[0]
+        status = debianbts.get_status([number])[0]
         log = debianbts.get_bug_log(number)
 
         # add Date/Subject/From headers to the msg bodies

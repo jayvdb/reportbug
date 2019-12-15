@@ -366,6 +366,13 @@ def get_package_status(package, avail=False):
         output = get_command_output(
             "LC_ALL=C.UTF-8 apt-cache show %s 2>/dev/null" % packarg)
     else:
+        # filter through dpkg-query to automatically append arch
+        # qualifier in the cases where this is needed
+        try:
+            packarg = get_command_output(
+                "dpkg-query -W -f='${binary:Package}\n' %s 2>/dev/null" % packarg).split()[0]
+        except IndexError:
+            pass
         output = get_command_output(
             "COLUMNS=79 dpkg --status %s 2>/dev/null" % packarg)
 

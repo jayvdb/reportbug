@@ -107,13 +107,13 @@ if readline is not None:
 
 
 def _launch_mbox_reader(mbox_reader_cmd, bts, bugs, number, mirrors, archived,
-                        mbox, http_proxy, timeout):
+                        mbox, mboxmaint, http_proxy, timeout):
     try:
         number = int(number)
         if number not in bugs and 1 <= number <= len(bugs):
             number = bugs[number - 1]
         reportbug.utils.launch_mbox_reader(mbox_reader_cmd,
-                                           debbugs.get_report_url(bts, number, mirrors, archived, mbox),
+                                           debbugs.get_report_url(bts, number, mirrors, archived, mbox, mboxmaint),
                                            http_proxy, timeout)
     except ValueError:
         ewrite('Invalid report number: %s\n',
@@ -488,7 +488,7 @@ def show_report(number, system, mirrors,
             skip_pager = True
         elif x == 'e':
             reportbug.utils.launch_mbox_reader(mbox_reader_cmd,
-                                               debbugs.get_report_url(system, number, mirrors, archived, True),
+                                               debbugs.get_report_url(system, number, mirrors, archived, True, True),
                                                http_proxy, timeout)
             skip_pager = True
         elif x == 'o':
@@ -730,7 +730,7 @@ def browse_bugs(hierarchy, count, bugs, bts, queryonly, mirrors,
                     elif x == 'e':
                         number = our_raw_input('Please enter the number of the bug you would like to view: #', allowed)
                         _launch_mbox_reader(mbox_reader_cmd, bts, bugs, number,
-                                            mirrors, 'no', True, http_proxy,
+                                            mirrors, 'no', True, True, http_proxy,
                                             timeout)
                     else:
                         if x == 'm' or x == 'i':
@@ -762,8 +762,8 @@ def browse_bugs(hierarchy, count, bugs, bts, queryonly, mirrors,
                                 ewrite('Invalid report number: %s\n',
                                        number)
 
-            startcount = endcount + 1
-            scount = 0
+                startcount = endcount + 1
+                scount = 0
 
             # these now empty
 
@@ -955,7 +955,7 @@ def search_bugs(hierarchyfull, bts, queryonly, mirrors,
                         number = our_raw_input('Please enter the number of the '
                                                'bug you would like to view: #', allowed)
                         _launch_mbox_reader(mbox_reader_cmd, bts, bugs, number,
-                                            mirrors, 'no', True, http_proxy, timeout)
+                                            mirrors, 'no', True, True, http_proxy, timeout)
                     else:
                         if x == 'm' or x == 'i':
                             number = our_raw_input(
