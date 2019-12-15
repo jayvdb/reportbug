@@ -219,7 +219,7 @@ def query_dpkg_for(filename, use_dlocate=True):
 
     # still not found?
     # dpkg and merged /usr do not work well together
-    if not packages and filename[0:8] in ('/usr/bin', '/usr/lib', '/usr/sbi'):
+    if not packages and filename.startswith(('/usr/bin', '/usr/lib', '/usr/sbin')):
         # try without '/usr'
         filename = filename[4:]
         return query_dpkg_for(filename)
