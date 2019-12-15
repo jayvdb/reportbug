@@ -1,10 +1,9 @@
 import unittest
+from unittest import mock
 
 import pytest
 
 from reportbug import checkversions
-
-import mock
 
 
 class TestCheckversions(unittest.TestCase):

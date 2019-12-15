@@ -1,3 +1,43 @@
+reportbug (7.6.0) unstable; urgency=medium
+
+  [ Bastian Venthur ]
+  * Update to debianbts 2.10
+  * replace mock w/ unittest.mock (available since py3.3)
+
+  [ Salvatore Bonaccorso ]
+  * reportbug/debbugs.py
+    - allow to fill stretch-pu updates against release.d.o; Closes: #938941
+
+  [ Paul Gevers ]
+  * reportbug/debbugs.py
+    - Add template to unblock release.debian.org bugs
+
+  [ Nis Martensen ]
+  * show name of output file in GTK+ ui; Closes: #941257
+  * reportbug/debbugs.py
+    - do not show `newcomer` tag in novice mode; Closes: #941961
+  * reportbug/ui/text_ui.py
+    - fix the total bug count not to be equal only to wishlist bugs;
+      Closes: #922014
+  * reportbug/utils.py
+    - query dpkg status with unambiguous package name; Closes: #932383
+
+  [ Fabrice BAUZAC ]
+  * reportbug/ui/urwid_ui.py
+    - suggest to install python3-urwid for the urwid UI; Closes: #944562
+  * reportbug/ui/gtk_ui.py
+    - suggest to install reportbug-gtk for the GTK+ UI; Closes: #944515
+
+  [ Andrei POPESCU ]
+  * Download and use maintainer mbox whenever applicable; Closes: #933765
+
+  [ Sandro Tosi ]
+  * doc/README.developers
+    - add a section describing why bugscripts are executed with LC_ALL=C;
+      Closes: #946326
+
+ -- Sandro Tosi <morph@debian.org>  Sat, 14 Dec 2019 13:18:07 -0500
+
 reportbug (7.5.3) unstable; urgency=medium
 
   * debian/control

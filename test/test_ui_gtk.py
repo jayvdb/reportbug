@@ -11,7 +11,7 @@ import debianbts
 class TestUIGTK(unittest.TestCase):
     @pytest.mark.network  # marking the test as using network
     def test_bug_class(self):
-        bug = debianbts.get_status(415801)[0]
+        bug = debianbts.get_status([415801])[0]
 
         gtk_bug = ui.Bug(bug)
 
