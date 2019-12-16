@@ -1400,6 +1400,11 @@ class UI(object):
                         raise NoReport
                     else:
                         package = exinfo.package or exinfo.source
+                        if package == 'src:linux':
+                            package = utils.get_running_kernel_pkg()
+                        elif package.startswith('src:'):
+                            package = package[4:]
+                            issource = True
                 else:
                     efail("The report bug number provided seems to not exist.\n")
         except NoBugs:
