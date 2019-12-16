@@ -744,8 +744,12 @@ def offer_configuration(options):
     print('# You can add other settings after this line.  See', file=fp)
     print('# /etc/reportbug.conf for a full listing of options.', file=fp)
     fp.close()
-    ui.final_message('Default preferences file written.  To reconfigure, '
-                     're-run reportbug with the "--configure" option.\n')
+    if options.configure:
+        ui.final_message('Default preferences file written.  To reconfigure, '
+                         're-run reportbug with the "--configure" option.\n')
+    else:
+        ui.long_message('Default preferences file written.  To reconfigure, '
+                         're-run reportbug with the "--configure" option.\n')
 
 
 def verify_option(option, opt, value, parser, *args):
@@ -1019,7 +1023,7 @@ def main():
     (options, args) = parser.parse_args()
 
     # Load the interface, *before* the configuration step.
-    sys.argv = sys.argv[:1] + list(args)
+    #sys.argv = sys.argv[:1] + list(args)
 
     # if not set in config file or on cli, then set 10M as default
     if not options.max_attachment_size:
@@ -1231,7 +1235,8 @@ class UI(object):
         if utils.first_run():
             if not self.args and not self.options.searchfor:
                 offer_configuration(self.options)
-                main()
+                #main()
+                os.execv(__file__, sys.argv)
                 sys.exit(0)
             else:
                 ewrite('Warning: no reportbug configuration found.  Proceeding in %s mode.\n' % self.options.mode)
