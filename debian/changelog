@@ -3,7 +3,11 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ Bastian Venthur ]
   * Replace nosetests with pytest
 
- -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 18:47:08 -0500
+  [ Nis Martensen ]
+  * reportbug/utils.py
+    - support merged-/usr during file search; Closes: #942261
+
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 18:51:04 -0500
 
 reportbug (7.6.0) unstable; urgency=medium
 
