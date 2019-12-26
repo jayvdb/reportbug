@@ -6,8 +6,11 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ Nis Martensen ]
   * reportbug/utils.py
     - support merged-/usr during file search; Closes: #942261
+  * bin/reportbug
+    - recognize source packages (and `src:linux`) when sending followup info;
+      Closes: #946363
 
- -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 18:51:04 -0500
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 18:55:30 -0500
 
 reportbug (7.6.0) unstable; urgency=medium
 
