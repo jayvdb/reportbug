@@ -1,13 +1,13 @@
 import unittest
 
-from nose.plugins.attrib import attr
+import pytest
 
 from reportbug import urlutils
 
 
 class TestNetwork(unittest.TestCase):
 
-    @attr('network')  # mark the test as using network
+    @pytest.mark.network  # marking the test as using network
     def test_open_url(self):
 
         page = urlutils.open_url('https://bugs.debian.org/reportbug')

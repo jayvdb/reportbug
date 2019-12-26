@@ -1,24 +1,13 @@
 #! /usr/bin/make -f
 
-NOSETESTS = nosetests3 test -v --stop
-nosetests_cmd = $(NOSETESTS) ${NOSETESTS_OPTS}
-
 .PHONY: tests
 tests:
-	$(nosetests_cmd)
+	pytest-3
 
 # run tests not requiring network
 .PHONY: quicktests
-quicktests: NOSETESTS_OPTS += --processes=4 --attr='!network'
 quicktests:
-	$(nosetests_cmd)
-
-coverage: NOSETESTS_OPTS += --with-coverage --cover-package=reportbug
-coverage:
-	$(nosetests_cmd)
-
-coverhtml: NOSETESTS_OPTS += --cover-html
-coverhtml: coverage
+	pytest-3 -m 'not network'
 
 codechecks: pep8 pyflakes pylint
 

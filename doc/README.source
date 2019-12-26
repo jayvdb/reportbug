@@ -60,22 +60,12 @@ The following ``make`` targets are useful for testing and related
 tasks.
 
 * ``make tests`` runs the unit test suite, preceded by a timestamp
-  banner, and reports any test failures or "OK" if all tests pass.
+  banner, and reports any test failures or "OK" if all tests pass. Coverage
+  reports are generated automatically.
 
 * ``make quicktests`` runs the unit test suite, but only for those
   tests that dont require network access, which can be slow sometimes
   (hence the name)
-
-* ``make coverage`` runs the test suite and collects test coverage
-  information, then reports the current statement coverage of the test
-  suite.
-
-  This requires the `python3-coverage` package to be installed. See its
-  documentation for more about its operation.
-
-* ``make coverhtml`` runs  the test suite and collects test coverage
-  information, then reports the current statement coverage using an HTML
-  output format.
 
 * ``make pyflakes`` runs the `pyflakes` static code checker on all
   Python files found in the project tree.
