@@ -1,3 +1,10 @@
+reportbug (7.6.1) UNRELEASED; urgency=medium
+
+  [ Bastian Venthur ]
+  * Replace nosetests with pytest
+
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 18:47:08 -0500
+
 reportbug (7.6.0) unstable; urgency=medium
 
   [ Bastian Venthur ]
