@@ -799,6 +799,13 @@ def lsb_release_info():
 
 
 def get_arch():
+    """Get the architecture of the current system.
+
+    :returns:
+
+        The architecture, e.g. ``"i386"``.
+
+    """
     arch = get_command_output('COLUMNS=79 dpkg --print-architecture 2>/dev/null').strip()
     if not arch:
         un = os.uname()

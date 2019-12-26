@@ -59,8 +59,19 @@ NEWQUEUE_URL = 'http://ftp-master.debian.org/new.822'
 
 
 def compare_versions(current, upstream):
-    """Return 1 if upstream is newer than current, -1 if current is
-    newer than upstream, and 0 if the same."""
+    """Return 1 if upstream is newer than current, -1 if current is newer
+    than upstream, and 0 if the same.
+
+    .. warning::
+
+        Beware, this is the opposite of usual convention!
+
+        The usual convention is: f(a, b) returns <0, =0, >0 when a <,
+        =, > b.
+
+        See e.g. the comparison function in qsort(3).
+
+    """
     if not current or not upstream:
         return 0
     return debian_support.version_compare(upstream, current)
@@ -73,6 +84,43 @@ def later_version(a, b):
 
 
 def get_versions_available(package, timeout, dists=None, http_proxy=None, arch='i386'):
+    """:param package:
+
+        Name of the package, e.g. ``"reportbug"``.
+
+    :param timeout:
+
+        Socket timeout, in seconds.
+
+    :param dists:
+
+        The distributions where the search should be done, as an
+        iterable, e.g. ``('oldstable', 'stable', 'testing',
+        'unstable', 'experimental')`` (which is the default).
+
+    :param http_proxy:
+
+        The proxy to use for the http protocol.  By default, use the
+        :func:`urllib.request.getproxies()` settings.
+
+    :returns:
+
+        A map of each dist to a version of the package, e.g.::
+
+            dict(oldstable="46.1",
+                 stable="1:26.1+1-3.2+deb10u1",
+                 testing="1:26.1+1-4",
+                 unstable="1:26.3+1-1")
+
+        .. todo::
+
+            What if there are several versions in the same dist?
+            E.g.::
+
+                emacs | 1:26.1+1-4           | sid      | source, all
+                emacs | 1:26.3+1-1           | sid      | source, all
+
+    """
     if not dists:
         dists = ('oldstable', 'stable', 'testing', 'unstable', 'experimental')
 
@@ -93,6 +141,15 @@ def get_versions_available(package, timeout, dists=None, http_proxy=None, arch='
     if not page:
         return {}
 
+    # The page looks like this:
+    #
+    # $ wget -qO- 'https://qa.debian.org/madison.php?package=emacs&text=on&s=oldstable,stable,testing,unstable,experimental&a=source,all,x86_64'
+    #  emacs | 46.1                 | stretch  | all
+    #  emacs | 1:26.1+1-3.2+deb10u1 | buster   | source, all
+    #  emacs | 1:26.1+1-4           | bullseye | source, all
+    #  emacs | 1:26.1+1-4           | sid      | source, all
+    #  emacs | 1:26.3+1-1           | sid      | source, all
+
     # read the content of the page, remove spaces, empty lines
     content = page.replace(' ', '').strip()
 
@@ -102,8 +159,11 @@ def get_versions_available(package, timeout, dists=None, http_proxy=None, arch='
         # skip lines not having the right number of fields
         if len(l) != 4:
             continue
-        # map suites name (returned by madison) to dist name
+
+        # map suites name (returned by madison, e.g. "bullseye") to
+        # dist name (e.g. "testing").
         dist = utils.CODENAME2SUITE.get(l[2], l[2])
+
         versions[dist] = l[1]
 
     return versions
@@ -135,6 +195,25 @@ def get_newqueue_available(package, timeout, dists=None, http_proxy=None, arch='
 
 
 def get_incoming_version(package, timeout, http_proxy=None, arch='i386'):
+    """
+    :param timeout:
+
+        Socket timeout, in seconds.
+
+    :param http_proxy:
+
+        The proxy to use for the http protocol.  By default, use the
+        :func:`urllib.request.getproxies()` settings.
+
+    :returns:
+
+        None.
+
+        .. todo::
+
+            Looks like this function does not work at the moment.
+
+    """
     try:
         page = open_url(INCOMING_URL, http_proxy, timeout)
     except NoNetwork:
@@ -168,6 +247,44 @@ def get_incoming_version(package, timeout, http_proxy=None, arch='i386'):
 def check_available(package, version, timeout, dists=None,
                     check_incoming=True, check_newqueue=True,
                     http_proxy=None, arch='i386'):
+    """:param package:
+
+        Name of the package, e.g. ``"emacs"``.
+
+    :param version:
+
+        The version as a string, e.g. ``"1:26.3+1-1"``.
+
+    :param timeout:
+
+        Socket timeout, in seconds.
+
+    :param check_incoming:
+
+        If truthy, also check versions in
+        ``http://incoming.debian.org/``.
+
+    :param http_proxy:
+
+        The proxy to use for the http protocol.  By default, use the
+        :func:`urllib.request.getproxies()` settings.
+
+    :returns:
+
+        A tuple ``(avail, toonew)``::
+
+        avail
+            The versions that are more recent that current, as a
+            mapping of each distribution to the version, e.g.::
+
+                dict(unstable="42.1", testing="42.0")
+
+        toonew
+            Whether the current version is "too new", as a boolean.
+            The version is "too new" if it is strictly newer than all
+            distributions.
+
+    """
     avail = {}
 
     if check_incoming:
@@ -185,7 +302,11 @@ def check_available(package, version, timeout, dists=None,
         # print gc.garbage, stuff
 
     new = {}
+
+    # Number of distributions that are outdated compared to our
+    # current version.
     newer = 0
+
     for dist in avail:
         if dist == 'incoming':
             if ':' in version:
@@ -196,8 +317,10 @@ def check_available(package, version, timeout, dists=None,
         else:
             comparison = compare_versions(version, avail[dist])
         if comparison > 0:
+            # The available version is newer than our version.
             new[dist] = avail[dist]
         elif comparison < 0:
+            # Our version is newer than the available version.
             newer += 1
     too_new = (newer and newer == len(avail))
     return new, too_new
