@@ -2263,9 +2263,10 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
         body = body.rstrip('\n') + '\n'
 
         if justsave:
-            fh, outputfile = TempFile(prefix=tfprefix,
-                                      dir=self.options.draftpath)
-            fh.close()
+            if not self.options.outfile:
+                fh, outputfile = TempFile(prefix=tfprefix,
+                                          dir=self.options.draftpath)
+                fh.close()
             mua = mailing = False
             # fake sending the report, it actually saves it in a tempfile
             # but with all the email headers and stuff
