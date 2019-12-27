@@ -1600,8 +1600,14 @@ class UI(object):
         if (pkgavail and self.options.verify and os.path.exists('/usr/bin/debsums')
                 and not self.options.kudos and state == 'installed'):
             ewrite('Verifying package integrity...\n')
+            fullpackagename = package
+            try:
+                fullpackagename = utils.get_command_output(
+                        "dpkg-query -W -f='${binary:Package}\n' %s 2>/dev/null" % shlex.quote(package)).split()[0]
+            except IndexError:
+                pass
             rc, output = subprocess.getstatusoutput('/usr/bin/debsums --ignore-permissions -s ' +
-                                                  shlex.quote(package))
+                                                  shlex.quote(fullpackagename))
             debsumsoutput = output
 
             if rc and not notatty:
