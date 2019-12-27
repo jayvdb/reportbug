@@ -9,8 +9,10 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   * bin/reportbug
     - recognize source packages (and `src:linux`) when sending followup info;
       Closes: #946363
+    - try to determine an unambiguous package name to pass to debsums;
+      Closes: #940532
 
- -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 18:55:30 -0500
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:23:14 -0500
 
 reportbug (7.6.0) unstable; urgency=medium
 
