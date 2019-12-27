@@ -12,8 +12,10 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - try to determine an unambiguous package name to pass to debsums;
       Closes: #940532
     - dont create an empty tempfile if the `outfile` option is given
+  * reportbug/bugreport.py
+    - correctly detect LANGUAGE; Closes: #946963
 
- -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:25:09 -0500
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:28:01 -0500
 
 reportbug (7.6.0) unstable; urgency=medium
 
