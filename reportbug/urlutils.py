@@ -104,6 +104,18 @@ _opener = None
 
 
 def urlopen(url, proxies=None, timeout=60, data=None):
+    """Fetch an URL.
+
+    :param url:
+
+        The URL to open, e.g. ``"http://example.com/"``.
+
+    :returns:
+
+        The contents returned by invoking GET on the given URL, as a
+        Unicode string, e.g. ``u"Hello"``.
+
+    """
     global _opener
 
     if not proxies:
@@ -139,6 +151,25 @@ def urlopen(url, proxies=None, timeout=60, data=None):
 # Global useful URL opener; returns None if the page is absent, otherwise
 # like urlopen
 def open_url(url, http_proxy=None, timeout=60):
+    """:param url:
+
+        The URL to open, e.g. ``"http://example.org/"``.
+
+    :param http_proxy:
+
+        The proxy to use for the http protocol.  By default, use the
+        :func:`urllib.request.getproxies()` settings.
+
+    :param timeout:
+
+        Socket timeout, in seconds.
+
+    :returns:
+
+        The contents returned by invoking GET on the given URL, as a
+        Unicode string, e.g. ``u"Hello"``.
+
+    """
     # Set timeout to 60 secs (1 min), cfr bug #516449
     # in #572316 we set a user-configurable timeout
     socket.setdefaulttimeout(timeout)
