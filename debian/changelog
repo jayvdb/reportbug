@@ -15,7 +15,10 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   * reportbug/bugreport.py
     - correctly detect LANGUAGE; Closes: #946963
 
- -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:28:01 -0500
+  [ Fabrice BAUZAC ]
+  * Improve code documentation
+
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:32:16 -0500
 
 reportbug (7.6.0) unstable; urgency=medium
 
