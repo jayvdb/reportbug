@@ -1,3 +1,25 @@
+reportbug (7.6.1) UNRELEASED; urgency=medium
+
+  [ Bastian Venthur ]
+  * Replace nosetests with pytest
+
+  [ Nis Martensen ]
+  * reportbug/utils.py
+    - support merged-/usr during file search; Closes: #942261
+  * bin/reportbug
+    - recognize source packages (and `src:linux`) when sending followup info;
+      Closes: #946363
+    - try to determine an unambiguous package name to pass to debsums;
+      Closes: #940532
+    - dont create an empty tempfile if the `outfile` option is given
+  * reportbug/bugreport.py
+    - correctly detect LANGUAGE; Closes: #946963
+
+  [ Fabrice BAUZAC ]
+  * Improve code documentation
+
+ -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:32:16 -0500
+
 reportbug (7.6.0) unstable; urgency=medium
 
   [ Bastian Venthur ]

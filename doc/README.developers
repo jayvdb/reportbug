@@ -187,8 +187,8 @@ The source tree for ``reportbug`` is organised this way:
 * `Unit testing framework`_
 
   * ``test/`` contains the unit test suite. Unit test modules are
-    discovered and run using the ``nosetests`` program, and are named
-    as ``test_*.py``.
+    discovered and run using the ``pytest`` program, and are named as
+    ``test_*.py``.
 
 * ?? TODO: describe the purpose
 
@@ -208,9 +208,9 @@ The directory ``test/`` contains unit test modules and supporting
 files. New unit test modules should be added to this directory and
 named ``test_*.py``.
 
-The unit test suite depends on the `python-nose` package being
-installed, to make the ``nosetests`` command available. The unit tests
-themselves can be written using either the `unittest` or `doctest`
+The unit test suite depends on the `python3-pytest` and `python3-pytest-cov`
+package being installed, to make the ``pytest`` command available. The unit
+tests themselves can be written using either the `unittest` or `doctest`
 modules in the standard Python library.
 
 The `scaffold` module (from the ``test/scaffold.py`` file) contains
@@ -224,7 +224,8 @@ The following ``make`` targets are useful for testing and related
 tasks.
 
 * ``make test`` runs the unit test suite, preceded by a timestamp
-  banner, and reports any test failures or "OK" if all tests pass.
+  banner, and reports any test failures or "OK" if all tests pass. Coverage
+  reports are generated automatically.
 
 * ``make test-continuous`` starts a loop which clears the screen, runs
   ``make test``, then waits for any of the tests or source code to

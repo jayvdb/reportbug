@@ -89,9 +89,16 @@ class bugreport(object):
         locinfo = []
         langsetting = os.environ.get('LANG', 'C')
         allsetting = os.environ.get('LC_ALL', '')
+        languagesetting = os.environ.get('LANGUAGE', '')
         for setting in ('LANG', 'LC_CTYPE', 'LANGUAGE'):
             if setting == 'LANG':
                 env = langsetting
+            elif setting == 'LANGUAGE':
+                if languagesetting:
+                    env = languagesetting
+                else:
+                    locinfo.append('LANGUAGE not set')
+                    continue
             else:
                 env = '%s (charmap=%s)' % (os.environ.get(setting, langsetting), subprocess.getoutput("locale charmap"))
 

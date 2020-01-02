@@ -1400,6 +1400,11 @@ class UI(object):
                         raise NoReport
                     else:
                         package = exinfo.package or exinfo.source
+                        if package == 'src:linux':
+                            package = utils.get_running_kernel_pkg()
+                        elif package.startswith('src:'):
+                            package = package[4:]
+                            issource = True
                 else:
                     efail("The report bug number provided seems to not exist.\n")
         except NoBugs:
@@ -1595,8 +1600,14 @@ class UI(object):
         if (pkgavail and self.options.verify and os.path.exists('/usr/bin/debsums')
                 and not self.options.kudos and state == 'installed'):
             ewrite('Verifying package integrity...\n')
+            fullpackagename = package
+            try:
+                fullpackagename = utils.get_command_output(
+                        "dpkg-query -W -f='${binary:Package}\n' %s 2>/dev/null" % shlex.quote(package)).split()[0]
+            except IndexError:
+                pass
             rc, output = subprocess.getstatusoutput('/usr/bin/debsums --ignore-permissions -s ' +
-                                                  shlex.quote(package))
+                                                  shlex.quote(fullpackagename))
             debsumsoutput = output
 
             if rc and not notatty:
@@ -2252,9 +2263,10 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
         body = body.rstrip('\n') + '\n'
 
         if justsave:
-            fh, outputfile = TempFile(prefix=tfprefix,
-                                      dir=self.options.draftpath)
-            fh.close()
+            if not self.options.outfile:
+                fh, outputfile = TempFile(prefix=tfprefix,
+                                          dir=self.options.draftpath)
+                fh.close()
             mua = mailing = False
             # fake sending the report, it actually saves it in a tempfile
             # but with all the email headers and stuff

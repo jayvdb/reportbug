@@ -60,7 +60,8 @@ The following ``make`` targets are useful for testing and related
 tasks.
 
 * ``make tests`` runs the unit test suite, preceded by a timestamp
-  banner, and reports any test failures or "OK" if all tests pass.
+  banner, and reports any test failures or "OK" if all tests pass. Coverage
+  reports are generated automatically.
 
 * ``make quicktests`` runs the unit test suite, but only for those
   tests that dont require network access, which can be slow sometimes
