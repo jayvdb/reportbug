@@ -661,6 +661,8 @@ class Page(ReportbugConnector):
         self.assistant.set_page_side_image(self.widget, GdkPixbuf.Pixbuf.new_from_file(self.side_image))
         self.assistant.set_next_page(self)
         self.set_page_title("Reportbug")
+        # reportbug cannot usefully go back
+        self.assistant.commit()
 
     # Setup keyboard focus in the page
     def setup_focus(self):
