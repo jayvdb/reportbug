@@ -610,7 +610,38 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                 """ % (package, package, version))
     elif tag.endswith('-pu'):
         subject = '%s: package %s/%s' % (tag, package, version)
-        body = '(please explain the reason for this update here)\n'
+        body = textwrap.dedent("""\
+                (Please provide enough information to help the release team
+                to judge the request efficiently. E.g. by filling in the
+                sections below.)
+
+                [ Reason ]
+                (Explain what the reason for the (old-)stable update is. I.e.
+                what is the bug, when was it introduced, is this a regression
+                with respect to the previous (old-)stable.)
+
+                [ Impact ]
+                (What is the impact for the user if the update isn't approved?)
+
+                [ Tests ]
+                (What automated or manual tests cover the affected code?)
+
+                [ Risks ]
+                (Discussion of the risks involved. E.g. code is trivial or
+                complex, alternatives available.)
+
+                [ Checklist ]
+                  [ ] *all* changes are documented in the d/changelog
+                  [ ] I reviewed all changes and I approve them
+                  [ ] attach debdiff against the package in (old)stable
+                  [ ] the issue is verified as fixed in unstable
+
+                [ Changes ]
+                (Explain *all* the changes)
+
+                [ Other info ]
+                (Anything else the release team should know.)
+                """ % (package, package, version))
     elif tag == 'rm':
         subject = 'RM: %s/%s' % (package, version)
         body = '(explain the reason for the removal here)\n'
