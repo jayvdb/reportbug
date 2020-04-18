@@ -1725,9 +1725,13 @@ class UI(object):
         if not (dontquery or notatty or self.options.kudos):
             pkg, src = package, issource
             if self.options.query_src:
-                src = True
+                pkg = [pkg]
                 if src_name:
-                    pkg = src_name
+                    pkg += ['src:'+src_name]
+                elif not package.startswith('src:'):
+                    pkg += ['src:'+package]
+                if submitas and submitas not in pkg:
+                    pkg += [submitas]
             try:
                 exinfo = ui.handle_bts_query(pkg, bts, self.options.timeout,
                                              self.options.mirrors,
