@@ -542,13 +542,15 @@ def get_avail_database():
 def get_source_name(package):
     packages = []
 
-    data = get_command_output('apt-cache showsrc ' + pipes.quote(package))
-    packre = re.compile(r'^Package: (.*)$')
+    data = get_command_output('apt-cache show ' + pipes.quote(package))
+    if not data:
+        return None
+    packre = re.compile(r'^Source: (.*)$')
     for line in data.split('\n'):
         m = packre.match(line)
         if m:
             return m.group(1)
-    return None
+    return package
 
 
 def get_source_package(package):
