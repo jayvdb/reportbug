@@ -287,6 +287,13 @@ class TestSourcePackages(unittest.TestCase):
         src = utils.get_source_name('reportbug-bugfree')
         self.assertIsNone(src)
 
+        # The 'astroid' binary package belongs to the 'astroidmail'
+        # source package. get_source_name() must not return the
+        # 'astroid' source package here (which builds the
+        # python3-astroid binary package)
+        src = utils.get_source_name('astroid')
+        self.assertEqual(src, 'astroidmail')
+
     def test_get_source_package(self):
         src = 'reportbug'
         binpkgs = utils.get_source_package(src)
