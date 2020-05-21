@@ -133,15 +133,6 @@ def info_dialog(message):
     dialog.show_all()
 
 
-def error_dialog(message):
-    _assert_context(ui_context)
-    dialog = Gtk.MessageDialog(assistant, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                               Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, message)
-    dialog.connect('response', lambda d, *args: d.destroy())
-    dialog.set_title('Reportbug')
-    dialog.show_all()
-
-
 class CustomDialog(Gtk.Dialog):
     def __init__(self, stock_image, message, buttons, *args, **kwargs):
         _assert_context(ui_context)
@@ -1078,7 +1069,6 @@ class HandleBTSQueryPage(TreePage):
                 return(report, sectitle), {}
 
         except NoPackage:
-            error_dialog('No record of this package found.')
             raise NoPackage
 
         raise SyncReturn(None)
