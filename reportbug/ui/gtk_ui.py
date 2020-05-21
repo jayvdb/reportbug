@@ -89,7 +89,7 @@ def _assert_context(expected):
     # This compares by pointer value of the underlying GMainContext
     if really != expected:
         raise AssertionError('Function should be called in %s but was called in %s' %
-                             (_describe_context(really), _describe_context(expected)))
+                             (_describe_context(expected), _describe_context(really)))
 
     if not really.is_owner():
         raise AssertionError('Function should be called with %s acquired')
