@@ -62,7 +62,7 @@ from queue import Queue
 import threading
 import textwrap
 
-from reportbug.exceptions import NoPackage, NoBugs
+from reportbug.exceptions import NoPackage, NoBugs, QuertBTSError
 from reportbug import debbugs
 from reportbug.urlutils import launch_browser
 
@@ -1049,9 +1049,9 @@ class HandleBTSQueryPage(TreePage):
             (count, sectitle, hierarchy) = debbugs.get_reports(
                 package, timeout, bts, mirrors=mirrors, version=version,
                 http_proxy=http_proxy, archived=archived, source=source)
-        except:
-            error_dialog("Unable to connect to %s BTS." % sysinfo['name'])
-            raise NoBugs
+        except Exception as e:
+            errmsg = 'Unable to connect to %s BTS (error: "%s"); ' % (debbugs.SYSTEMS[bts]['name'], repr(e))
+            raise QuertBTSError(errmsg)
 
         try:
             if not count:
