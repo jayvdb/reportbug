@@ -29,7 +29,7 @@ import re
 import getpass
 from reportbug.exceptions import (
     UINotImportable,
-    NoPackage, NoBugs, NoReport,
+    NoPackage, NoBugs, NoReport, QuertBTSError,
 )
 from reportbug.urlutils import launch_browser
 from .text_ui import (
@@ -584,9 +584,8 @@ def handle_bts_query(package, bts, timeout, mirrors=None, http_proxy="",
             http_proxy=http_proxy, archived=archived, source=source)
     except Exception as e:
         ui.run_wrapper(nullfunc)
-        long_message('Unable to connect to %s BTS.', sysinfo['name'],
-                     title=title)
-        raise NoBugs
+        errmsg = 'Unable to connect to %s BTS (error: "%s"); ' % (sysinfo['name'], repr(e))
+        raise QuertBTSError(errmsg)
 
     try:
         if not count:
