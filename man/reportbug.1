@@ -68,6 +68,10 @@ already been reported (default).
 .B \-B SYSTEM, \-\-bts=SYSTEM
 Instead of the Debian bug server (or the bug server specified in
 \fB/etc/reportbug.conf\fP, use the server specified by \fBSYSTEM\fP.
+Note that if your \fBHOME/.reportbugrc\fP or \fB/etc/reportbug.conf\fP include an smtphost
+setting that is specific to your default bug server and not a generic smarthost,
+you may need to override this using \-\-smtphost=<host> to be able to report a
+bug directly to \fBSYSTEM\fP.
 .TP
 .B \-\-body=BODY
 Use the specified \fIBODY\fP as the body of the message.  The body
