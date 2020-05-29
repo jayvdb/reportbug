@@ -120,7 +120,7 @@ class TestPackages(unittest.TestCase):
         self.assertIsNotNone(depends)
         self.assertIsNotNone(maintainer)
         self.assertTrue(installed)
-        self.assertEqual(origin, 'debian')
+        self.assertIsNone(origin)
         self.assertEqual(priority, 'required')
         self.assertIsNotNone(desc)
         self.assertIsNotNone(fulldesc)
