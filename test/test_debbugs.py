@@ -14,23 +14,23 @@ class TestDebianbts(unittest.TestCase):
     def test_get_tags(self):
         # for each severity, for each mode
         self.assertCountEqual(list(debbugs.get_tags('critical', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('grave', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('serious', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('important', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('does-not-build', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('normal', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('non-critical', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('minor', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('wishlist', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
 
         self.assertCountEqual(list(debbugs.get_tags('critical', utils.MODE_STANDARD).keys()),
                               ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
