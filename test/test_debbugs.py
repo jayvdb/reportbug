@@ -209,7 +209,7 @@ class TestGetReports(unittest.TestCase):
 class TestUrlFunctions(unittest.TestCase):
     def test_cgi_report_url(self):
         self.assertCountEqual(debbugs.cgi_report_url('debian', 123).split('?')[1].split('&'),
-                              'bug=123&archived=False&mbox=no'.split('&'))
+                              'bug=123&archived=False&mbox=no&mboxmaint=no'.split('&'))
         self.assertIsNone(debbugs.cgi_report_url('default', 123))
 
     def test_cgi_package_url(self):
@@ -226,4 +226,4 @@ class TestUrlFunctions(unittest.TestCase):
 
     def test_get_report_url(self):
         self.assertCountEqual(debbugs.get_report_url('debian', 123).split('?')[1].split('&'),
-                              'bug=123&archived=False&mbox=no'.split('&'))
+                              'bug=123&archived=False&mbox=no&mboxmaint=no'.split('&'))
