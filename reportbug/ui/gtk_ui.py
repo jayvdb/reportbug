@@ -1030,7 +1030,7 @@ class HandleBTSQueryPage(TreePage):
         root = sysinfo.get('btsroot')
         if not root:
             # do we need to make a dialog for this?
-            return
+            raise SyncReturn(None)
 
         if isinstance(package, str):
             pkgname = package
