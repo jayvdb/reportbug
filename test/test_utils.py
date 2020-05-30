@@ -120,7 +120,7 @@ class TestPackages(unittest.TestCase):
         self.assertIsNotNone(depends)
         self.assertIsNotNone(maintainer)
         self.assertTrue(installed)
-        self.assertEqual(origin, 'debian')
+        self.assertIsNone(origin)
         self.assertEqual(priority, 'required')
         self.assertIsNotNone(desc)
         self.assertIsNotNone(fulldesc)
@@ -345,7 +345,7 @@ class TestSystemInformation(unittest.TestCase):
         os.path.islink = mock.MagicMock(return_value=False)
         init = utils.get_init_system()
         print(init)
-        self.assertTrue(init.startswith('sysvinit'))
+        self.assertTrue(init.startswith('runit'))
         os.path.isfile = __save1
         os.path.islink = __save2
         del __save1

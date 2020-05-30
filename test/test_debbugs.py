@@ -14,23 +14,23 @@ class TestDebianbts(unittest.TestCase):
     def test_get_tags(self):
         # for each severity, for each mode
         self.assertCountEqual(list(debbugs.get_tags('critical', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('grave', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('serious', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('important', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('does-not-build', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('normal', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('non-critical', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('minor', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
         self.assertCountEqual(list(debbugs.get_tags('wishlist', utils.MODE_NOVICE).keys()),
-                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch', 'newcomer'])
+                              ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'patch'])
 
         self.assertCountEqual(list(debbugs.get_tags('critical', utils.MODE_STANDARD).keys()),
                               ['a11y', 'lfs', 'l10n', 'd-i', 'upstream', 'ipv6', 'security', 'patch', 'newcomer'])
@@ -209,7 +209,7 @@ class TestGetReports(unittest.TestCase):
 class TestUrlFunctions(unittest.TestCase):
     def test_cgi_report_url(self):
         self.assertCountEqual(debbugs.cgi_report_url('debian', 123).split('?')[1].split('&'),
-                              'bug=123&archived=False&mbox=no'.split('&'))
+                              'bug=123&archived=False&mbox=no&mboxmaint=no'.split('&'))
         self.assertIsNone(debbugs.cgi_report_url('default', 123))
 
     def test_cgi_package_url(self):
@@ -226,4 +226,4 @@ class TestUrlFunctions(unittest.TestCase):
 
     def test_get_report_url(self):
         self.assertCountEqual(debbugs.get_report_url('debian', 123).split('?')[1].split('&'),
-                              'bug=123&archived=False&mbox=no'.split('&'))
+                              'bug=123&archived=False&mbox=no&mboxmaint=no'.split('&'))
