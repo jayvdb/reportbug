@@ -452,8 +452,8 @@ def show_report(number, system, mirrors,
 
         if not skip_pager:
             try:
-                with os.popen('sensible-pager', 'w') as fd:
-                    fd.write(text)
+                with subprocess.Popen('sensible-pager', stdin=subprocess.PIPE, errors='ignore') as fd:
+                    fd.communicate(text)
             except IOError as x:
                 if x.errno == errno.EPIPE:
                     pass
@@ -1008,8 +1008,8 @@ def display_report(text, use_pager=True, presubj=False):
 
     pager = os.environ.get('PAGER', 'sensible-pager')
     try:
-        with os.popen(pager, 'w') as p:
-            p.write(text)
+        with subprocess.Popen(pager, stdin=subprocess.PIPE, errors='ignore') as p:
+            p.communicate(text)
     except IOError:
         pass
 
