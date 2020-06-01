@@ -132,7 +132,7 @@ def get_versions_available(package, timeout, dists=None, http_proxy=None, arch='
     # or to binary packages available on the current arch
     url += '&a=source,all,' + arch
     try:
-        page = open_url(url)
+        page = open_url(url, http_proxy, timeout)
     except NoNetwork:
         return {}
     except urllib.error.HTTPError as x:
