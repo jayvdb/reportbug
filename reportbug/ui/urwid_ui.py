@@ -23,6 +23,7 @@
 # (LGPL) Version 2.1 or later.  On Debian systems, this license is available
 # in /usr/share/common-licenses/LGPL
 
+import locale
 import sys
 import re
 import getpass
@@ -338,7 +339,9 @@ display_failure = long_message
 
 def select_options(msg, ok, help=None, allow_numbers=False, nowrap=False,
                    ui=None, title=None):
-    box = dialog('', long_message=msg, height=('relative', 80),
+    loc = locale.nl_langinfo(locale.CODESET)
+    safe_msg = msg.encode(loc, errors='replace').decode(errors='replace')
+    box = dialog('', long_message=safe_msg, height=('relative', 80),
                  title=title or VERSION)
     if not help:
         help = {}
