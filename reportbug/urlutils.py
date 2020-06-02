@@ -124,7 +124,7 @@ def urlopen(url, proxies=None, timeout=60, data=None):
     headers = {'User-Agent': UA_STR,
                'Accept-Encoding': 'gzip;q=1.0, deflate;q=0.9, identity;q=0.5'}
 
-    return requests.get(url, headers).text
+    return requests.get(url, headers=headers, proxies=proxies, timeout=timeout).text
 
     # req = urllib.request.Request(url, data, headers)
     #
