@@ -6,6 +6,8 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ Nis Martensen ]
   * reportbug/utils.py
     - support merged-/usr during file search; Closes: #942261
+    - get_source_name: improve, use python apt
+    - use a single global apt cache
   * bin/reportbug
     - recognize source packages (and `src:linux`) when sending followup info;
       Closes: #946363
@@ -14,11 +16,25 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - dont create an empty tempfile if the `outfile` option is given
   * reportbug/bugreport.py
     - correctly detect LANGUAGE; Closes: #946963
+  * gtk_ui: fix crash in handle_bts_query on non-Debian systems;
+    Closes: #709862
+  * Testsuite:
+    - adapt to recent code changes
+    - test get_source_name with astroid
 
   [ Fabrice BAUZAC ]
   * Improve code documentation
 
- -- Sandro Tosi <morph@debian.org>  Thu, 26 Dec 2019 19:32:16 -0500
+  [ Jens Korte ]
+  * Update description of --bts option in reportbug.1 man page
+
+  [ Paul Gevers ]
+  * Add template to (o)pu release.debian.org bugs; Closes: #883346
+
+  [ Josh Triplett ]
+  * querybts: Use http_proxy when opening mbox URLs
+
+ -- Nis Martensen <nis.martensen@web.de>  Sat, 30 May 2020 15:33:00 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 

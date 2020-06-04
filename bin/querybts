@@ -171,7 +171,7 @@ def main():
                 for num in mboxbuglist:
                     url = debbugs.get_report_url(options.system, num, options.archived, mbox=True, mboxmaint=True)
                     try:
-                        report = urlutils.open_url(url, timeout=options.timeout)
+                        report = urlutils.open_url(url, options.http_proxy, timeout=options.timeout)
                         sys.stdout.write(report)
                     except NoNetwork as ex:
                         print("Error while accessing mbox report (%s)." % ex, file=sys.stderr)
@@ -179,7 +179,7 @@ def main():
                 num = int(m.group(1))
                 url = debbugs.get_report_url(options.system, num, options.archived, mbox=True, mboxmaint=True)
                 try:
-                    report = urlutils.open_url(url, timeout=options.timeout)
+                    report = urlutils.open_url(url, options.http_proxy, timeout=options.timeout)
                     sys.stdout.write(report)
                 except NoNetwork as ex:
                     print("Error while accessing mbox report (%s)." % ex, file=sys.stderr)

@@ -120,7 +120,7 @@ class TestPackages(unittest.TestCase):
         self.assertIsNotNone(depends)
         self.assertIsNotNone(maintainer)
         self.assertTrue(installed)
-        self.assertEqual(origin, 'debian')
+        self.assertIsNone(origin)
         self.assertEqual(priority, 'required')
         self.assertIsNotNone(desc)
         self.assertIsNotNone(fulldesc)
@@ -287,6 +287,13 @@ class TestSourcePackages(unittest.TestCase):
         src = utils.get_source_name('reportbug-bugfree')
         self.assertIsNone(src)
 
+        # The 'astroid' binary package belongs to the 'astroidmail'
+        # source package. get_source_name() must not return the
+        # 'astroid' source package here (which builds the
+        # python3-astroid binary package)
+        src = utils.get_source_name('astroid')
+        self.assertEqual(src, 'astroidmail')
+
     def test_get_source_package(self):
         src = 'reportbug'
         binpkgs = utils.get_source_package(src)
@@ -345,7 +352,7 @@ class TestSystemInformation(unittest.TestCase):
         os.path.islink = mock.MagicMock(return_value=False)
         init = utils.get_init_system()
         print(init)
-        self.assertTrue(init.startswith('sysvinit'))
+        self.assertTrue(init.startswith('runit'))
         os.path.isfile = __save1
         os.path.islink = __save2
         del __save1

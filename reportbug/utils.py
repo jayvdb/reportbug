@@ -103,6 +103,7 @@ CODENAME2SUITE = {'wheezy': 'oldoldoldstable',
                   'experimental': 'experimental'}
 SUITE2CODENAME = dict([(suite, codename) for codename, suite in list(CODENAME2SUITE.items())])
 
+_apt_cache = apt.Cache()
 
 def realpath(filename):
     filename = os.path.abspath(filename)
@@ -540,23 +541,16 @@ def get_avail_database():
 
 
 def get_source_name(package):
-    packages = []
-
-    data = get_command_output('apt-cache showsrc ' + pipes.quote(package))
-    packre = re.compile(r'^Package: (.*)$')
-    for line in data.split('\n'):
-        m = packre.match(line)
-        if m:
-            return m.group(1)
-    return None
+    try:
+        return _apt_cache[package].versions[0].source_name
+    except KeyError:
+        return None
 
 
 def get_source_package(package):
     packages = []
     retlist = []
     found = {}
-
-    apt_cache = apt.Cache()
 
     data = get_command_output('apt-cache showsrc ' + pipes.quote(package))
     binre = re.compile(r'^Binary: (.*)$')
@@ -569,7 +563,7 @@ def get_source_package(package):
 
     for p in packages:
         try:
-            desc = apt_cache[p].versions[0].summary
+            desc = _apt_cache[p].versions[0].summary
         except KeyError:
             continue
         if desc and (p not in found):
@@ -1422,7 +1416,7 @@ def is_security_update(pkgname, pkgversion):
     # them are distributed through the normal channels as part of a
     # stable release update.
     try:
-        p = apt.Cache()[pkgname]
+        p = _apt_cache[pkgname]
         if 'Debian-Security' in [o.label for o in
                         p.versions[pkgversion].origins]:
             return True
