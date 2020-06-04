@@ -67,17 +67,6 @@ tasks.
   tests that dont require network access, which can be slow sometimes
   (hence the name)
 
-* ``make coverage`` runs the test suite and collects test coverage
-  information, then reports the current statement coverage of the test
-  suite.
-
-  This requires the `python3-coverage` package to be installed. See its
-  documentation for more about its operation.
-
-* ``make coverhtml`` runs  the test suite and collects test coverage
-  information, then reports the current statement coverage using an HTML
-  output format.
-
 * ``make lint`` runs the `flake8` code checker on all code modules and
   programs.
 

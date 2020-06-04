@@ -240,13 +240,6 @@ tasks.
   This uses the ``inotifywait`` command from the `inotify-tools`
   package to wait for `create` and `modify` events.
 
-* ``make coverage`` runs the test suite and collects test coverage
-  information, then reports the current statement coverage of the test
-  suite.
-
-  This requires the `python-coverage` package to be installed. See its
-  documentation for more about its operation.
-
 * ``make lint`` runs the `flake8` code checker on all code modules and
   programs.
 
