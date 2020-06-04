@@ -25,7 +25,7 @@ The source tree for ``reportbug`` is organised this way:
 * `Unit testing framework`_
 
   * ``test/`` contains the unit test suite. Unit test modules are
-    discovered and run using the ``nosetests3`` program, and are named
+    discovered and run using the ``pytest-3`` program, and are named
     as ``test_*.py``.
 
 * Documentation
@@ -45,8 +45,8 @@ The directory ``test/`` contains unit test modules and supporting
 files. New unit test modules should be added to this directory and
 named ``test_*.py``.
 
-The unit test suite depends on the `python3-nose` package being
-installed, to make the ``nosetests3`` command available. The unit tests
+The unit test suite depends on the `python3-pytest` package being
+installed, to make the ``pytest-3`` command available. The unit tests
 themselves can be written using the `unittest` modules in the standard
 Python library.
 
@@ -67,21 +67,11 @@ tasks.
   tests that dont require network access, which can be slow sometimes
   (hence the name)
 
-* ``make pyflakes`` runs the `pyflakes` static code checker on all
-  Python files found in the project tree.
+* ``make lint`` runs the `flake8` code checker on all code modules and
+  programs.
 
-  This requires the `pyflakes` package to be installed. See its
+  This requires the `flake8` package to be installed. See its
   documentation for more about its operation.
-
-* ``make pylint`` runs the `pylint` code checker on all code modules
-  and programs.
-
-  This requires the `pylint` package to be installed. See its
-  documentation for more about its operation.
-
-* ``make pep8`` runs the `pep8` static code checker.
-
-  This requires the `pep8` package to be installed.
 
 ..
     Local Variables:
