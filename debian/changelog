@@ -2,6 +2,10 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
 
   [ Bastian Venthur ]
   * Replace nosetests with pytest
+  * replace pep8, pyflake, pylint with flake8
+  * updated docs
+  * removed references to non-existing coverage targets
+  * removed remaining traces of nose
 
   [ Nis Martensen ]
   * reportbug/utils.py
@@ -16,8 +20,14 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - dont create an empty tempfile if the `outfile` option is given
   * reportbug/bugreport.py
     - correctly detect LANGUAGE; Closes: #946963
-  * gtk_ui: fix crash in handle_bts_query on non-Debian systems;
-    Closes: #709862
+  * reportbug/ui/gtk_ui.py:
+    - fix crash in handle_bts_query on non-Debian systems; Closes: #709862
+    - Hide back button; Closes: #855380, #872772
+  * 961955: urlutils.py, checkversions.py: use proxy and timeout;
+    Closes: #961955
+  * reportbug/ui/text_ui.py: use subprocess.Popen instead of os.popen;
+    Closes: #961675
+  * reportbug/ui/urwid_ui.py: survive ancient encoding
   * Testsuite:
     - adapt to recent code changes
     - test get_source_name with astroid
@@ -34,7 +44,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ Josh Triplett ]
   * querybts: Use http_proxy when opening mbox URLs
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 30 May 2020 15:33:00 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Thu, 04 Jun 2020 21:22:41 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 
