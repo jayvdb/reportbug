@@ -877,6 +877,7 @@ TAGS = {
     'l10n': 'This bug reports a localization/internationalization issue.',
     'a11y': 'This bug is relevant to the accessibility of the package.',
     'newcomer': 'This bug has a known solution but the maintainer requests someone else implement it.',
+    'ftbfs': 'The package fails to build from source.',
 }
 
 
