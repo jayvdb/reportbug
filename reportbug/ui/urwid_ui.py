@@ -272,7 +272,7 @@ class listdialog(dialog):
 class checklistdialog(listdialog):
     def on_exit(self, exitcode):
         """
-        Mimick dialog(1)'s --checklist exit.
+        Mimic dialog(1)'s --checklist exit.
         Put each checked item in double quotes with a trailing space.
         """
         if exitcode:
@@ -653,8 +653,8 @@ def handle_bts_query(package, bts, timeout, mirrors=None, http_proxy="",
         long_message('No record of this package found.', title=title)
         raise NoPackage
 
-    # we didn't find a report; we access Bugreport thru debbugs,
-    # so to avoid and import of debianbts
+    # we didn't find a report; we access Bugreport through debbugs,
+    # so to avoid an import of debianbts
     if result and not isinstance(result, debbugs.debianbts.Bugreport):
         raise NoReport
 

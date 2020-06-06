@@ -587,7 +587,7 @@ class ReportbugApplication(threading.Thread):
 
 
 # Connection with reportbug
-# Syncronize "pipe" with reportbug
+# Synchronize "pipe" with reportbug
 class SyncReturn(RuntimeError):
     def __init__(self, result):
         _assert_context(reportbug_context)
@@ -712,7 +712,7 @@ class IntroPage(Page):
 
 This wizard will guide you through the bug reporting process step by step.
 
-<b>Note:</b> bug reports are publicly archived(including the email address of the submitter).""")
+<b>Note:</b> bug reports are publicly archived (including the email address of the submitter).""")
         label.set_use_markup(True)
         label.set_line_wrap(True)
         label.set_justify(Gtk.Justification.FILL)

@@ -100,7 +100,7 @@ def indent_wrap_text(text, starttext='', indent=0, linelen=None):
 if readline is not None:
     readline.parse_and_bind("tab: complete")
     try:
-        # minimize the word delimeter list if possible
+        # minimize the word delimiter list if possible
         readline.set_completer_delims(' ')
     except:
         pass

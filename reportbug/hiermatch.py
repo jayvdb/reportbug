@@ -9,7 +9,7 @@ from . import exceptions
 
 def egrep_list(strlist, pattern_str, subindex=None):
     """Use the pattern_str to find any match in a list of strings."""
-    """Return: a list of index for the matchs into the origin list."""
+    """Return: a list of index for the matches into the origin list."""
 
     if strlist is None:
         return None

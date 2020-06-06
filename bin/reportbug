@@ -766,7 +766,7 @@ def verify_option(option, opt, value, parser, *args):
 def verify_append_option(option, opt, value, parser, *args):
     heading, valid = args
     # special case --tag: in valid we pass a function reference
-    # as get_tags is dependant on the user mode, so we also have to convert
+    # as get_tags is dependent on the user mode, so we also have to convert
     # the mode to the integer value expected... FIXME
     if opt == '--tag' or opt == '-T':
         valid = sorted(valid(mode=utils.MODELIST.index(parser.values.mode)).keys()) + ['none']
