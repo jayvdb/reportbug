@@ -1400,6 +1400,7 @@ class UI(object):
                         raise NoReport
                     else:
                         package = exinfo.package or exinfo.source
+                        subject = exinfo.subject
                         if package == 'src:linux':
                             package = utils.get_running_kernel_pkg()
                         elif package.startswith('src:'):
