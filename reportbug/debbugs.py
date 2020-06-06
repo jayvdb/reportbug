@@ -1123,8 +1123,10 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
         if isinstance(package, str):
             if source:
                 bugs = debianbts.get_bugs(src=package)
+                bugs += debianbts.get_bugs(affects='src:'+package)
             else:
                 bugs = debianbts.get_bugs(package=package)
+                bugs += debianbts.get_bugs(affects=package)
         else:
             bugs = list(map(int, package))
 
