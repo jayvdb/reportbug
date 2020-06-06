@@ -168,11 +168,11 @@ class bugreport(object):
                 kinfo = []
 
                 if 'SMP' in un[3]:
-                    cores = os.cpu_count()
-                    if cores > 1:
-                        kinfo += ['SMP w/%d CPU cores' % cores]
+                    threads = os.cpu_count()
+                    if threads > 1:
+                        kinfo += ['SMP w/%d CPU threads' % threads]
                     elif cores == 1:
-                        kinfo += ['SMP w/1 CPU core']
+                        kinfo += ['SMP w/1 CPU thread']
                 if 'PREEMPT' in un[3]:
                     kinfo += ['PREEMPT']
 
