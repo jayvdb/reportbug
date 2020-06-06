@@ -1190,7 +1190,7 @@ class HandleBTSQueryPage(TreePage):
 
     def execute(self, buglist, sectitle):
         _assert_context(ui_context)
-        GLib.idle_add(self.label.set_text, "%s. Double-click a bug to retrieve and submit more information." % sectitle)
+        GLib.idle_add(self.label.set_text, "%s. Double-click a bug to retrieve and submit more information, or press 'Next' if none match." % sectitle)
 
         self.model = Gtk.TreeStore(*([str] * len(self.columns)))
         for category in buglist:
