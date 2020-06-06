@@ -17,13 +17,15 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
       Closes: #946363
     - try to determine an unambiguous package name to pass to debsums;
       Closes: #940532
-    - dont create an empty tempfile if the `outfile` option is given
+    - do not create an empty tempfile if the `outfile` option is given
+    - fix re-execution after configuration;
+      Closes: #620712, #730236, #780747, #926726
   * reportbug/bugreport.py
     - correctly detect LANGUAGE; Closes: #946963
   * reportbug/ui/gtk_ui.py:
     - fix crash in handle_bts_query on non-Debian systems; Closes: #709862
     - Hide back button; Closes: #855380, #872772
-  * 961955: urlutils.py, checkversions.py: use proxy and timeout;
+  * urlutils.py, checkversions.py: use proxy and timeout;
     Closes: #961955
   * reportbug/ui/text_ui.py: use subprocess.Popen instead of os.popen;
     Closes: #961675
@@ -31,6 +33,10 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   * Testsuite:
     - adapt to recent code changes
     - test get_source_name with astroid
+  * fix some minor typos in various files
+  * manpage: document that reportbug will exit after --configure
+  * reportbug.debbugs.py: get_reports: also include bugs that affect the package;
+    Closes: #544812
 
   [ Fabrice BAUZAC ]
   * Improve code documentation
@@ -44,7 +50,21 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ Josh Triplett ]
   * querybts: Use http_proxy when opening mbox URLs
 
- -- Nis Martensen <nis.martensen@web.de>  Thu, 04 Jun 2020 21:22:41 +0200
+  [ Ansgar ]
+  * bugreport.py: "CPU cores" → "CPU threads"
+
+  [ Bas Couwenberg ]
+  * reportbug/debbugs.py: add the 'ftbfs' tag to make `-T ftbfs` work;
+    Closes: #955809
+
+  [ chrysn ]
+  * reportbug/ui/gtk_ui.py: add hint to press Next of no bug matches;
+    Closes: #871048
+
+  [ mozbugbox ]
+  * bin/reportbug: allow followups on ITP bugs; Closes: #657066
+
+ -- Nis Martensen <nis.martensen@web.de>  Sat, 06 Jun 2020 22:50:13 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 
