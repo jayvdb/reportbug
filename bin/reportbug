@@ -1724,7 +1724,7 @@ class UI(object):
 
         if not (dontquery or notatty or self.options.kudos):
             pkg, src = package, issource
-            if self.options.query_src and not issource:
+            if self.options.query_src and not issource and not isvirtual:
                 pkg = [pkg]
                 if src_name:
                     pkg += ['src:'+src_name]
