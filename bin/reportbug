@@ -1767,8 +1767,7 @@ class UI(object):
                 return
             except QuertBTSError as q:
                 if not ui.yes_no(
-                        'Error retrieving information on existing bug reports. '
-                        'Are you connected to the internet?\n'
+                        'Error retrieving information on existing bug reports from the BTS. '
                         'The following error was detected:\n'
                         + str(q) +
                         '\nDo you still want to file a report?',
