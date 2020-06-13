@@ -1144,11 +1144,8 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
                         bugs += debianbts.get_bugs(affects=pkg)
 
         bugs = list(set(bugs))
-        try:
-            # retrieve bugs and generate the hierarchy
-            stats = debianbts.get_status(bugs)
-        except:
-            raise QuertBTSError
+        # retrieve bugs and generate the hierarchy
+        stats = debianbts.get_status(bugs)
 
         d = defaultdict(list)
         for s in stats:
