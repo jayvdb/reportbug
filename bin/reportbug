@@ -1491,7 +1491,7 @@ class UI(object):
                         ewrite("Getting status for %s...\n", package)
                         status = utils.get_package_status(package)
                         pkgavail, installed = status[1], status[6]
-                    elif len(packages) > 1:
+                    elif 'Source package' in [x[1] for x in packages]:
                         issource = True
                 else:
                     ewrite('No matching source or binary packages.\n')
@@ -1728,10 +1728,14 @@ class UI(object):
 
         if not (dontquery or notatty or self.options.kudos):
             pkg, src = package, issource
-            if self.options.query_src:
-                src = True
+            if self.options.query_src and not issource and not isvirtual:
+                pkg = [pkg]
                 if src_name:
-                    pkg = src_name
+                    pkg += ['src:'+src_name]
+                elif not package.startswith('src:'):
+                    pkg += ['src:'+package]
+                if submitas and submitas not in pkg:
+                    pkg += [submitas]
             try:
                 exinfo = ui.handle_bts_query(pkg, bts, self.options.timeout,
                                              self.options.mirrors,

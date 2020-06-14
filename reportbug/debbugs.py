@@ -1128,8 +1128,22 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
                 bugs = debianbts.get_bugs(package=package)
                 bugs += debianbts.get_bugs(affects=package)
         else:
-            bugs = list(map(int, package))
+            bugs = []
+            for pkg in package:
+                try:
+                    bugs += [ int(pkg) ]
+                except ValueError:
+                    if pkg.startswith('src:'):
+                        bugs += debianbts.get_bugs(src=pkg[4:])
+                        bugs += debianbts.get_bugs(affects=pkg)
+                    elif source:
+                        bugs += debianbts.get_bugs(src=pkg)
+                        bugs += debianbts.get_bugs(affects='src:'+pkg)
+                    else:
+                        bugs += debianbts.get_bugs(package=pkg)
+                        bugs += debianbts.get_bugs(affects=pkg)
 
+        bugs = list(set(bugs))
         try:
             # retrieve bugs and generate the hierarchy
             stats = debianbts.get_status(bugs)
