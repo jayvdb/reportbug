@@ -642,10 +642,10 @@ def offer_configuration(options):
     else:
         smtpuser = ''
 
-    if smtphost:
+    if smtphost and not smtphost.endswith(':465'):
         smtptls = ui.yes_no(
             'Do you want to encrypt the SMTP connection with TLS (only '
-            'available if the SMTP host supports it)?', 'Yes', 'No',
+            'available if the SMTP host supports STARTTLS)?', 'Yes', 'No',
             default=False)
 
     http_proxy = ui.get_string(
@@ -719,10 +719,10 @@ def offer_configuration(options):
             print('#smtpuser "my username here"', file=fp)
             print('#smtppasswd "my password here"', file=fp)
         if smtptls:
-            print('# Enable TLS for the SMTP host', file=fp)
+            print('# Require STARTTLS for the SMTP host connection', file=fp)
             print('smtptls', file=fp)
         else:
-            print('# Enable this option if you need TLS for the SMTP host', file=fp)
+            print('# Enable this to use STARTTLS for the SMTP host connection', file=fp)
             print('#smtptls', file=fp)
 
     if http_proxy:

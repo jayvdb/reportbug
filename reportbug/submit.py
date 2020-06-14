@@ -357,6 +357,10 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                 # submit
                 if smtphost.lower() == 'reportbug.debian.org':
                     conn = smtplib.SMTP(smtphost, 587)
+                elif smtphost.endswith(':465'):
+                    # ignore smtptls setting since port 465 implies SSL
+                    smtptls = None
+                    conn = smtplib.SMTP_SSL(smtphost)
                 else:
                     conn = smtplib.SMTP(smtphost)
                 response = conn.ehlo()
