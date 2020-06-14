@@ -258,7 +258,9 @@ The username to use for SMTP. Example:
 
 .TP
 .B smtptls
-Enables TLS encryption for the SMTP connection.
+Enables TLS encryption for the SMTP connection, using STARTTLS. This
+setting is ignored if you connect to port 465, in which case SSL/TLS
+will always be used.
 .TP
 .B submit
 Use \fIsubmit\fP as the bug submission address.

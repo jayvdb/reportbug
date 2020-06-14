@@ -437,7 +437,8 @@ default.
 .B \-\-tls
 If using SMTP, use Transport Layer Security (TLS) encryption to secure
 the connection to the mail server.  Some SMTP servers may require this
-option.
+option. Note that this option is ignored if you connect to your SMTP
+server via port 465, which already implies using SSL/TLS.
 .TP
 .B \-\-smtpuser=USERNAME
 If using SMTP, use the specified \fIUSERNAME\fP for authentication.
