@@ -20,23 +20,39 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - do not create an empty tempfile if the `outfile` option is given
     - fix re-execution after configuration;
       Closes: #620712, #730236, #780747, #926726
+    - Query both binary and source package by default; Closes: #936061
+    - minor update for STARTTLS clarification
+    - Improved QuertBTSError handling
   * reportbug/bugreport.py
     - correctly detect LANGUAGE; Closes: #946963
+  * reportbug/debbugs.py:
+    - get_reports: also include bugs that affect the package;
+      Closes: #544812
+    - get_reports: add support for lists of packages
+    - get_reports: drop one try..except
+  * reportbug/submit.py: use implicit SSL with port 465
+  * urlutils.py, checkversions.py: use proxy and timeout;
+      Closes: #961955
   * reportbug/ui/gtk_ui.py:
     - fix crash in handle_bts_query on non-Debian systems; Closes: #709862
     - Hide back button; Closes: #855380, #872772
-  * urlutils.py, checkversions.py: use proxy and timeout;
-    Closes: #961955
-  * reportbug/ui/text_ui.py: use subprocess.Popen instead of os.popen;
-    Closes: #961675
-  * reportbug/ui/urwid_ui.py: survive ancient encoding
+    - handle_bts_query: Use QuertBTSError instead of NoBugs;
+      Closes: #919102, #918989
+    - drop broken/unused error_dialog function
+    - fix argument order in _assert_context
+  * reportbug/ui/text_ui.py:
+    - use subprocess.Popen instead of os.popen; Closes: #961675
+    - handle_bts_query: Use QuertBTSError
+  * reportbug/ui/urwid_ui.py:
+    - survive ancient encoding
+    - handle_bts_query: Use QuertBTSError
   * Testsuite:
     - adapt to recent code changes
     - test get_source_name with astroid
   * fix some minor typos in various files
-  * manpage: document that reportbug will exit after --configure
-  * reportbug.debbugs.py: get_reports: also include bugs that affect the package;
-    Closes: #544812
+  * manpages:
+    - document that reportbug will exit after --configure
+    - Update for SSL/TLS encrypted submission support
 
   [ Fabrice BAUZAC ]
   * Improve code documentation
@@ -64,7 +80,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ mozbugbox ]
   * bin/reportbug: allow followups on ITP bugs; Closes: #657066
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 06 Jun 2020 22:50:13 +0200
+ -- Sandro Tosi <morph@debian.org>  Sun, 14 Jun 2020 14:55:05 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 
