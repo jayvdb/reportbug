@@ -1765,8 +1765,14 @@ class UI(object):
                 else:
                     ewrite('Nothing new to report; exiting.\n')
                 return
-            except QuertBTSError:
-                ewrite('Error accessing the BTS, no bugs information available.\n')
+            except QuertBTSError as q:
+                if not ui.yes_no(
+                        'Error retrieving information on existing bug reports from the BTS. '
+                        'The following error was detected:\n'
+                        + str(q) +
+                        '\nDo you still want to file a report?',
+                        'Keep going', 'Abort', False, nowrap=True):
+                    return
 
             if self.options.queryonly and not exinfo:
                 return

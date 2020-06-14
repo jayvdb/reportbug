@@ -62,7 +62,7 @@ from queue import Queue
 import threading
 import textwrap
 
-from reportbug.exceptions import NoPackage, NoBugs
+from reportbug.exceptions import NoPackage, NoBugs, QuertBTSError
 from reportbug import debbugs
 from reportbug.urlutils import launch_browser
 
@@ -89,7 +89,7 @@ def _assert_context(expected):
     # This compares by pointer value of the underlying GMainContext
     if really != expected:
         raise AssertionError('Function should be called in %s but was called in %s' %
-                             (_describe_context(really), _describe_context(expected)))
+                             (_describe_context(expected), _describe_context(really)))
 
     if not really.is_owner():
         raise AssertionError('Function should be called with %s acquired')
@@ -128,15 +128,6 @@ def info_dialog(message):
     _assert_context(ui_context)
     dialog = Gtk.MessageDialog(assistant, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
                                Gtk.MessageType.INFO, Gtk.ButtonsType.CLOSE, message)
-    dialog.connect('response', lambda d, *args: d.destroy())
-    dialog.set_title('Reportbug')
-    dialog.show_all()
-
-
-def error_dialog(message):
-    _assert_context(ui_context)
-    dialog = Gtk.MessageDialog(assistant, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                               Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, message)
     dialog.connect('response', lambda d, *args: d.destroy())
     dialog.set_title('Reportbug')
     dialog.show_all()
@@ -1049,9 +1040,9 @@ class HandleBTSQueryPage(TreePage):
             (count, sectitle, hierarchy) = debbugs.get_reports(
                 package, timeout, bts, mirrors=mirrors, version=version,
                 http_proxy=http_proxy, archived=archived, source=source)
-        except:
-            error_dialog("Unable to connect to %s BTS." % sysinfo['name'])
-            raise NoBugs
+        except Exception as e:
+            errmsg = 'Unable to connect to %s BTS (error: "%s"); ' % (debbugs.SYSTEMS[bts]['name'], repr(e))
+            raise QuertBTSError(errmsg)
 
         try:
             if not count:
@@ -1078,7 +1069,6 @@ class HandleBTSQueryPage(TreePage):
                 return(report, sectitle), {}
 
         except NoPackage:
-            error_dialog('No record of this package found.')
             raise NoPackage
 
         raise SyncReturn(None)

@@ -38,7 +38,7 @@ except ImportError:
 
 from reportbug import debbugs, hiermatch
 from reportbug.exceptions import (
-    NoReport, NoPackage, NoBugs, NoNetwork,
+    NoReport, NoPackage, NoBugs, NoNetwork, QuertBTSError,
     InvalidRegex,
 )
 from reportbug.urlutils import launch_browser
@@ -528,14 +528,8 @@ def handle_bts_query(package, bts, timeout, mirrors=None, http_proxy="",
             package, timeout, bts, mirrors=mirrors, version=version,
             source=source, http_proxy=http_proxy, archived=archived)
     except Exception as e:
-        ewrite('Unable to connect to %s BTS (error: "%s"); ' % (debbugs.SYSTEMS[bts]['name'], repr(e)))
-        res = select_options('continue', 'yN',
-                             {'y': 'Keep going.',
-                              'n': 'Abort.'})
-        if res == 'n':
-            raise NoNetwork
-        else:
-            raise NoBugs
+        errmsg = 'Unable to connect to %s BTS (error: "%s"); ' % (debbugs.SYSTEMS[bts]['name'], repr(e))
+        raise QuertBTSError(errmsg)
 
     try:
         # If there's no report, then skip all the rest
