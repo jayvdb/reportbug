@@ -1,7 +1,5 @@
-Format-Specification: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Author: Sandro Tosi <morph@debian.org>
-Packaged-By: Sandro Tosi <morph@debian.org>
-Packaged-Date: Fri, 14 May 1999 01:07:35 -0500
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Contact: Sandro Tosi <morph@debian.org>
 
 Files: *
 Copyright:
