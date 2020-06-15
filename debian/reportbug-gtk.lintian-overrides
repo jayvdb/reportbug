@@ -1,0 +1,2 @@
+# all reportbug UIs share the same main script
+reportbug-gtk binary: desktop-command-not-in-package usr/share/applications/reportbug.desktop reportbug
