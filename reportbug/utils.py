@@ -40,6 +40,7 @@ import socket
 import subprocess
 import apt
 import gzip
+import shutil
 
 from .urlutils import open_url
 
@@ -908,14 +909,6 @@ MUA = {
 }
 MUA['nmh'] = MUA['mh']
 
-# TODO: convert them to class methods
-MUAVERSION = {
-    MUA['mutt']: 'mutt -v',
-    MUA['mh']: '/usr/bin/mh/comp -use -file',
-    MUA['gnus']: 'emacs --version',
-    MUA['claws-mail']: 'claws-mail --version',
-}
-
 
 def mua_is_supported(mua):
     # check if the mua is supported by reportbug
@@ -926,34 +919,14 @@ def mua_is_supported(mua):
 
 def mua_exists(mua):
     # check if the mua is available on the system
-    if mua == 'mh' or mua == MUA['mh']:
-        mua_tmp = MUA['mh']
-    elif mua == 'nmh' or mua == MUA['nmh']:
-        mua_tmp = MUA['mh']
-    elif mua == 'gnus' or mua == MUA['gnus']:
-        mua_tmp = MUA['gnus']
-    elif mua == 'mutt' or mua == MUA['mutt']:
-        mua_tmp = MUA['mutt']
-    elif mua == 'claws-mail' or mua == MUA['claws-mail']:
-        mua_tmp = MUA['claws-mail']
-    else:
-        mua_tmp = MUA[mua]
-    output = '/dev/null'
-    if os.path.exists(output):
+    if isinstance(mua, str):
         try:
-            returnvalue = subprocess.call(MUAVERSION[mua_tmp],
-                                          stdout=open(output, 'w', errors='backslashreplace'),
-                                          stderr=subprocess.STDOUT,
-                                          shell=True)
-        except (IOError, OSError):
-            returnvalue = subprocess.call(MUAVERSION[mua_tmp], shell=True)
-    else:
-        returnvalue = subprocess.call(MUAVERSION[mua_tmp], shell=True)
-    # 127 is the shell standard return value to indicate a 'command not found' result
-    if returnvalue == 127:
-        return False
-    else:
+            mua = MUA[mua]
+        except KeyError:
+            return False
+    if shutil.which(mua.name):
         return True
+    return False
 
 
 def first_run():
