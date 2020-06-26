@@ -920,22 +920,9 @@ MUAVERSION = {
 
 def mua_is_supported(mua):
     # check if the mua is supported by reportbug
-    if mua == 'mh' or mua == MUA['mh']:
-        mua_tmp = 'mh'
-    elif mua == 'nmh' or mua == MUA['nmh']:
-        mua_tmp = 'mh'
-    elif mua == 'gnus' or mua == MUA['gnus']:
-        mua_tmp = 'gnus'
-    elif mua == 'mutt' or mua == MUA['mutt']:
-        mua_tmp = 'mutt'
-    elif mua == 'claws-mail' or mua == MUA['claws-mail']:
-        mua_tmp = 'claws-mail'
-    else:
-        mua_tmp = mua
-    if mua_tmp not in MUA:
-        return False
-    else:
+    if isinstance(mua, Mua) or mua in MUA.keys():
         return True
+    return False
 
 
 def mua_exists(mua):
