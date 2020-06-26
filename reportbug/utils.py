@@ -868,15 +868,12 @@ CONFIG_ARGS = (
 
 
 class Mua:
-    command = ""
-    name = ""
-
     def __init__(self, command):
-        self.command = command
-        self.name = command.split()[0]
+        self._command = command
+        self.executable = command.split()[0]
 
     def send(self, filename):
-        mua = self.command
+        mua = self._command
         if '%s' not in mua:
             mua += ' %s'
         return ui.system(mua % shlex.quote(filename))
@@ -886,10 +883,8 @@ class Mua:
 
 
 class Gnus(Mua):
-    name = "gnus"
-
     def __init__(self):
-        pass
+        self.executable = 'emacsclient'
 
     def send(self, filename):
         elisp = """(progn
@@ -924,7 +919,7 @@ def mua_exists(mua):
             mua = MUA[mua]
         except KeyError:
             return False
-    if shutil.which(mua.name):
+    if shutil.which(mua.executable):
         return True
     return False
 

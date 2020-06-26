@@ -434,7 +434,7 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                             'saved to %s\n', msgname)
 
     if mua:
-        ewrite("Spawning %s...\n", mua.name)
+        ewrite("Spawning %s...\n", mua.executable)
         returnvalue = 0
         succeeded = False
         while not succeeded:
