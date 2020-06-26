@@ -36,11 +36,13 @@ except ImportError as e:
         sys.exit(1)
 import shlex
 import email
+import email.policy
 import socket
 import subprocess
 import apt
 import gzip
 import shutil
+import urllib
 
 from .urlutils import open_url
 
@@ -893,11 +895,52 @@ class Gnus(Mua):
                          " || emacs --eval %s" % (elisp, elisp))
 
 
+class Xdg(Mua):
+    def __init__(self):
+        self.executable = 'xdg-email'
+
+    def _get_headerparam(self, hdr, msg):
+        parmstr = ""
+
+        hd = msg[hdr]
+        if hd:
+            content = urllib.parse.quote(''.join(hd.splitlines()),
+                                         safe='', errors='replace')
+            parmstr = "{}={}&".format(hdr, content)
+
+        return parmstr
+
+    def _msg_to_mailto(self, msg):
+        mailto = "mailto:"
+        mailto += urllib.parse.quote(''.join(msg["to"].splitlines()),
+                                     safe='', errors='replace')
+        mailto += "?"
+
+        for hdr in ["subject", "cc", "bcc"]:
+            mailto += self._get_headerparam(hdr, msg)
+
+        body = msg.get_payload()
+        if body:
+            mailto += "body="
+            mailto += urllib.parse.quote(body,
+                                         safe='', errors='replace')
+
+        return mailto.rstrip('?&')
+
+    def send(self, filename):
+        with open(filename, 'r') as fp:
+            message = email.message_from_file(fp, policy=email.policy.compat32)
+
+        command = '{} "{}"'.format(self.executable, self._msg_to_mailto(message))
+        return ui.system(command)
+
+
 MUA = {
     'mutt': Mua('mutt -H'),
     'mh': Mua('/usr/bin/mh/comp -use -file'),
     'gnus': Gnus(),
     'claws-mail': Mua('claws-mail --compose-from-file'),
+    'xdg-email': Xdg(),
 }
 MUA['nmh'] = MUA['mh']
 
