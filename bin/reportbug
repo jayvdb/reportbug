@@ -1072,7 +1072,8 @@ def main():
             ewrite("Selected mail user agent cannot be found; exiting.\n")
             sys.exit(1)
 
-        options.mua = utils.mua_name(options.mua)
+        # we want options.mua to be a utils.Mua instance
+        options.mua = utils.MUA.get(options.mua, options.mua)
 
     # try to import the specified UI, but only if template
     # is not set (it's useful only in 'text' UI).

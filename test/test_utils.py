@@ -373,13 +373,6 @@ class TestMua(unittest.TestCase):
             if not utils.mua_exists(mua):
                 self.fail("%s MUA program not available" % mua)
 
-    def test_mua_name(self):
-
-        for mua in ('mh', 'nmh', 'gnus', 'mutt', 'claws-mail'):
-            self.assertIsInstance(utils.mua_name(mua), utils.Mua)
-
-        self.assertEqual(utils.mua_name('mua-of-my-dreams'), 'mua-of-my-dreams')
-
 
 class TestBugreportBody(unittest.TestCase):
     def test_get_dependency_info(self):

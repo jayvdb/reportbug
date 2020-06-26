@@ -970,14 +970,6 @@ def mua_exists(mua):
         return True
 
 
-def mua_name(mua):
-    # in case the user specifies only the mua name in --mua, returns the default options
-    if mua in MUA:
-        return MUA[mua]
-    else:
-        return mua
-
-
 def first_run():
     return not os.path.exists(USERFILE)
 
