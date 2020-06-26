@@ -38,7 +38,6 @@ import shlex
 import email
 import socket
 import subprocess
-import pipes
 import apt
 import gzip
 
@@ -174,7 +173,7 @@ def glob_escape(filename):
 
 
 def search_pipe(searchfile, use_dlocate=True):
-    arg = pipes.quote(searchfile)
+    arg = shlex.quote(searchfile)
     if use_dlocate and os.path.exists('/usr/bin/dlocate'):
         pipe = os.popen('COLUMNS=79 dlocate -S %s 2>/dev/null' % arg)
     else:
@@ -369,7 +368,7 @@ def get_package_status(package, avail=False):
     except OSError:
         os.chdir('/')
 
-    packarg = pipes.quote(package)
+    packarg = shlex.quote(package)
     if avail:
         output = get_command_output(
             "LC_ALL=C.UTF-8 apt-cache show %s 2>/dev/null" % packarg)
@@ -552,7 +551,7 @@ def get_source_package(package):
     retlist = []
     found = {}
 
-    data = get_command_output('apt-cache showsrc ' + pipes.quote(package))
+    data = get_command_output('apt-cache showsrc ' + shlex.quote(package))
     binre = re.compile(r'^Binary: (.*)$')
     for line in data.split('\n'):
         m = binre.match(line)
@@ -725,7 +724,7 @@ def get_changed_config_files(conffiles, nocompress=False):
             confinfo[filename] = msg
             continue
 
-        filemd5 = get_command_output('md5sum ' + pipes.quote(filename)).split()[0]
+        filemd5 = get_command_output('md5sum ' + shlex.quote(filename)).split()[0]
         if filemd5 == md5sum:
             continue
 
@@ -879,7 +878,7 @@ class Mua:
         mua = self.command
         if '%s' not in mua:
             mua += ' %s'
-        return ui.system(mua % pipes.quote(filename))
+        return ui.system(mua % shlex.quote(filename))
 
     def get_name(self):
         return self.name
@@ -896,7 +895,7 @@ class Gnus(Mua):
                       (load-file "/usr/share/reportbug/reportbug.el")
                       (tfheen-reportbug-insert-template "%s"))"""
         filename = re.sub("[\"\\\\]", "\\\\\\g<0>", filename)
-        elisp = pipes.quote(elisp % filename)
+        elisp = shlex.quote(elisp % filename)
         return ui.system("emacsclient --no-wait --eval %s 2>/dev/null"
                          " || emacs --eval %s" % (elisp, elisp))
 
@@ -1221,8 +1220,8 @@ def exec_and_parse_bugscript(handler, bugscript, runner=os.system):
 
     fh, filename = TempFile()
     fh.close()
-    rc = runner('LC_ALL=C %s %s %s' % (handler, pipes.quote(bugscript),
-                                          pipes.quote(filename)))
+    rc = runner('LC_ALL=C %s %s %s' % (handler, shlex.quote(bugscript),
+                                          shlex.quote(filename)))
 
     isheaders = False
     ispseudoheaders = False
