@@ -304,34 +304,32 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
             if ed:
                 editor = ed
         elif x == 'm':
-            mailers = [(x, '') for x in list(utils.MUA.keys())]
-            mailers.sort()
+            mailers = [(x, '') for x in sorted(utils.MUA.keys()) if utils.mua_exists(x)]
+            if not mailers:
+                ui.display_failure('No mailers supported by reportbug found on this system.')
+                continue
             mailer = ui.menu('Choose a mailer for your report', mailers,
                              'Select mailer: ', default='', empty_ok=True)
             if mailer and mailer != -1:
-                if not utils.mua_exists(utils.MUA[mailer]):
-                    ewrite("Selected mail user agent cannot be found.\n")
+                # get the MUA
+                mailer = utils.MUA.get(mailer)
+                # if there are no attachments, directly go to the mailer
+                if not attachments:
+                    options.mua = mailer
+                    break
+
+                # otherwise notify that they will be lost
+                if ui.yes_no(
+                        'Editing the report will lose all attachments: are you sure you want to continue?',
+                        'Yes, please',
+                        'No, thanks',
+                        True):
+                    # if ok, go into the MUA
+                    options.mua = mailer
+                    break
+                # else go back to the menu
                 else:
-                    # get the MUA
-                    mailer = utils.MUA.get(mailer)
-                    # in case there are attachments
-                    if attachments:
-                        # notify that they will be lost
-                        if ui.yes_no(
-                                'Editing the report will lose all attachments: are you sure you want to continue?',
-                                'Yes, please',
-                                'No, thanks',
-                                True):
-                            # if ok, go into the MUA
-                            options.mua = mailer
-                            break
-                        # else, go back to the menu
-                        else:
-                            pass
-                    # no attach, we can go directly into the MUA
-                    else:
-                        options.mua = mailer
-                        break
+                    pass
             skip_editing = True
         elif x in ('n', 'q'):
             justsave = True
