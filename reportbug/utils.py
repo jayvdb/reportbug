@@ -878,9 +878,6 @@ class Mua:
             mua += ' %s'
         return ui.system(mua % shlex.quote(filename))
 
-    def get_name(self):
-        return self.name
-
 
 class Gnus(Mua):
     def __init__(self):
