@@ -304,9 +304,10 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
             if ed:
                 editor = ed
         elif x == 'm':
+            skip_editing = True
             mailers = [(x, '') for x in sorted(utils.MUA.keys()) if utils.mua_exists(x)]
             if not mailers:
-                ui.display_failure('No mailers supported by reportbug found on this system.')
+                ui.display_failure('No mailers supported by reportbug found on this system.\n')
                 continue
             mailer = ui.menu('Choose a mailer for your report', mailers,
                              'Select mailer: ', default='', empty_ok=True)
@@ -330,7 +331,6 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                 # else go back to the menu
                 else:
                     pass
-            skip_editing = True
         elif x in ('n', 'q'):
             justsave = True
             break
