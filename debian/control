@@ -3,16 +3,17 @@ Section: utils
 Priority: standard
 Maintainer: Reportbug Maintainers <debian-reportbug@lists.debian.org>
 Uploaders: Sandro Tosi <morph@debian.org>
-Standards-Version: 4.4.0
-Build-Depends: debhelper (>= 10), python3, dh-python
+Standards-Version: 4.5.0
+Build-Depends: debhelper-compat (= 12), python3, dh-python
 Build-Depends-Indep: python3-pytest, python3-pytest-cov, python3-setuptools
 Vcs-Git: https://salsa.debian.org/reportbug-team/reportbug.git
 Vcs-Browser: https://salsa.debian.org/reportbug-team/reportbug
+Rules-Requires-Root: no
 
 Package: reportbug
 Architecture: all
 Depends: ${misc:Depends}, ${python3:Depends}, apt, python3-reportbug (= ${source:Version}), sensible-utils
-Suggests: postfix | exim4 | mail-transport-agent, gnupg | pgp, debconf-utils (>> 1.1.0), debsums (>= 2.0.47), file (>> 1.30), dlocate, python3-urwid, reportbug-gtk (= ${source:Version}), xdg-utils, emacs-bin-common, claws-mail (>= 3.8.0)
+Suggests: default-mta | postfix | exim4 | mail-transport-agent, gnupg | pgp, debconf-utils (>> 1.1.0), debsums (>= 2.0.47), file (>> 1.30), dlocate, python3-urwid, reportbug-gtk (= ${source:Version}), xdg-utils, emacs-bin-common, claws-mail (>= 3.8.0)
 Description: reports bugs in the Debian distribution
  reportbug is a tool designed to make the reporting of bugs in Debian
  and derived distributions relatively painless.  Its features include:
