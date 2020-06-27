@@ -12,6 +12,12 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - support merged-/usr during file search; Closes: #942261
     - get_source_name: improve, use python apt
     - use a single global apt cache
+    - simplify mua_is_supported
+    - switch from pipes to shlex.quotes
+    - simplify mua_exists, drop MUAVERSION
+    - drop Mua.get_name()
+    - add mua support via xdg-email
+      (Closes: #532150, #788045, #865792)
   * bin/reportbug
     - recognize source packages (and `src:linux`) when sending followup info;
       Closes: #946363
@@ -23,14 +29,18 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - Query both binary and source package by default; Closes: #936061
     - minor update for STARTTLS clarification
     - Improved QuertBTSError handling
+    - improve and simplify mailer selection in handle_editing
   * reportbug/bugreport.py
     - correctly detect LANGUAGE; Closes: #946963
+    - bugreport.py: fix missing cores → threads
   * reportbug/debbugs.py:
     - get_reports: also include bugs that affect the package;
       Closes: #544812
     - get_reports: add support for lists of packages
     - get_reports: drop one try..except
   * reportbug/submit.py: use implicit SSL with port 465
+  * bin/reportbug, reportbug.utils, test_utils: drop mua_name function
+  * reportbug/utils.py,submit.py: rename Mua.name → Mua.executable
   * urlutils.py, checkversions.py: use proxy and timeout;
       Closes: #961955
   * reportbug/ui/gtk_ui.py:
@@ -49,6 +59,8 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   * Testsuite:
     - adapt to recent code changes
     - test get_source_name with astroid
+    - test/test_debbugs.py: add ftbfs tag
+    - test/test_utils.py: add test for new xdg-email Mua
   * fix some minor typos in various files
   * manpages:
     - document that reportbug will exit after --configure
@@ -80,7 +92,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ mozbugbox ]
   * bin/reportbug: allow followups on ITP bugs; Closes: #657066
 
- -- Sandro Tosi <morph@debian.org>  Sun, 14 Jun 2020 14:55:05 +0200
+ -- Sandro Tosi <morph@debian.org>  Sat, 27 Jun 2020 12:47:10 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 
