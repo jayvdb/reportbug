@@ -27,6 +27,20 @@ License: other
 
 Files: share/debian-swirl.svg
 Comment: taken from gnome-icon-theme v2.30.3-2
+Copyright:
+   Copyright holders listed in gnome-icon-theme v2.30.3-2:
+   Copyright © 2002-2008:
+    Ulisse Perusin <uli.peru@gmail.com>
+    Riccardo Buzzotta <raozuzu@yahoo.it>
+    Josef Vybíral <cornelius@vybiral.info>
+    Hylke Bons <h.bons@student.rug.nl>
+    Ricardo González <rick@jinlabs.com>
+    Lapo Calamandrei <calamandrei@gmail.com>
+    Rodney Dawes <dobey@novell.com>
+    Luca Ferretti <elle.uca@libero.it>
+    Tuomas Kuosmanen <tigert@gimp.org>
+    Andreas Nilsson <nisses.mail@home.se>
+    Jakub Steiner <jimmac@novell.com>
 License: GPL-2
     This program is free software; you can redistribute it
     and/or modify it under the terms of the GNU General Public
