@@ -135,6 +135,10 @@ This host is useful in situations like:
  - the usual SMTP server is not working/unusable (different network);
  - etc.
 
+In order to configure reportbug to use it, run `reportbug --configure',
+enter your name and email address where appropriate, and just press
+Enter at all other prompts.
+
 Please keep in mind that this service has some limitations:
 
  - only 5 reports per hour are allowed (technically, 5 connections to
