@@ -8,6 +8,7 @@ Build-Depends: debhelper-compat (= 12), python3, dh-python
 Build-Depends-Indep: python3-pytest, python3-pytest-cov, python3-setuptools
 Vcs-Git: https://salsa.debian.org/reportbug-team/reportbug.git
 Vcs-Browser: https://salsa.debian.org/reportbug-team/reportbug
+Rules-Requires-Root: no
 
 Package: reportbug
 Architecture: all
