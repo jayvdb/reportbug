@@ -944,12 +944,19 @@ class Mailto(Mua):
 
 MUA = {
     'mutt': Mua('mutt -H'),
+    'neomutt': Mua('neomutt -H'),
     'mh': Mua('/usr/bin/mh/comp -use -file'),
+    'nmh': Mua('/usr/bin/mh/comp -use -file'),
     'gnus': Gnus(),
     'claws-mail': Mua('claws-mail --compose-from-file'),
+    'alpine': Mailto('alpine -url'),
+    'pine': Mailto('pine -url'),
+    'evolution': Mailto('evolution'),
+    'kmail': Mailto('kmail'),
+    'thunderbird': Mailto('thunderbird -compose'),
+    'sylpheed': Mailto('sylpheed --compose'),
     'xdg-email': Mailto('xdg-email'),
 }
-MUA['nmh'] = MUA['mh']
 
 
 def mua_is_supported(mua):
