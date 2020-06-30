@@ -13,6 +13,7 @@ smtptls
 
 Thanks to: Raphael Geissert <atomo64@gmail.com>
 
+
 How to add Usertags to a Bug at Report Time
 ===========================================
 
@@ -36,6 +37,7 @@ appear in the first one).
 
 Thanks to: Sandro Tosi <morph@debian.org>
 
+
 How to Use the GTK+ User Interface
 ==================================
 
@@ -47,6 +49,50 @@ If after installing this the GTK+ UI still doesn't show up, please
 file a report (in text ui :) ).
 
 Thanks to: Sandro Tosi <morph@debian.org>
+
+
+Support for external MUAs
+=========================
+
+reportbug has limited support for external Mail User Agents (MUAs),
+allowing you to pass the prepared report to your email client for
+finalization and submission. This integration feature is somewhat
+fragile and sometimes unreliable.
+
+Use this at your own risk. You may lose your report if something fails!
+
+Supported MUAs include: alpine, claws-mail, evolution, gnus, kmail,
+neomutt, nmh, mh, mutt, pine, sylpheed, thunderbird, and xdg-email.
+To configure reportbug to use your MUA of choice, place a line like
+this in your $HOME/.reportbugrc:
+    mua alpine
+
+Not all MUAs are supported equally well. Known problems and
+limitations include:
+
+ - With many MUAs there is no feedback (via exitcode) to reportbug on
+   whether the report was sent or not.
+
+ - Passing desired attachments to the MUA does not work; you'll have to
+   attach everything (if needed) in the MUA itself.
+
+ - Setting custom mail headers may only work in a few cases.
+
+ - Long messages may be truncated.
+
+One particularly unreliable choice is to specify `xdg-email' as your
+MUA. It is not actually a MUA itself, but will try to automatically
+detect and launch your preferred MUA. The frameworks it is relying upon
+may even allow you to use a webmail service for report submission, so
+this can be very convenient if you are used to using such a service.
+
+The downside of xdg-email's flexibility is that it relies on a bunch of
+external tools that can fail or exhibit unexpected behavior. You might
+lose your report without ever even seeing any error message! Please test
+this extensively before seriously using it. If you encounter any
+problems, please report them to the appropriate package (belonging to
+your Desktop Environment, or xdg-utils) and not to reportbug!
+
 
 How to Use `gnus` MUA effectively
 =================================
@@ -74,6 +120,7 @@ With these changes, using the `gnus` MUA, the mail is opened in the
 running `emacs`, or if there's none, a new instance is executed.
 
 Thanks to: Håkon Stordahl <hakon@stordahl.org>
+
 
 How To Specify Pseudo-Headers
 =============================
@@ -107,6 +154,7 @@ mail body still triggers the reportbug recognition code that will move the heade
 to mail headers part if it is not a "common" pseudo-header (like 'Usertags',
 'Severity', or 'Package' and so on).
 
+
 Network Errors and Timeout
 ==========================
 
@@ -120,6 +168,7 @@ timeout is set to 1 minute; so in case of such an error, if you're
 unsure that it's a clear network outage, you can try to pass
 `--timeout <secs>' to either `reportbug' or `querybts' and see if it
 solves the issue.
+
 
 reportbug.debian.org SMTP Host Service Usage Policy
 ===================================================
