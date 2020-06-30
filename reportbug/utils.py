@@ -105,6 +105,8 @@ CODENAME2SUITE = {'wheezy': 'oldoldoldstable',
                   'experimental': 'experimental'}
 SUITE2CODENAME = dict([(suite, codename) for codename, suite in list(CODENAME2SUITE.items())])
 
+MAX_ARG_LENGTH = 130000  # the actual limit on linux is 131071
+
 _apt_cache = apt.Cache()
 
 def realpath(filename):
@@ -899,21 +901,22 @@ class Xdg(Mua):
     def __init__(self):
         self.executable = 'xdg-email'
 
+    def _uq(self, ins):
+        return urllib.parse.quote(ins, safe='', errors='replace')
+
     def _get_headerparam(self, hdr, msg):
         parmstr = ""
 
         hd = msg[hdr]
         if hd:
-            content = urllib.parse.quote(''.join(hd.splitlines()),
-                                         safe='', errors='replace')
+            content = self._uq(''.join(hd.splitlines()))
             parmstr = "{}={}&".format(hdr, content)
 
         return parmstr
 
     def _msg_to_mailto(self, msg):
         mailto = "mailto:"
-        mailto += urllib.parse.quote(''.join(msg["to"].splitlines()),
-                                     safe='', errors='replace')
+        mailto += self._uq(''.join(msg["to"].splitlines()))
         mailto += "?"
 
         for hdr in ["subject", "cc", "bcc"]:
@@ -921,9 +924,15 @@ class Xdg(Mua):
 
         body = msg.get_payload()
         if body:
-            mailto += "body="
-            mailto += urllib.parse.quote(body,
-                                         safe='', errors='replace')
+            try_mailto = mailto + 'body=' + self._uq(body)
+            while len(try_mailto) > MAX_ARG_LENGTH:
+                body = body[:-2000]
+                if not body:
+                    # should never happen
+                    raise Exception('unreasonable message')
+                body += '\n\n[ MAILBODY EXCEEDED REASONABLE LENGTH, OUTPUT TRUNCATED ]'
+                try_mailto = mailto + 'body=' + self._uq(body)
+            mailto = try_mailto
 
         return mailto.rstrip('?&')
 
