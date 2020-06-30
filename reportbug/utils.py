@@ -876,7 +876,7 @@ class Mua:
         self._command = command
         self.executable = command.split()[0]
 
-    def send(self, filename):
+    def get_send_command(self, filename):
         cmd = self._command
         if '%s' not in cmd:
             cmd += ' %s'
@@ -888,7 +888,7 @@ class Gnus(Mua):
     def __init__(self):
         self.executable = 'emacsclient'
 
-    def send(self, filename):
+    def get_send_command(self, filename):
         elisp = """(progn
                       (load-file "/usr/share/reportbug/reportbug.el")
                       (tfheen-reportbug-insert-template "%s"))"""
@@ -937,7 +937,7 @@ class Xdg(Mua):
 
         return mailto.rstrip('?&')
 
-    def send(self, filename):
+    def get_send_command(self, filename):
         with open(filename, 'r') as fp:
             message = email.message_from_file(fp, policy=email.policy.compat32)
 
