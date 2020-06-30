@@ -75,7 +75,7 @@ del mode
 # moved here since it needs the MODE_* vars to be defined
 from . import debbugs
 # it needs to be imported after debbugs
-from .ui import text_ui as ui
+#from .ui import text_ui as ui
 
 from reportbug.ui import AVAILABLE_UIS
 
@@ -877,10 +877,11 @@ class Mua:
         self.executable = command.split()[0]
 
     def send(self, filename):
-        mua = self._command
-        if '%s' not in mua:
-            mua += ' %s'
-        return ui.system(mua % shlex.quote(filename))
+        cmd = self._command
+        if '%s' not in cmd:
+            cmd += ' %s'
+        cmd = cmd % shlex.quote(filename)
+        return cmd
 
 
 class Gnus(Mua):
@@ -893,8 +894,8 @@ class Gnus(Mua):
                       (tfheen-reportbug-insert-template "%s"))"""
         filename = re.sub("[\"\\\\]", "\\\\\\g<0>", filename)
         elisp = shlex.quote(elisp % filename)
-        return ui.system("emacsclient --no-wait --eval %s 2>/dev/null"
-                         " || emacs --eval %s" % (elisp, elisp))
+        cmd = "emacsclient --no-wait --eval %s 2>/dev/null || emacs --eval %s" % (elisp, elisp)
+        return cmd
 
 
 class Xdg(Mua):
@@ -940,8 +941,8 @@ class Xdg(Mua):
         with open(filename, 'r') as fp:
             message = email.message_from_file(fp, policy=email.policy.compat32)
 
-        command = '{} "{}"'.format(self.executable, self._msg_to_mailto(message))
-        return ui.system(command)
+        cmd = '{} "{}"'.format(self.executable, self._msg_to_mailto(message))
+        return cmd
 
 
 MUA = {

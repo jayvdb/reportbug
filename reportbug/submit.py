@@ -438,7 +438,7 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
         returnvalue = 0
         succeeded = False
         while not succeeded:
-            returnvalue = mua.send(filename)
+            returnvalue = ui.system(mua.send(filename))
             if returnvalue != 0:
                 ewrite("Mutt users should be aware it is mandatory to edit the draft before sending.\n")
                 mtitle = 'Report has not been sent yet; what do you want to do now?'
