@@ -898,10 +898,7 @@ class Gnus(Mua):
         return cmd
 
 
-class Xdg(Mua):
-    def __init__(self):
-        self.executable = 'xdg-email'
-
+class Mailto(Mua):
     def _uq(self, ins):
         return urllib.parse.quote(ins, safe='', errors='replace')
 
@@ -950,7 +947,7 @@ MUA = {
     'mh': Mua('/usr/bin/mh/comp -use -file'),
     'gnus': Gnus(),
     'claws-mail': Mua('claws-mail --compose-from-file'),
-    'xdg-email': Xdg(),
+    'xdg-email': Mailto('xdg-email'),
 }
 MUA['nmh'] = MUA['mh']
 
