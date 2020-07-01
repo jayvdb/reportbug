@@ -60,6 +60,7 @@ from reportbug.exceptions import (
     UINotImportable, UINotImplemented,
     NoNetwork, NoPackage, NoBugs, NoReport, QuertBTSError,
 )
+from reportbug import mailer
 from reportbug import submit
 from reportbug import checkversions
 from reportbug import debbugs
@@ -305,18 +306,18 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                 editor = ed
         elif x == 'm':
             skip_editing = True
-            mailers = [(x, '') for x in sorted(utils.MUA.keys()) if utils.mua_exists(x)]
+            mailers = [(x, '') for x in sorted(mailer.MUA.keys()) if mailer.mua_exists(x)]
             if not mailers:
                 ui.display_failure('No mailers supported by reportbug found on this system.\n')
                 continue
-            mailer = ui.menu('Choose a mailer for your report', mailers,
+            mailprog = ui.menu('Choose a mailer for your report', mailers,
                              'Select mailer: ', default='', empty_ok=True)
-            if mailer and mailer != -1:
+            if mailprog and mailprog != -1:
                 # get the MUA
-                mailer = utils.MUA.get(mailer)
+                mailprog = mailer.MUA.get(mailprog)
                 # if there are no attachments, directly go to the mailer
                 if not attachments:
-                    options.mua = mailer
+                    options.mua = mailprog
                     break
 
                 # otherwise notify that they will be lost
@@ -326,7 +327,7 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                         'No, thanks',
                         True):
                     # if ok, go into the MUA
-                    options.mua = mailer
+                    options.mua = mailprog
                     break
                 # else go back to the menu
                 else:
@@ -842,7 +843,7 @@ def main():
                       dest='sign', const='gpg',
                       help='sign report with GNU Privacy Guard (GnuPG/gpg)')
     parser.add_option('-G', '--gnus', action='store_const', dest='mua',
-                      const=utils.MUA['gnus'],
+                      const=mailer.MUA['gnus'],
                       help='send the report using Gnus')
     parser.add_option('--pgp', action='store_const', dest='sign',
                       const='pgp',
@@ -859,13 +860,13 @@ def main():
                       dest='sendto', const='maintonly',
                       help='send the report to the maintainer only')
     parser.add_option('-M', '--mutt', action='store_const', dest='mua',
-                      const=utils.MUA['mutt'],
+                      const=mailer.MUA['mutt'],
                       help='send the report using mutt')
     parser.add_option('--mirror', action='append', help='add a BTS mirror',
                       dest='mirrors')
     parser.add_option('-n', '--mh', '--nmh', action='store_const', dest='mua',
                       help='send the report using mh/nmh',
-                      const=utils.MUA['mh'])
+                      const=mailer.MUA['mh'])
     parser.add_option('-N', '--bugnumber', action='store_true',
                       dest='bugnumber', help='specify a bug number to look for')
     parser.add_option('--mua', dest='mua',
@@ -1062,16 +1063,16 @@ def main():
             sys.exit(1)
 
     if options.mua and not options.template:
-        if not utils.mua_is_supported(options.mua):
+        if not mailer.mua_is_supported(options.mua):
             ewrite("Specified mail user agent is not supported; exiting.\n")
             sys.exit(1)
 
-        if not utils.mua_exists(options.mua):
+        if not mailer.mua_exists(options.mua):
             ewrite("Selected mail user agent cannot be found; exiting.\n")
             sys.exit(1)
 
-        # we want options.mua to be a utils.Mua instance
-        options.mua = utils.MUA.get(options.mua, options.mua)
+        # we want options.mua to be a mailer.Mua instance
+        options.mua = mailer.MUA.get(options.mua, options.mua)
 
     # try to import the specified UI, but only if template
     # is not set (it's useful only in 'text' UI).

@@ -23,7 +23,7 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE."""
 
 __all__ = ['bugreport', 'utils', 'urlutils', 'checkbuildd', 'checkversions',
-           'debbugs', 'exceptions', 'submit', 'tempfile']
+           'debbugs', 'exceptions', 'submit', 'tempfile', 'mailer']
 
 VERSION_NUMBER = "7.6.0"
 
