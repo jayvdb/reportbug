@@ -81,7 +81,7 @@ class Mailto(Mua):
         for hdr in ["subject", "cc", "bcc"]:
             mailto += self._get_headerparam(hdr, msg)
 
-        body = msg.get_payload()
+        body = msg.get_payload(decode=True).decode(errors='replace')
         if body:
             try_mailto = mailto + 'body=' + self._uq(body)
             while len(try_mailto) > MAX_ARG_LENGTH:
