@@ -81,6 +81,9 @@ class Mailto(Mua):
         for hdr in ["subject", "cc", "bcc"]:
             mailto += self._get_headerparam(hdr, msg)
 
+        if msg.is_multipart():
+            return mailto.rstrip('?&')
+
         body = msg.get_payload(decode=True).decode(errors='replace')
         if body:
             try_mailto = mailto + 'body=' + self._uq(body)
