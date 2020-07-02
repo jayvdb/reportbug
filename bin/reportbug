@@ -306,7 +306,8 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                 editor = ed
         elif x == 'm':
             skip_editing = True
-            mailers = [(x, '') for x in sorted(mailer.MUA.keys()) if mailer.mua_exists(x)]
+            mailers = [(x, '') for x in sorted(mailer.MUA.keys()) if
+                    mailer.mua_exists(x) and mailer.mua_can_run(x)]
             if not mailers:
                 ui.display_failure('No mailers supported by reportbug found on this system.\n')
                 continue
@@ -1069,6 +1070,10 @@ def main():
 
         if not mailer.mua_exists(options.mua):
             ewrite("Selected mail user agent cannot be found; exiting.\n")
+            sys.exit(1)
+
+        if not mailer.mua_can_run(options.mua):
+            ewrite("Selected mail user agent cannot be run without graphical display; exiting.\n")
             sys.exit(1)
 
         # we want options.mua to be a mailer.Mua instance

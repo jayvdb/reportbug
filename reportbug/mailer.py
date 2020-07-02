@@ -23,6 +23,7 @@
 
 import email
 import email.policy
+import os
 import re
 import shlex
 import shutil
@@ -123,6 +124,14 @@ MUA = {
     'xdg-email': Mailto('xdg-email'),
 }
 
+MUA_NEEDS_DISPLAY = [
+        'claws-mail',
+        'evolution',
+        'kmail',
+        'thunderbird',
+        'sylpheed',
+        # 'xdg-email', # not if MAILER is set
+        ]
 
 def mua_is_supported(mua):
     # check if the mua is supported by reportbug
@@ -141,3 +150,17 @@ def mua_exists(mua):
     if shutil.which(mua.executable):
         return True
     return False
+
+
+def mua_can_run(mua):
+    # some MUAs need a graphical environment
+    if ('DISPLAY' in os.environ
+            or 'WAYLAND_DISPLAY' in os.environ):
+        return True
+    if isinstance(mua, Mua):
+        mua = mua.executable
+    if mua in MUA_NEEDS_DISPLAY:
+        return False
+    if mua == 'xdg-email' and 'MAILER' not in os.environ:
+        return False
+    return True
