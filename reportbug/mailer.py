@@ -27,6 +27,7 @@ import re
 import shlex
 import shutil
 import urllib
+from .exceptions import BadMessage
 
 
 MAX_ARG_LENGTH = 130000  # the actual limit on linux is 131071
@@ -91,7 +92,7 @@ class Mailto(Mua):
                 body = body[:-2000]
                 if not body:
                     # should never happen
-                    raise Exception('unreasonable message')
+                    raise BadMessage('unreasonable message')
                 body += '\n\n[ MAILBODY EXCEEDED REASONABLE LENGTH, OUTPUT TRUNCATED ]'
                 try_mailto = mailto + 'body=' + self._uq(body)
             mailto = try_mailto

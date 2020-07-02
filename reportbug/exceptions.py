@@ -72,3 +72,8 @@ class NoMessage(reportbug_exception):
 # There was a problem accessing BTS
 class QuertBTSError(reportbug_exception):
     pass
+
+
+# Why handle broken messages?
+class BadMessage(reportbug_exception):
+    pass
