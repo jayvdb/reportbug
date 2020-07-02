@@ -133,7 +133,7 @@ def mua_is_supported(mua):
 
 def mua_exists(mua):
     # check if the mua is available on the system
-    if isinstance(mua, str):
+    if not isinstance(mua, Mua):
         try:
             mua = MUA[mua]
         except KeyError:
