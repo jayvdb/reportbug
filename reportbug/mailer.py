@@ -61,7 +61,7 @@ class Gnus(Mua):
 
 class Mailto(Mua):
     def _uq(self, ins):
-        return urllib.parse.quote(ins, safe='', errors='replace')
+        return urllib.parse.quote(ins, safe='/', errors='replace')
 
     def _get_headerparam(self, hdr, msg):
         parmstr = ""
