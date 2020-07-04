@@ -8,6 +8,7 @@ from reportbug import mailer
 import os.path
 import email
 import textwrap
+import shutil
 
 
 class TestMua(unittest.TestCase):
@@ -20,9 +21,12 @@ class TestMua(unittest.TestCase):
 
     def test_mua_exists(self):
 
-        for mua in ('mh', 'nmh', 'gnus', 'mutt', 'claws-mail', 'xdg-email'):
-            if not mailer.mua_exists(mua):
-                self.fail("%s MUA program not available" % mua)
+        self.assertFalse(mailer.mua_exists('definitely-unsupported-mua'))
+        self.assertFalse(mailer.mua_exists(mailer.Mua('definitely-unsupported-mua')))
+        for mua in mailer.MUA:
+            if shutil.which(mailer.MUA[mua].executable):
+                self.assertTrue(mailer.mua_exists(mailer.MUA[mua]))
+                self.assertTrue(mailer.mua_exists(mua))
 
 
 message = textwrap.dedent(r"""
