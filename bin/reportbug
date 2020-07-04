@@ -163,10 +163,6 @@ def include_file_in_report(message, message_filename,
     return (message, message_filename, attachment_filenames)
 
 
-# Useful to retrieve CCs given in handle_editing
-CCS = []
-
-
 def handle_editing(filename, dmessage, options, sendto, attachments, package,
                    severity, mode, editor=None, charset='utf-8', tags=''):
     if not editor:
@@ -216,10 +212,10 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
         if not subject:
             ui.long_message('No subject found in message.  Please edit again.\n')
 
-        menuopts = "Ynaceilmpqdts"
+        menuopts = "Ynaceilmpqdt"
 
         if not changed or not subject:
-            menuopts = "ynacEilmpqdts"
+            menuopts = "ynacEilmpqdt"
 
         # cfr Debian BTS #293361
         if package == 'wnpp':
@@ -248,7 +244,6 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                                'l': 'Pipe the message through the pager.',
                                'p': 'print message to stdout.',
                                't': 'Add tags.',
-                               's': 'Add a X-Debbugs-CC recipient (a CC but after BTS processing).',
                                'm': "Choose a mailer to edit the report."})
 
         if x in ('a', 'i'):
@@ -368,13 +363,6 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                 message = message.replace(oldtags, newtags)
                 with open(filename, 'w', errors='backslashreplace') as f:
                     f.write(message)
-        elif x == 's':
-            skip_editing = True
-            ccemail = ui.get_string(
-                ('Please add the email address. Just press ENTER if you '
-                 'don\'t want anymore.'), empty_ok=True, force_prompt=True)
-            if ccemail:
-                CCS.append(ccemail)
         elif x == 'y':
             if message == dmessage:
                 x = ui.select_options(
@@ -2167,6 +2155,9 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             ewrite('Will send a CC of this report to the Debian Security Team.\n')
             listcc += ['Debian Security Team <team@security.debian.org>']
 
+        if listcc:
+            pseudos.append('X-Debbugs-Cc: ' + ', '.join(listcc))
+
         # Prepare bug report
         if self.options.kudos:
             message = '\n\n'
@@ -2259,10 +2250,6 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
                                 ewrite('%s not found!', attachfile)
                     else:
                         break
-        if CCS:
-            listcc += CCS
-        if listcc:
-            headers.append('X-Debbugs-CC: ' + ', '.join(listcc))
 
         # Pass both headers and pseudo-headers (passed on command-line, f.e.)
         body, headers, pseudoheaders = utils.cleanup_msg(message, headers, pseudos, rtype)

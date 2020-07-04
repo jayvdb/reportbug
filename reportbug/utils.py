@@ -54,7 +54,7 @@ STATUSDB = os.path.join(DPKGLIB, 'status')
 # Headers other than these become email headers for debbugs servers
 PSEUDOHEADERS = ('Package', 'Source', 'Version', 'Severity', 'File', 'Tags',
                  'Justification', 'Followup-For', 'Owner', 'User', 'Usertags',
-                 'Forwarded', 'Control')
+                 'Forwarded', 'Control', 'X-Debbugs-Cc')
 # These pseudo-headers can be repeated in the report
 REPEATABLE_PSEUDOHEADERS = ['Control',]
 

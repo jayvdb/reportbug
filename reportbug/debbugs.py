@@ -265,7 +265,7 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
             section, priority = info[16], info[10]
 
     if tag == 'override':
-        headers.append('X-Debbugs-CC: debian-boot@lists.debian.org')
+        pseudos.append('X-Debbugs-Cc: debian-boot@lists.debian.org')
         ui.log_message('Your report will be carbon-copied to debian-boot.\n')
 
         # we handle here the override change request
@@ -340,7 +340,7 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
             suite = 'unstable'
 
         if suite not in ('testing', 'unstable', 'experimental'):
-            headers.append('X-Debbugs-CC: debian-release@lists.debian.org')
+            pseudos.append('X-Debbugs-Cc: debian-release@lists.debian.org')
             ui.log_message('Your report will be carbon-copied to debian-release.\n')
 
         why = 'Please enter the reason for removal: '
@@ -732,7 +732,7 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
                 'appropriate short description for the eventual package: ')
 
         if tag == 'ITP':
-            headers.append('X-Debbugs-CC: debian-devel@lists.debian.org')
+            pseudos.append('X-Debbugs-Cc: debian-devel@lists.debian.org')
             pseudos.append('Owner: {}'.format(
                 email.header.make_header(email.header.decode_header(fromaddr))))
             ui.log_message('Your report will be carbon-copied to debian-devel, '
@@ -765,7 +765,7 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
             severity = 'important'
 
         if tag == 'RFH':
-            headers.append('X-Debbugs-CC: debian-devel@lists.debian.org')
+            pseudos.append('X-Debbugs-Cc: debian-devel@lists.debian.org')
             ui.log_message('Your request will be carbon-copied to debian-devel, '
                            'per Debian policy.\n')
 
