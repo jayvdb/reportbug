@@ -39,7 +39,7 @@ class Mua:
         self._command = command
         self.executable = command.split()[0]
 
-    def get_send_command(self, filename):
+    def get_send_command(self, filename, attachments=[]):
         cmd = self._command
         if '%s' not in cmd:
             cmd += ' %s'
@@ -47,11 +47,24 @@ class Mua:
         return cmd
 
 
+class Mutt(Mua):
+    def get_send_command(self, filename, attachments=[]):
+        cmd = self._command
+        if '%s' not in cmd:
+            cmd += ' %s'
+        cmd = cmd % shlex.quote(filename)
+        if attachments:
+            att = [shlex.quote(os.path.abspath(a)) for a in attachments if os.path.exists(a)]
+            if att:
+                cmd += " -a " + " ".join(att)
+        return cmd
+
+
 class Gnus(Mua):
     def __init__(self):
         self.executable = 'emacsclient'
 
-    def get_send_command(self, filename):
+    def get_send_command(self, filename, attachments=[]):
         elisp = """(progn
                       (load-file "/usr/share/reportbug/reportbug.el")
                       (tfheen-reportbug-insert-template "%s"))"""
@@ -75,7 +88,7 @@ class Mailto(Mua):
 
         return parmstr
 
-    def _msg_to_mailto(self, msg):
+    def _msg_to_mailto(self, msg, attachments=[]):
         mailto = "mailto:"
         mailto += self._uq(''.join(msg["to"].splitlines()))
         mailto += "?"
@@ -85,6 +98,11 @@ class Mailto(Mua):
 
         if msg.is_multipart():
             return mailto.rstrip('?&')
+
+        if attachments:
+            attstrlist = ['attach={}&'.format(self._uq(os.path.abspath(a))) for a in attachments if os.path.exists(a)]
+            if attstrlist:
+                mailto += ''.join(attstrlist)
 
         body = msg.get_payload(decode=True).decode(errors='replace')
         if body:
@@ -100,17 +118,17 @@ class Mailto(Mua):
 
         return mailto.rstrip('?&')
 
-    def get_send_command(self, filename):
+    def get_send_command(self, filename, attachments=[]):
         with open(filename, 'r') as fp:
             message = email.message_from_file(fp, policy=email.policy.compat32)
 
-        cmd = '{} "{}"'.format(self.executable, self._msg_to_mailto(message))
+        cmd = '{} "{}"'.format(self.executable, self._msg_to_mailto(message, attachments))
         return cmd
 
 
 MUA = {
-    'mutt': Mua('mutt -H'),
-    'neomutt': Mua('neomutt -H'),
+    'mutt': Mutt('mutt -H'),
+    'neomutt': Mutt('neomutt -H'),
     'mh': Mua('/usr/bin/mh/comp -use -file'),
     'nmh': Mua('/usr/bin/mh/comp -use -file'),
     'gnus': Gnus(),

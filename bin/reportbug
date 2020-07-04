@@ -321,9 +321,9 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                     options.mua = mailprog
                     break
 
-                # otherwise notify that they will be lost
+                # otherwise notify that they may be lost
                 if ui.yes_no(
-                        'Editing the report will lose all attachments: are you sure you want to continue?',
+                        'Editing the report might lose all attachments: are you sure you want to continue?',
                         'Yes, please',
                         'No, thanks',
                         True):
@@ -1230,9 +1230,9 @@ class UI(object):
                 smtphost.lower())
             smtphost = 'reportbug.debian.org'
 
-        if attachments and mua:
-            ewrite('Attachments are incompatible with using an MUA.  They will be ignored.\n')
-            attachments = []
+        #if attachments and mua:
+        #    ewrite('Attachments are incompatible with using an MUA.  They will be ignored.\n')
+        #    attachments = []
 
         if utils.first_run():
             if not self.args and not self.options.searchfor:
@@ -2151,7 +2151,8 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
                 pseudos.append(bugscript_pseudo.strip())
             # add attachments only if no MUA is used, using attachments with a
             # MUA is not yet supported by reportbug.
-            if bugscript_attachments and not mua:
+            #if bugscript_attachments and not mua:
+            if bugscript_attachments:
                 attachments += bugscript_attachments
             addinfo = None
             if not self.options.noconf:
