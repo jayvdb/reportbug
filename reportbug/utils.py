@@ -995,95 +995,105 @@ def parse_bug_control_file(filename):
     return submitas, submitto, reportwith, supplemental
 
 
-def cleanup_msg(dmessage, headers, pseudos, type):
-    pseudoheaders = []
-    # Handle non-pseduo-headers
+def cleanup_msg(dmessage, headers, pseudos, btstype):
+    newheaders = []
+    collected_pseudoheaders = []
+    clean_pseudoheaders = []
     headerre = re.compile(r'^([^:]+):\s*(.*)$', re.I)
-    newsubject = message = ''
+    message = ''
     parsing = lastpseudo = True
 
     # Include the headers that were passed in too!
-    newheaders = []
     for header in headers:
         mob = headerre.match(header)
         if mob:
             newheaders.append(mob.groups())
 
-    # Get the pseudo-headers fields
-    PSEUDOS = []
+    # we normalize pseudoheader keys
+    def normph(aph):
+        return '-'.join([x.capitalize() for x in aph.split('-')])
+
+    accepted_pseudoheaders = [normph(ph) for ph in PSEUDOHEADERS]
+
+    # Get the pseudo-header fields
     for ph in pseudos:
         mob = headerre.match(ph)
         if mob:
-            PSEUDOS.append(mob.group(1))
+            ph = normph(mob.group(1))
+            if ph not in accepted_pseudoheaders:
+                accepted_pseudoheaders.append(ph)
 
+    # look through the dirty message and extract headers and pseudoheaders
     for line in dmessage.split(os.linesep):
-        if not line and parsing:
-            parsing = False
-        elif parsing:
+        if parsing:
+            # stop trying to parse (pseudo-)headers at the first empty line
+            if not line:
+                parsing = False
+                continue
+
             mob = headerre.match(line)
             # GNATS and debbugs have different ideas of what a pseudoheader
             # is...
-            if mob and ((type == 'debbugs' and
-                                 mob.group(1) not in PSEUDOHEADERS and
-                                 mob.group(1) not in PSEUDOS) or
-                        (type == 'gnats' and mob.group(1)[0] != '>')):
+            if mob and ((btstype == 'debbugs' and
+                                 normph(mob.group(1)) not in accepted_pseudoheaders) or
+                        (btstype == 'gnats' and mob.group(1)[0] != '>')):
+                # unrecognized pseudoheaders are turned into headers
                 newheaders.append(mob.groups())
                 lastpseudo = False
-                continue
             elif mob:
-                # Normalize pseudo-header
-                lastpseudo = False
+                # Continuation lines are not supported for pseudoheaders
+                lastpseudo = True
+                # Normalize pseudo-header for debbugs, leave as is for
+                # gnats
                 key, value = mob.groups()
                 if key[0] != '>':
-                    # Normalize hyphenated headers to capitalize each word
-                    key = '-'.join([x.capitalize() for x in key.split('-')])
-                pseudoheaders.append((key, value))
-            elif not lastpseudo and len(newheaders):
+                    key = normph(key)
+                collected_pseudoheaders.append((key, value))
+            elif not lastpseudo and len(newheaders) and line[0] == ' ':
                 # Assume we have a continuation line
                 lastheader = newheaders[-1]
                 newheaders[-1] = (lastheader[0], lastheader[1] + '\n' + line)
-                continue
             else:
-                # Permit bogus headers in the pseudoheader section
-                headers.append(re.split(r':\s+', line, 1))
+                # Discard anything else found in the (pseudo-)header section
+                pass
         elif line.strip() != NEWBIELINE:
             message += line + '\n'
 
-    ph = []
-    if type == 'gnats':
-        for header, content in pseudoheaders:
+    if btstype == 'gnats':
+        for header, content in collected_pseudoheaders:
             if content:
-                ph += ["%s: %s" % (header, content)]
+                clean_pseudoheaders += ["%s: %s" % (header, content)]
             else:
-                ph += [header]
-    else:
-        ph2 = {}
-        repeatable_ph = []
-        # generate a list of pseudoheaders, but without duplicates
-        # we take the list of pseudoheaders defined in reportbug and add
-        # the ones passed by the user (if not already present). We are not using
-        # set(..) because we want to preserve the item order of PSEUDOHEADERS
-        pseudo_list = list(PSEUDOHEADERS)
-        for p in PSEUDOS:
-            if p not in pseudo_list:
-                pseudo_list.append(p)
+                clean_pseudoheaders += [header]
 
-        for header, content in pseudoheaders:
-            # if either in the canonical pseudo-headers list or in those passed on the command line
-            if header in pseudo_list:
-                if header not in REPEATABLE_PSEUDOHEADERS:
-                    ph2[header] = content
-                else:
-                    repeatable_ph += ['%s: %s' % (header, content)]
-            else:
-                newheaders.append((header, content))
+        return message, newheaders, clean_pseudoheaders
 
-        for header in pseudo_list:
-            if header in ph2:
-                ph += ['%s: %s' % (header, ph2[header])]
-        ph.extend(repeatable_ph)
+    # else btstype is debbugs:
+    unique_ph = {}
+    repeatable_ph = []
 
-    return message, newheaders, ph
+    for header, content in collected_pseudoheaders:
+        if header in REPEATABLE_PSEUDOHEADERS:
+            # repeatables can append
+            repeatable_ph += ['%s: %s' % (header, content)]
+            continue
+
+        # non-repeatables
+        if header == 'X-Debbugs-Cc' and header in unique_ph:
+            unique_ph[header] += ', ' + content
+        else:
+            # for most non-repeatables, the last overwrites the
+            # previous
+            unique_ph[header] = content
+
+    # sort pseudoheaders
+    for header in accepted_pseudoheaders:
+        if header in unique_ph:
+            clean_pseudoheaders += ['%s: %s' % (header, unique_ph[header])]
+
+    clean_pseudoheaders.extend(repeatable_ph)
+
+    return message, newheaders, clean_pseudoheaders
 
 
 def launch_mbox_reader(cmd, url, http_proxy, timeout):
