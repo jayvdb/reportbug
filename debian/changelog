@@ -18,6 +18,11 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - drop Mua.get_name()
     - add mua support via xdg-email
       (Closes: #532150, #788045, #865792)
+    - protect against too long mailto argument
+    - Mua.send: return commandline instead of calling ui.system
+    - Mua: rename send → get_send_command
+    - rename Xdg → Mailto
+    - add direct support for a few more MUAs
   * bin/reportbug
     - recognize source packages (and `src:linux`) when sending followup info;
       Closes: #946363
@@ -61,10 +66,38 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - test get_source_name with astroid
     - test/test_debbugs.py: add ftbfs tag
     - test/test_utils.py: add test for new xdg-email Mua
+    - test: adapt to splitting mailer off utils
+    - test/test_mailer.py: do not require all MUAs to be installed
+      (Closes: #843337)
   * fix some minor typos in various files
   * manpages:
     - document that reportbug will exit after --configure
     - Update for SSL/TLS encrypted submission support
+  * doc/README.Users:
+    - Clarify how to configure reportbug.debian.org
+      (Closes: #963073)
+    - document limitations of MUA support
+  * share/handle_bugscript: convert to UTF-8
+  * Lintian fixes:
+    - add override for desktop-command-not-in-package
+    - d/control: suggest default mta
+    - d/copyright: fix obsolete-field-in-dep5-copyright
+    - d/copyright: fix dep5-copyright-license-name-not-unique
+    - d/copyright: fix missing-license-paragraph-in-dep5-copyright
+    - d/copyright: fix missing-field-in-dep5-copyright
+    - d/copyright: GPL-any is equivalent to GPL-1+
+  * debian/control:
+    - switch to debhelper compat level 12
+    - add Rules-Requires-Root (R³)
+    - update standards-version (no changes needed)
+  * split off MUA stuff from utils into new mailer submodule
+  * reportbug/mailer.py:
+    - Mailto Mua: fix payload decoding
+    - Mailto Mua: multipart → mailto is not supported
+    - Mailto Mua: not urlquoting "/" should be safe
+    - mua_exists: invert logic
+  * reportbug/exceptions.py,mailer.py: use custom BadMessage exception
+  * do not try to run graphical MUAs in text-only environments
 
   [ Fabrice BAUZAC ]
   * Improve code documentation
@@ -92,7 +125,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ mozbugbox ]
   * bin/reportbug: allow followups on ITP bugs; Closes: #657066
 
- -- Sandro Tosi <morph@debian.org>  Sat, 27 Jun 2020 12:47:10 +0200
+ -- Sandro Tosi <morph@debian.org>  Sat, 04 Jul 2020 10:27:51 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 
@@ -1381,7 +1414,7 @@ reportbug (4.12) unstable; urgency=low
       Closes: #511210
     - added the '--no-cc-menu' command-line option to not display the menu
       asking for additional CCs; part of #428113
-    - added the '--no-tags-menu' command-line option to not display the menu 
+    - added the '--no-tags-menu' command-line option to not display the menu
       asking for tags; thanks to Josh Triplett for the report and Carl Chenet
       for the (partial) patch; Closes: #428113
   * bin/reportbug, reportbug/ui/text_ui.py, share/presubj
@@ -1978,7 +2011,7 @@ reportbug (4.0) unstable; urgency=low
     - removed reportbug/test_hiermatch.py, partially merget into
       test/test_hiermatch.py
   * bin/*, reportbug/*, reportbug/ui/*, debian/copyright
-    - updated copyright information, in particular adding me 
+    - updated copyright information, in particular adding me
   * reportbug/urlutils.py
     - added a timeout of 1 minute for url retrieving; thanks to Michal Suchanek
       for the report; Closes: 516449
