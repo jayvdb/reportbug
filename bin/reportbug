@@ -1383,7 +1383,9 @@ class UI(object):
                 if match:
                     report = int(match.group(1))
                     exinfo = ui.show_report(report, 'debian', self.options.mirrors,
-                                            self.options.http_proxy, self.options.timeout, queryonly=True,
+                                            self.options.http_proxy,
+                                            self.options.timeout,
+                                            queryonly=self.options.queryonly,
                                             title=VERSION,
                                             archived=False,
                                             mbox_reader_cmd=self.options.mbox_reader_cmd)

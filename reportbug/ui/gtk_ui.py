@@ -486,7 +486,10 @@ class BugPage(Gtk.EventBox, threading.Thread):
         self.assistant.forward_page()
         # Though we're only a page, we are authorized to destroy our parent :)
         # This would be better handled connecting externally to self.reply_button
-        self.dialog.destroy()
+        try:
+            self.dialog.destroy()
+        except AttributeError:
+            pass
 
 
 class BugsDialog(Gtk.Dialog):
