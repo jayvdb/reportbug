@@ -257,7 +257,7 @@ class ReportViewerDialog(Gtk.Dialog):
         # maybe adding it as a secondary button or such is better
         if res == Gtk.ResponseType.APPLY:
             clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-            clipboard.set_text(self.message)
+            clipboard.set_text(self.message, -1)
         else:
             self.destroy()
 
