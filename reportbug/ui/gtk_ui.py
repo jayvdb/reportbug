@@ -1284,7 +1284,7 @@ class FinalMessagePage(LongMessagePage):
     def execute(self, *args, **kwargs):
         _assert_context(ui_context)
         LongMessagePage.execute(self, *args, **kwargs)
-        self.set_page_title("Thanks for your report")
+        #self.set_page_title("Thanks for your report")
 
 
 class EditorPage(Page):
