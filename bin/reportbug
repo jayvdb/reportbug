@@ -242,7 +242,7 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                                'c': "Change editor and re-edit.",
                                'e': 'Re-edit the bug report.',
                                'l': 'Pipe the message through the pager.',
-                               'p': 'print message to stdout.',
+                               'p': 'Print message to stdout.',
                                't': 'Add tags.',
                                'm': "Choose a mailer to edit the report."})
 
