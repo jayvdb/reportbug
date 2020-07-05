@@ -451,7 +451,7 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                     fh, msgname = TempFile(prefix=tfprefix, dir=draftpath)
                     fh.write(message)
                     fh.close()
-                    ewrite('Draft saved into %s\n', msgname)
+                    ui.long_message('Draft saved into %s\n', msgname)
                     succeeded = True
             else:
                 succeeded = True
