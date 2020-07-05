@@ -979,8 +979,6 @@ def main():
     parser.add_option('--check-installed', action='store_true',
                       dest='querydpkg', help='check whether the specified '
                                              'package is installed when filing a report (default)')
-    parser.add_option('--exit-prompt', action='store_true', dest='exitprompt',
-                      help='prompt before exiting', default=False)
     parser.add_option('--paranoid', action='store_true', dest='paranoid',
                       help='show contents of message before sending')
     parser.add_option('--no-paranoid', action='store_false', dest='paranoid',
@@ -2293,8 +2291,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
                 self.options.paranoid, self.options.draftpath,
                 self.options.envelopefrom)
 
-        if self.options.exitprompt:
-            ui.get_string('Please press ENTER to exit reportbug: ')
+        ui.final_message('Thank you for using reportbug\n')
         return
 
 
