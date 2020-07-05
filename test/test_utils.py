@@ -405,12 +405,22 @@ class TestBugreportBody(unittest.TestCase):
 Package: release.debian.org
 User: release.debian.org@packages.debian.org
 Usertags: unblock
+random text between pseudoheader lines
+Justification: line with too long content
+ so there is a continuation line
 Severity: normal
 Morph: cool
 Control: testcontrol1
+source: reportbug
 Control: testcontrol2
 Continuation:
  header
+X-Debbugs-CC: debian-reportbug@lists.debian.org
+x-debbugs-cC: root@localhost
+
+some text before further head-like line
+Version: 2.1.3
+tags: ftbfs
 
 Please unblock package reportbug
 
@@ -428,7 +438,12 @@ Kernel: Linux 2.6.31-1-amd64 (SMP w/4 CPU cores)
 Locale: LANG=en_US.UTF-8, LC_CTYPE=en_US.UTF-8 (charmap=UTF-8)
 Shell: /bin/sh linked to /bin/bash"""
         header = ['X-Debbugs-CC: reportbug@packages.qa.debian.org']
-        pseudos = ['Morph: cool', 'Control: testcontrol1', 'Control: testcontrol2']
+        pseudos = ['Morph: cool',
+                'Control: testcontrol1',
+                'Control: testcontrol2',
+                #'Control: testcontrol7',
+                #'Breaks: other',
+                ]
         rtype = 'debbugs'
         body, headers, pseudo = utils.cleanup_msg(message, header, pseudos,
                                                   rtype)
