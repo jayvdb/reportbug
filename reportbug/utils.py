@@ -1294,7 +1294,7 @@ def is_security_update(pkgname, pkgversion):
     #
     # This check is not sufficient to detect security updates reliably,
     # since other stable updates also use the same version pattern.
-    regex = re.compile('(\+|~)deb(\d+)u(\d+)')
+    regex = re.compile(r'(\+|~)deb(\d+)u(\d+)')
     secversion = regex.search(pkgversion)
     if not secversion:
         return False

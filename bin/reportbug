@@ -422,7 +422,7 @@ def find_package_for(filename, notatty=False, pathonly=False):
 
 
 def validate_package_name(package):
-    if not re.match(r'^[a-z0-9][a-z0-9\-\+\.]+$', package):
+    if not re.match(r'^[a-z0-9][a-z0-9+.-]+$', package):
         ui.long_message("%s is not a valid package name.", package)
         package = None
     return package
