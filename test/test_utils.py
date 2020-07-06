@@ -470,19 +470,16 @@ Shell: /bin/sh linked to /bin/bash"""
             self.assertIn(ph, pseudo)
 
         cleanheaders = [('X-Debbugs-CC', 'reportbug@packages.qa.debian.org'),
-                ('Subject', 'unblock: reportbug/4.12.6\n'
-                    'random text between pseudoheader lines\n'
-                    ' so there is a continuation line'),
-                ('source', 'reportbug'),
-                ('Continuation', '\n header'),
-                ('X-Debbugs-CC', 'debian-reportbug@lists.debian.org'),
-                ('x-debbugs-cC', 'root@localhost'),
+                ('Subject', 'unblock: reportbug/4.12.6'),
+                ('Continuation', '\n header')
                 ]
         cleanpseudos = ['Package: release.debian.org',
+                'Source: reportbug',
                 'Severity: normal',
                 'Justification: line with too long content',
                 'User: release.debian.org@packages.debian.org',
                 'Usertags: unblock',
+                'X-Debbugs-Cc: debian-reportbug@lists.debian.org, root@localhost',
                 'Morph: cool',
                 'Control: testcontrol1',
                 'Control: testcontrol2',
