@@ -469,6 +469,49 @@ Shell: /bin/sh linked to /bin/bash"""
         for ph in pseudos:
             self.assertIn(ph, pseudo)
 
+        cleanheaders = [('X-Debbugs-CC', 'reportbug@packages.qa.debian.org'),
+                ('Subject', 'unblock: reportbug/4.12.6\n'
+                    'random text between pseudoheader lines\n'
+                    ' so there is a continuation line'),
+                ('source', 'reportbug'),
+                ('Continuation', '\n header'),
+                ('X-Debbugs-CC', 'debian-reportbug@lists.debian.org'),
+                ('x-debbugs-cC', 'root@localhost'),
+                ]
+        cleanpseudos = ['Package: release.debian.org',
+                'Severity: normal',
+                'Justification: line with too long content',
+                'User: release.debian.org@packages.debian.org',
+                'Usertags: unblock',
+                'Morph: cool',
+                'Control: testcontrol1',
+                'Control: testcontrol2',
+                ]
+        cleanmessage = """some text before further head-like line
+Version: 2.1.3
+tags: ftbfs
+
+Please unblock package reportbug
+
+(explain the reason for the unblock here)
+
+unblock reportbug/4.12.6
+
+-- System Information:
+Debian Release: squeeze/sid
+  APT prefers unstable
+  APT policy: (500, 'unstable'), (1, 'experimental')
+Architecture: amd64 (x86_64)
+
+Kernel: Linux 2.6.31-1-amd64 (SMP w/4 CPU cores)
+Locale: LANG=en_US.UTF-8, LC_CTYPE=en_US.UTF-8 (charmap=UTF-8)
+Shell: /bin/sh linked to /bin/bash
+"""
+
+        self.assertEqual(headers, cleanheaders)
+        self.assertEqual(pseudo, cleanpseudos)
+        self.assertEqual(body, cleanmessage)
+
     @pytest.mark.network  # marking the test as using network
     def test_generate_blank_report(self):
 
