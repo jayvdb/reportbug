@@ -39,6 +39,9 @@ class Mua:
         self._command = command
         self.executable = command.split()[0]
 
+    def _check_attachable(self, afile):
+        return os.path.isfile(afile) and os.access(afile, os.R_OK)
+
     def get_send_command(self, filename, attachments=[]):
         cmd = self._command
         if '%s' not in cmd:
@@ -54,7 +57,8 @@ class Mutt(Mua):
             cmd += ' %s'
         cmd = cmd % shlex.quote(filename)
         if attachments:
-            att = [shlex.quote(os.path.abspath(a)) for a in attachments if os.path.exists(a)]
+            att = [shlex.quote(os.path.abspath(a)) for a in attachments
+                    if self._check_attachable(a)]
             if att:
                 cmd += " -a " + " ".join(att)
         return cmd
@@ -100,7 +104,8 @@ class Mailto(Mua):
             return mailto.rstrip('?&')
 
         if attachments:
-            attstrlist = ['attach={}&'.format(self._uq(os.path.abspath(a))) for a in attachments if os.path.exists(a)]
+            attstrlist = ['attach={}&'.format(self._uq(os.path.abspath(a)))
+                    for a in attachments if self._check_attachable(a)]
             if attstrlist:
                 mailto += ''.join(attstrlist)
 
