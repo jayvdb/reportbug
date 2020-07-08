@@ -592,8 +592,8 @@ def handle_bts_query(package, bts, timeout, mirrors=None, http_proxy="",
             ewrite('%d bug reports found:\n\n', count)
 
         return browse_bugs(hierarchy, count, bugs, bts, queryonly,
-                           mirrors, http_proxy, timeout, screen, title, package,
-                           mbox_reader_cmd)
+                           mirrors, http_proxy, timeout, screen, title,
+                           package, source, mbox_reader_cmd)
 
     except NoPackage:
         long_message('No record of this package found.')
@@ -601,7 +601,8 @@ def handle_bts_query(package, bts, timeout, mirrors=None, http_proxy="",
 
 
 def browse_bugs(hierarchy, count, bugs, bts, queryonly, mirrors,
-                http_proxy, timeout, screen, title, package, mbox_reader_cmd):
+                http_proxy, timeout, screen, title, package,
+                source, mbox_reader_cmd):
     try:
         output_encoding = locale.getpreferredencoding()
     except locale.Error as msg:
@@ -681,7 +682,10 @@ def browse_bugs(hierarchy, count, bugs, bts, queryonly, mirrors,
                         lastpage = []
                         break
                     elif x == 'b':
-                        launch_browser('https://bugs.debian.org/%s' % package)
+                        if source:
+                            launch_browser('https://bugs.debian.org/src:%s' % package)
+                        else:
+                            launch_browser('https://bugs.debian.org/%s' % package)
                         continue
                     elif x == 'r':
                         continue
