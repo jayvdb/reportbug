@@ -546,7 +546,11 @@ def get_source_name(package):
     try:
         return _apt_cache[package].versions[0].source_name
     except KeyError:
-        return None
+        pass
+    # check if there is a source package with that name
+    if apt.apt_pkg.SourceRecords().lookup(package):
+        return package
+    return None
 
 
 def get_source_package(package):
