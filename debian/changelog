@@ -23,7 +23,9 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - Mua: rename send → get_send_command
     - rename Xdg → Mailto
     - add direct support for a few more MUAs
+      Closes: #271084, #922058
     - reportbug/utils.py: clean up cleanup_msg
+    - fix get_source_name breakage from previous change
   * bin/reportbug
     - recognize source packages (and `src:linux`) when sending followup info;
       Closes: #946363
@@ -54,7 +56,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
       Closes: #961955
   * reportbug/ui/gtk_ui.py:
     - fix crash in handle_bts_query on non-Debian systems; Closes: #709862
-    - Hide back button; Closes: #855380, #872772
+    - Hide back button; Closes: #855380, #867663, #872772
     - handle_bts_query: Use QuertBTSError instead of NoBugs;
       Closes: #919102, #918989
     - drop broken/unused error_dialog function
@@ -89,6 +91,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
     - Clarify how to configure reportbug.debian.org
       (Closes: #963073)
     - document limitations of MUA support
+    - some MUAs now support attachments
   * share/handle_bugscript: convert to UTF-8
   * Lintian fixes:
     - add override for desktop-command-not-in-package
@@ -113,6 +116,7 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   * do not try to run graphical MUAs in text-only environments
   * Use X-Debbugs-CC as pseudoheader instead of header
   * bin/reportbug,reportbug/submit.py,mailer.py: support attachments with MUA
+    Closes: #894794
   * bin/reportbug, reportbug/utils.py: minor regex improvements
   * bin/reportbug, reportbug/ui/gtk_ui.py: allow reply with -N in GTK ui
     (Closes: #687214)
@@ -144,7 +148,11 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ mozbugbox ]
   * bin/reportbug: allow followups on ITP bugs; Closes: #657066
 
- -- Sandro Tosi <morph@debian.org>  Mon, 06 Jul 2020 23:05:21 +0200
+  [ Brian Murray ]
+  * reportbug/ui/text_ui.py: launch browser for correct package type
+    (Closes: #963762)
+
+ -- Sandro Tosi <morph@debian.org>  Wed, 08 Jul 2020 21:17:50 +0200
 
 reportbug (7.6.0) unstable; urgency=medium
 
