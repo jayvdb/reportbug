@@ -73,8 +73,8 @@ limitations include:
  - With many MUAs there is no feedback (via exitcode) to reportbug on
    whether the report was sent or not.
 
- - Passing desired attachments to the MUA does not work; you'll have to
-   attach everything (if needed) in the MUA itself.
+ - Passing desired attachments to the MUA does not work with all MUAs;
+   you may have to attach everything (if needed) in the MUA itself.
 
  - Setting custom mail headers may only work in a few cases.
 
