@@ -154,8 +154,9 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
 
   [ Sandro Tosi ]
   * Add Nis Martensen to Uploaders, very much well deserved!
+  * Extend copyright notice to 2020
 
- -- Sandro Tosi <morph@debian.org>  Thu, 09 Jul 2020 22:16:27 -0400
+ -- Sandro Tosi <morph@debian.org>  Thu, 09 Jul 2020 22:17:52 -0400
 
 reportbug (7.6.0) unstable; urgency=medium
 

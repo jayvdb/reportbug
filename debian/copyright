@@ -4,7 +4,7 @@ Upstream-Contact: Sandro Tosi <morph@debian.org>
 Files: *
 Copyright:
     © 1999-2006 Chris Lawrence
-    Copyright (C) 2008-2019 Sandro Tosi <morph@debian.org>
+    Copyright (C) 2008-2020 Sandro Tosi <morph@debian.org>
 License: other
 
 Files: share/handle_bugscript
