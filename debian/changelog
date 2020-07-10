@@ -152,7 +152,10 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   * reportbug/ui/text_ui.py: launch browser for correct package type
     (Closes: #963762)
 
- -- Sandro Tosi <morph@debian.org>  Wed, 08 Jul 2020 21:17:50 +0200
+  [ Sandro Tosi ]
+  * Add Nis Martensen to Uploaders, very much well deserved!
+
+ -- Sandro Tosi <morph@debian.org>  Thu, 09 Jul 2020 22:16:27 -0400
 
 reportbug (7.6.0) unstable; urgency=medium
 

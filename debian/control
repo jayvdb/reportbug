@@ -2,7 +2,7 @@ Source: reportbug
 Section: utils
 Priority: standard
 Maintainer: Reportbug Maintainers <debian-reportbug@lists.debian.org>
-Uploaders: Sandro Tosi <morph@debian.org>
+Uploaders: Sandro Tosi <morph@debian.org>, Nis Martensen <nis.martensen@web.de>
 Standards-Version: 4.5.0
 Build-Depends: debhelper-compat (= 12), python3, dh-python
 Build-Depends-Indep: python3-pytest, python3-pytest-cov, python3-setuptools
