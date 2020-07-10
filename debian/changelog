@@ -1,4 +1,4 @@
-reportbug (7.6.1) UNRELEASED; urgency=medium
+reportbug (7.7.0) unstable; urgency=medium
 
   [ Bastian Venthur ]
   * Replace nosetests with pytest
@@ -155,8 +155,9 @@ reportbug (7.6.1) UNRELEASED; urgency=medium
   [ Sandro Tosi ]
   * Add Nis Martensen to Uploaders, very much well deserved!
   * Extend copyright notice to 2020
+  * New release
 
- -- Sandro Tosi <morph@debian.org>  Thu, 09 Jul 2020 22:17:52 -0400
+ -- Sandro Tosi <morph@debian.org>  Thu, 09 Jul 2020 22:18:36 -0400
 
 reportbug (7.6.0) unstable; urgency=medium
 
