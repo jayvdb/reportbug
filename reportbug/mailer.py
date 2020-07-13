@@ -35,9 +35,10 @@ MAX_ARG_LENGTH = 130000  # the actual limit on linux is 131071
 
 
 class Mua:
-    def __init__(self, command):
+    def __init__(self, command, needs_terminal=True):
         self._command = command
         self.executable = command.split()[0]
+        self.needs_terminal = needs_terminal
 
     def _check_attachable(self, afile):
         return os.path.isfile(afile) and os.access(afile, os.R_OK)
@@ -67,6 +68,7 @@ class Mutt(Mua):
 class Gnus(Mua):
     def __init__(self):
         self.executable = 'emacsclient'
+        self.needs_terminal = True
 
     def get_send_command(self, filename, attachments=[]):
         elisp = """(progn
@@ -137,14 +139,14 @@ MUA = {
     'mh': Mua('/usr/bin/mh/comp -use -file'),
     'nmh': Mua('/usr/bin/mh/comp -use -file'),
     'gnus': Gnus(),
-    'claws-mail': Mua('claws-mail --compose-from-file'),
+    'claws-mail': Mua('claws-mail --compose-from-file', needs_terminal=False),
     'alpine': Mailto('alpine -url'),
     'pine': Mailto('pine -url'),
-    'evolution': Mailto('evolution'),
-    'kmail': Mailto('kmail'),
-    'thunderbird': Mailto('thunderbird -compose'),
-    'sylpheed': Mailto('sylpheed --compose'),
-    'xdg-email': Mailto('xdg-email'),
+    'evolution': Mailto('evolution', needs_terminal=False),
+    'kmail': Mailto('kmail', needs_terminal=False),
+    'thunderbird': Mailto('thunderbird -compose', needs_terminal=False),
+    'sylpheed': Mailto('sylpheed --compose', needs_terminal=False),
+    'xdg-email': Mailto('xdg-email', needs_terminal=False),
 }
 
 MUA_NEEDS_DISPLAY = [

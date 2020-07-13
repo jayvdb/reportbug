@@ -23,7 +23,7 @@ import sys
 import os
 import re
 import shlex
-from subprocess import Popen, STDOUT, PIPE
+from subprocess import run, Popen, STDOUT, PIPE
 import email
 import smtplib
 import socket
@@ -435,10 +435,14 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
 
     if mua:
         ewrite("Spawning %s...\n", mua.executable)
+        sendcmd = mua.get_send_command(filename, attachments)
         returnvalue = 0
         succeeded = False
         while not succeeded:
-            returnvalue = ui.system(mua.get_send_command(filename, attachments))
+            if not mua.needs_terminal:
+                returnvalue = run(sendcmd, shell=True).returncode
+            else:
+                returnvalue = ui.system(sendcmd)
             if returnvalue != 0:
                 ewrite("Mutt users should be aware it is mandatory to edit the draft before sending.\n")
                 mtitle = 'Report has not been sent yet; what do you want to do now?'
