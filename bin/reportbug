@@ -1967,7 +1967,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             if ui.yes_no('Do you want to report a regression because of a security update? ',
                          'Yes, please inform the LTS and security teams.',
                          'No or I am not sure.', True):
-                distnumber = re.search('[+~]deb(\d+)u\d+', pkgversion).group(1)
+                distnumber = re.search(r'[+~]deb(\d+)u\d+', pkgversion).group(1)
                 support = 'none'
                 email_address = 'none'
                 try:
