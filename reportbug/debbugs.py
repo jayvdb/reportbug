@@ -641,7 +641,7 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
 
                 [ Other info ]
                 (Anything else the release team should know.)
-                """ % (package, package, version))
+                """)
     elif tag == 'rm':
         subject = 'RM: %s/%s' % (package, version)
         body = '(explain the reason for the removal here)\n'
