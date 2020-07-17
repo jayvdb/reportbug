@@ -1390,7 +1390,8 @@ class EditorPage(Page):
         self.others_buffer.set_text(self.report.get_others())
 
         info = self.report.get_original_info()
-        if info.strip() == "*** Please type your report below this line ***":
+        #if info.strip() == "*** Please type your report below this line ***":
+        if info.strip() == "Dear Maintainer,":
             info = "Please type your report here.\nThe text will be wrapped to be max 79 chars long per line."
             self.handle_first_info()
         self.info_buffer.set_text(info)
