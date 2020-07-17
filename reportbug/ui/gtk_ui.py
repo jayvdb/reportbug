@@ -311,8 +311,9 @@ class BugReport(object):
             line = lines[i]
             info.append(line)
             i += 1
-            if store < 2 and not line.strip():
-                store += 1
+            if not line.strip():
+                if store < 2:
+                    store += 1
                 continue
             if store == 2 and(line.startswith('-- ') or line.startswith('** ')):
                 break
