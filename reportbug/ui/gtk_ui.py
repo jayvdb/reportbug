@@ -345,22 +345,22 @@ class BugReport(object):
                 break
 
     def wrap_bug_body(self, msg, width=79, break_long_words=False):
-        """Wrap every line in the message"""
+        """Wrap every line in the message, except the pseudoheaders"""
 
         # resulting body text
         body = ''
+        phead = True
         for line in msg.splitlines():
+            if phead:
+                body += line + '\n'
+                if not line.strip():
+                    phead = False
+                continue
+
             # wrap long lines, it returns a list of "sub-lines"
             tmp = textwrap.wrap(line, width=width,
                                 break_long_words=break_long_words)
-            # need to special-case this else a join() on the list generator
-            # would remove all the '[]' so no empty lines in the report
-            if tmp == []:
-                body += '\n'
-            else:
-                # join the "sub-lines" and add a \n at the end(if there is
-                # only one item in the list, else there wouldn't be a \n)
-                body += '\n'.join(tmp) + '\n'
+            body += '\n'.join(tmp) + '\n'
 
         return body
 
