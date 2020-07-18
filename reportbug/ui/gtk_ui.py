@@ -654,9 +654,9 @@ class Page(ReportbugConnector):
         self.assistant.insert_page(self.widget, self.page_num)
         self.set_page_complete(self.default_complete)
         self.set_page_type(self.page_type)
+        self.set_page_title("Reportbug")
         self.assistant.set_page_side_image(self.widget, GdkPixbuf.Pixbuf.new_from_file(self.side_image))
         self.assistant.set_next_page(self)
-        self.set_page_title("Reportbug")
         # reportbug cannot usefully go back
         self.assistant.commit()
 
