@@ -47,6 +47,9 @@ try:
     gi.require_version('Gtk', '3.0')
     from gi.repository import Gtk
 
+    gi.require_version('GtkSource', '3.0')
+    from gi.repository import GtkSource
+
     gi.require_foreign('cairo')
 except ImportError:
     raise UINotImportable('Please install the reportbug-gtk package to use this interface.')
@@ -1302,7 +1305,8 @@ class EditorPage(Page):
         hbox.pack_start(self.subject, True, True, 0)
         vbox.pack_start(hbox, False, True, 0)
 
-        self.view = Gtk.TextView()
+        self.info_buffer = GtkSource.Buffer()
+        self.view = GtkSource.View(buffer=self.info_buffer)
         self.view.modify_font(Pango.FontDescription("Monospace"))
         self.view.set_wrap_mode(Gtk.WrapMode.WORD)
 
@@ -1318,7 +1322,6 @@ class EditorPage(Page):
 
         if gtkspellcheck is not NotImplemented:
             gtkspellcheck.SpellChecker(self.view)
-        self.info_buffer = self.view.get_buffer()
         scrolled = create_scrollable(self.view)
         vbox.pack_start(scrolled, True, True, 0)
 
