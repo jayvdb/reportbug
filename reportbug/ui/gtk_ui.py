@@ -304,6 +304,8 @@ class BugReport(object):
             if not line.strip():
                 break
             self.headers.append(line)
+            if line.startswith('Subject:'):
+                break
 
         store = 0
         info = []
@@ -361,7 +363,6 @@ class BugReport(object):
 
     def create_message(self, info):
         message = """%s
-
 %s
 
 
