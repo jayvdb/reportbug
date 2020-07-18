@@ -1327,6 +1327,7 @@ class EditorPage(Page):
 
         expander = Gtk.Expander.new_with_mnemonic("Other system information")
         view = Gtk.TextView()
+        view.modify_font(Pango.FontDescription("Monospace"))
         view.set_editable(False)
         self.others_buffer = view.get_buffer()
         scrolled = create_scrollable(view)
