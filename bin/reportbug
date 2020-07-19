@@ -2269,6 +2269,11 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
         # newline in the message.  See #234963.
         body = body.rstrip('\n') + '\n'
 
+        if not pseudoheaders and not justsave:
+            ui.display_failure('Invalid bug report message: No pseudoheaders found.\n'
+                    'Your message will not be submitted, but stored in a temporary file instead.\n')
+            justsave = True
+
         if justsave:
             if not self.options.outfile:
                 fh, outputfile = TempFile(prefix=tfprefix,
