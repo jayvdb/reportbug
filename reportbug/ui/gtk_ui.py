@@ -807,11 +807,7 @@ class GetMultilinePage(Page):
 
     def get_value(self):
         _assert_context(ui_context)
-        text = self.buffer.get_text(self.buffer.get_start_iter(), self.buffer.get_end_iter())
-        lines = text.split('\n')
-        # Remove the trailing empty line at the end
-        if len(lines) > 0 and not lines[-1].strip():
-            del lines[-1]
+        text = self.buffer.get_text(self.buffer.get_start_iter(), self.buffer.get_end_iter(), True)
         return text.split('\n')
 
     def execute(self, prompt):
