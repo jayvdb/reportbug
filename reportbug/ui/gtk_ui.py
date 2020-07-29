@@ -903,6 +903,7 @@ class GetListPage(TreePage):
         _assert_context(ui_context)
         if res == Gtk.ResponseType.ACCEPT:
             self.model.append([dialog.get_value()])
+            self.validate()
         dialog.destroy()
 
     def on_remove(self, button):
@@ -914,6 +915,7 @@ class GetListPage(TreePage):
             iters.append(self.model.get_iter(path))
         for iter in iters:
             self.model.remove(iter)
+        self.validate()
 
     def execute(self, prompt):
         _assert_context(ui_context)
