@@ -2157,6 +2157,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
             ewrite('Will send a CC of this report to the Debian Security Team.\n')
             listcc += ['Debian Security Team <team@security.debian.org>']
 
+        listcc = [cc.strip() for cc in listcc if cc.strip()]
         if listcc:
             pseudos.append('X-Debbugs-Cc: ' + ', '.join(listcc))
 
