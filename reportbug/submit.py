@@ -176,7 +176,7 @@ def mime_attach(body, attachments, charset, body_charset=None):
                 email.encoders.encode_base64(part)
         elif maintype == 'message':
             fp = open(attachment, 'rb')
-            part = MIMEMessage(email.message_from_file(fp),
+            part = MIMEMessage(email.message_from_binary_file(fp),
                                _subtype=subtype)
             fp.close()
         elif maintype == 'image':
