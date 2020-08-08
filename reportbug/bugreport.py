@@ -130,7 +130,7 @@ class bugreport(object):
                 list(debbugs.SYSTEMS[self.system].get('specials', {}).keys()):
             body = utils.NEWBIELINE + '\n\n' + body
         elif not body:
-            body = '\n'
+            body = '\n\n'
 
         if self.issource:
             reportto = 'Source'
