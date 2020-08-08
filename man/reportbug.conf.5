@@ -120,6 +120,9 @@ Additional headers to add to the bug email.  Like:
 .br
 \fBheader\fP \fI"X-Debbugs-No-Ack: please" # to suppress acknowledgments\fP
 
+Note that setting additional headers may not work reliably if the bug
+email is passed to an external MUA for submission.
+
 .TP
 .B http_proxy
 Default HTTP proxy used to query the BTS (override with environment

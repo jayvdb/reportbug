@@ -236,12 +236,12 @@ output.
 .B \-\-list\-cc=ADDRESS
 Send a carbon copy of the report to the specified list after a report
 number is assigned; this is the equivalent to the option
-\fI\-H 'X\-Debbugs\-CC: ADDRESS'\fP.  This option will only work as
+\fI\-P 'X\-Debbugs\-CC: ADDRESS'\fP.  This option will only work as
 intended with \fBdebbugs\fP systems.
 .TP
 .B \-\-list\-cc-me
 Send a carbon copy of the report to your automatically detected email address
-after a report number is assigned. This sets an \fIX\-Debbugs\-CC\fP header
+after a report number is assigned. This sets an \fIX\-Debbugs\-CC\fP pseudo-header
 specifying that address. This option will only work as intended with
 \fBdebbugs\fP systems. See the documentation for the \fI\-\-email\fP option and
 the \fIENVIRONMENT\fP section for information on how reportbug detects your
