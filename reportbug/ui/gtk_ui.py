@@ -1276,11 +1276,9 @@ class LongMessagePage(Page):
         message = message % args
         # make it all on one line, it will be wrapped at display-time
         message = ' '.join(message.split())
-        GLib.idle_add(self.label.set_text, message)
-        # Reportbug should use final_message, so emulate it
         if('nnnnnn' in message):
-            self.set_page_type(Gtk.AssistantPageType.CONFIRM)
-            self.set_page_title("Thanks for your report")
+            message = 'Thank you for your report.\n\n' + message
+        GLib.idle_add(self.label.set_text, message)
 
 
 class FinalMessagePage(LongMessagePage):
