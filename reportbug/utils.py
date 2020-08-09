@@ -1211,7 +1211,7 @@ def get_init_system():
         init = 'OpenRC (via /run/openrc)'
         try:
             with open('/proc/1/comm', 'r') as pf:
-                init += ', PID 1: {}'.format(pf.read().strip())
+                init += f', PID 1: {pf.read().strip()}'
         except:
             pass
     elif os.path.isfile('/sbin/init') and not os.path.islink('/sbin/init'):
