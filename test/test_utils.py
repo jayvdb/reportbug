@@ -342,22 +342,25 @@ class TestSystemInformation(unittest.TestCase):
         os.path.isdir = __save
         del __save
 
-        __save = subprocess.call
+        __save1 = subprocess.call
+        __save2 = os.path.isdir
         subprocess.call = mock.MagicMock(return_value=0)
+        os.path.isdir = mock.MagicMock(return_value=False)
         init = utils.get_init_system()
         self.assertTrue(init.startswith('upstart'))
-        subprocess.call = __save
-        del __save
+        subprocess.call = __save1
+        os.path.isdir = __save2
+        del __save1
+        del __save2
 
         __save1 = os.path.isfile
-        __save2 = os.path.islink
+        __save2 = os.path.isdir
         os.path.isfile = mock.MagicMock(return_value=True)
-        os.path.islink = mock.MagicMock(return_value=False)
+        os.path.isdir = mock.MagicMock(return_value=False)
         init = utils.get_init_system()
-        print(init)
         self.assertTrue(init.startswith('runit'))
         os.path.isfile = __save1
-        os.path.islink = __save2
+        os.path.isdir = __save2
         del __save1
         del __save2
 
