@@ -1,3 +1,43 @@
+reportbug (7.7.1) UNRELEASED; urgency=medium
+
+  [ Anuradha Weeraman ]
+  * reportbug/debbugs.py: Fix crash with stable-pu update request
+    (Closes: #964987)
+
+  [ Nis Martensen ]
+  * mailer.py,submit.py: only run MUA in terminal if needed (Closes: #964846)
+  * reportbug/submit.py: use message_from_binary_file to attach messages
+    (Closes: #966480)
+  * bin/reportbug:
+    - use raw string for regexp
+    - do not submit without pseudoheaders
+    - Fix crash in offer_configuration (Closes: #965977)
+    - drop empty recipients from listcc
+    - Warn that X-Debbugs-Cc via headers are now unreliable
+  * man/reportbug.conf.5: fix bts help hint
+  * man/*: updates for list-cc* and headers
+  * reportbug/ui/gtk_ui.py:
+    - editor: fix report split
+    - Make pseudoheaders editable in Editor
+    - Update empty buffer string
+    - Always set window title
+    - switch editor: TextView → SourceView
+    - editor: do not rewrap pseudoheaders
+    - Editor: show other buffer in monospace font
+    - fix GetListPage
+    - fix crash in _get_multiline
+    - show "Thanks" in message, not in title
+  * debian/control:
+    - update package description
+    - add dependency on gir1.2-gtksource-3.0
+  * reportbug/bugreport.py: add second newline to empty body
+  * reportbug/utils.py:
+    - get_init_system: detect OpenRC (Closes: #968096)
+    - fix test failure in get_init_system
+  * test/test_utils.py: fix test_get_init_system
+
+ -- Nis Martensen <nis.martensen@web.de>  Sat, 05 Sep 2020 10:18:34 +0200
+
 reportbug (7.7.0) unstable; urgency=medium
 
   [ Bastian Venthur ]
