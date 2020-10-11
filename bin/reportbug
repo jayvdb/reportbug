@@ -1067,6 +1067,10 @@ def main():
         # we want options.mua to be a mailer.Mua instance
         options.mua = mailer.MUA.get(options.mua, options.mua)
 
+    if options.http_proxy:
+        os.environ['http_proxy'] = options.http_proxy
+        os.environ['https_proxy'] = options.http_proxy
+
     # try to import the specified UI, but only if template
     # is not set (it's useful only in 'text' UI).
     if options.interface and not options.template:
