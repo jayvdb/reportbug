@@ -35,8 +35,10 @@ reportbug (7.7.1) UNRELEASED; urgency=medium
     - get_init_system: detect OpenRC (Closes: #968096)
     - fix test failure in get_init_system
   * test/test_utils.py: fix test_get_init_system
+  * bin/reportbug, reportbug/urlutils.py: fix proxy support
+    (Closes: #717563, #877850)
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 05 Sep 2020 10:18:34 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 11 Oct 2020 15:28:49 +0200
 
 reportbug (7.7.0) unstable; urgency=medium
 
