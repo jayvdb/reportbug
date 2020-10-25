@@ -1,4 +1,4 @@
-reportbug (7.7.1) UNRELEASED; urgency=medium
+reportbug (7.8.0) unstable; urgency=medium
 
   [ Anuradha Weeraman ]
   * reportbug/debbugs.py: Fix crash with stable-pu update request
@@ -37,8 +37,9 @@ reportbug (7.7.1) UNRELEASED; urgency=medium
   * test/test_utils.py: fix test_get_init_system
   * bin/reportbug, reportbug/urlutils.py: fix proxy support
     (Closes: #717563, #877850)
+  * New release
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 11 Oct 2020 15:28:49 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 25 Oct 2020 09:21:16 +0100
 
 reportbug (7.7.0) unstable; urgency=medium
 
