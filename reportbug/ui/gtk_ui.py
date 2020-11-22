@@ -432,7 +432,7 @@ class BugPage(Gtk.EventBox, threading.Thread):
     def pulse(self):
         _assert_context(ui_context)
         self.progress.pulse()
-        return self.isAlive()
+        return self.is_alive()
 
     def not_found(self):
         _assert_context(ui_context)
