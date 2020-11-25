@@ -175,6 +175,10 @@ def select_options(msg, ok, help, allow_numbers=None, nowrap=False):
     if '?' not in ok:
         ok = ok + '?'
 
+    msg = msg.rstrip()
+    if msg[-1] == '?':
+        msg = msg[:-1]
+
     if nowrap:
         longmsg = msg + ' [' + '|'.join(ok) + ']?' + ' '
     else:

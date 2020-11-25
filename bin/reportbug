@@ -478,7 +478,7 @@ def get_package_name(bts='debian', mode=MODE_EXPERT):
     if mode < MODE_STANDARD:
         if package == 'reportbug':
             if not ui.yes_no('Is "reportbug" actually the package you are '
-                             'having problems with',
+                             'having problems with?',
                              'Yes, I am actually experiencing a problem with '
                              'reportbug.',
                              'No, I really meant to file a bug report on '
@@ -488,7 +488,7 @@ def get_package_name(bts='debian', mode=MODE_EXPERT):
     if mode < MODE_EXPERT:
         if package in ('bugs.debian.org', 'debbugs'):
             if ui.yes_no('Are you reporting a problem with this program '
-                         '(reportbug)', 'Yes, this is actually a bug in '
+                         '(reportbug)?', 'Yes, this is actually a bug in '
                                         'reportbug.', 'No, this is really a problem in the '
                                                       'bug tracking system itself.'):
                 package = 'reportbug'
@@ -1266,7 +1266,7 @@ class UI(object):
                 else:
                     message = "Running 'reportbug' as an administrative user " \
                               "is probably not a good idea!"
-                message += '  Continue'
+                message += '  Continue?'
 
                 if not ui.yes_no(message, 'Continue with reportbug.', 'Exit.',
                                  False):
@@ -1507,7 +1507,7 @@ class UI(object):
                 if not packages:
                     if ui.yes_no('A package named "%s" does not appear to be installed; do '
                                  'you want to search for a similar-looking filename in '
-                                 'an installed package' % package,
+                                 'an installed package?' % package,
                                  'Look for a file with a similar filename.',
                                  'Continue filing with this package name.', True):
                         pkgavail = False
@@ -1526,7 +1526,7 @@ class UI(object):
                         if not ui.yes_no("A package named '%s' does not appear to be installed "
                                          "on your system; however, '%s' contains a file named "
                                          "'%s'.  Do you want to file your report on the "
-                                         "package reportbug found" % (package, pack, tmp),
+                                         "package reportbug found?" % (package, pack, tmp),
                                          'Yes, use the package specified.',
                                          'No, give up the search.'):
                             efail("Package not installed; stopping.\n")
@@ -1538,7 +1538,7 @@ class UI(object):
                 elif not packages:
                     if not ui.yes_no(
                             'This package does not appear to be installed; continue '
-                            'with this report', 'Ignore this problem and continue.',
+                            'with this report?', 'Ignore this problem and continue.',
                             'Exit without filing a report.', False):
                         efail("Package not installed; stopping.\n")
                 elif (len(packages) > 1) or (packages[0][0] != package):
@@ -1555,7 +1555,7 @@ class UI(object):
                         status = utils.get_package_status(package)
             elif not pkgavail and not notatty and not isvirtual and not issource:
                 if not ui.yes_no(
-                        'This package does not appear to exist; continue',
+                        'This package does not appear to exist; continue?',
                         'Ignore this problem and continue.',
                         'Exit without filing a report.', False):
                     efail("Package does not exist; stopping.\n")
@@ -1622,7 +1622,7 @@ class UI(object):
             if rc and not notatty:
                 if not ui.yes_no('There may be a problem with your installation of ' + package +
                                  ';\nthe following problems were detected by debsums:\n' +
-                                 output + '\nDo you still want to file a report',
+                                 output + '\nDo you still want to file a report?',
                                  'Ignore this problem and continue.  This may be '
                                  'appropriate if you have fixed the package manually already.  '
                                  'This problem may also result from the use of localepurge.',
@@ -1651,7 +1651,7 @@ class UI(object):
                 http_proxy=self.options.http_proxy, arch=arch)
             if toonew:
                 if not ui.yes_no('\nYour version of %s (%s) is newer than that in Debian!\n'
-                                 'Do you still want to file a report' % (package, pkgversion),
+                                 'Do you still want to file a report?' % (package, pkgversion),
                                  'Ignore this problem and continue.  This may be '
                                  'appropriate if you know this bug is present in older '
                                  'releases of the package, or you\'re running a mixed '
@@ -1670,7 +1670,7 @@ class UI(object):
                                   'following newer release(s) are available in the Debian '
                                   'archive:\n' % (pkgversion, package)) + availtext +
                                   'Please try to verify if the bug you are about to report is ' +
-                                  'already addressed by these releases.  Do you still want to file a report',
+                                  'already addressed by these releases.  Do you still want to file a report?',
                                   'Ignore this problem and continue.  This may be '
                                   'appropriate if you know this bug is still present in more '
                                   'recent releases of the package.',
@@ -1757,7 +1757,7 @@ class UI(object):
             except NoPackage:
                 if not self.options.queryonly and maintainer and ui.yes_no(
                         'There is no record of this package in the bug tracking '
-                        'system.\nSend report directly to maintainer',
+                        'system.\nSend report directly to maintainer?',
                         'Send the report to the maintainer (%s).' % maintainer,
                         'Send the report to the BTS anyway.'):
                     rtype = 'debbugs'
@@ -1890,7 +1890,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
                 conftext += '\n-- debconf-show failed\n'
             elif output:
                 if (notatty or ui.yes_no("*** The following debconf settings were detected:\n" +
-                                         output + "\nInclude these settings in your report",
+                                         output + "\nInclude these settings in your report?",
                                          'Send your debconf settings.',
                                          "Don't send your debconf settings.", nowrap=True)):
                     conftext += '\n-- debconf information:\n%s\n' % output
@@ -1976,7 +1976,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
         # indicates a security update add the security or LTS team to CC
         # after user confirmation
         if pkgversion and package and not self.options.offline and mode > MODE_NOVICE and utils.is_security_update(package, pkgversion):
-            if ui.yes_no('Do you want to report a regression because of a security update? ',
+            if ui.yes_no('Do you want to report a regression because of a security update?',
                          'Yes, please inform the LTS and security teams.',
                          'No or I am not sure.', True):
                 distnumber = re.search(r'[+~]deb(\d+)u\d+', pkgversion).group(1)
@@ -2083,7 +2083,7 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
                     if ui.yes_no(
                             'Has this package successfully been built for this '
                             'architecture in the past (you can look this up at '
-                            'buildd.debian.org)',
+                            'buildd.debian.org)?',
                             'Yes, this is a recently-introduced problem.',
                             'No, it has always been this way.'):
                         justification += ' (but built successfully in the past)'

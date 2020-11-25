@@ -360,7 +360,7 @@ def select_options(msg, ok, help=None, allow_numbers=False, nowrap=False,
 
 
 def yes_no(msg, yeshelp, nohelp, default=True, nowrap=False, ui=None):
-    box = dialog('', long_message=msg + "?", title=VERSION)
+    box = dialog('', long_message=msg, title=VERSION)
     box.add_buttons([('Yes', True), ('No', False)], default=1 - int(default))
     result = box.main(ui)
     return result
