@@ -265,8 +265,6 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
             section, priority = info[16], info[10]
 
     if tag == 'override':
-        pseudos.append('X-Debbugs-Cc: debian-boot@lists.debian.org')
-        ui.log_message('Your report will be carbon-copied to debian-boot.\n')
 
         # we handle here the override change request
         new_section = ui.menu('Select the new section', {
@@ -310,6 +308,10 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
                 ui.long_message("There's nothing we can do for you, then; "
                                 "exiting...")
                 sys.exit(1)
+
+        if new_priority != priority:
+            pseudos.append('X-Debbugs-Cc: debian-boot@lists.debian.org')
+            ui.log_message('Your report will be carbon-copied to debian-boot.\n')
 
         arch_section = ui.menu('Is this request for an archive section other than "main"?', {
             'main': "",
