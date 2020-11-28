@@ -265,6 +265,8 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
             section, priority = info[16], info[10]
 
     if tag == 'override':
+        pseudos.append('User: ftp.debian.org@packages.debian.org')
+        pseudos.append('Usertags: override')
 
         # we handle here the override change request
         new_section = ui.menu('Select the new section', {
