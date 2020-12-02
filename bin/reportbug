@@ -795,6 +795,7 @@ def main():
                     check_available=True, query_src=True, debconf=True,
                     editor='', offline=False, verify=True, check_uid=True,
                     testmode=False, attachments=[], keyid='', body=None,
+                    resume_saved=None,
                     bodyfile=None, smtptls=False, smtpuser='', smtppasswd='',
                     paranoid=False, mbox_reader_cmd=None)
 
@@ -977,6 +978,9 @@ def main():
     parser.add_option('--body-file', '--bodyfile', dest="bodyfile",
                       type="string",
                       help="use the specified file as the body of the report")
+    parser.add_option('-r', '--resume-saved', dest="resume_saved",
+                      type="string",
+                      help="resume report from previously saved temporary file")
     parser.add_option('-I', '--no-check-installed', action='store_false',
                       default=True, dest='querydpkg',
                       help='don\'t check whether the package is installed')
@@ -1161,6 +1165,7 @@ class UI(object):
         attachments = self.options.attachments
         pgp_addr = self.options.keyid
         bugnumber = self.options.bugnumber
+        bugscript = self.options.bugscript
 
         # if user specified a bug number on the command-line, don't query BTS
         if bugnumber:
@@ -1179,6 +1184,21 @@ class UI(object):
                     body = bf.read()
             except:
                 efail('Unable to read body from file %s.\n', self.options.bodyfile)
+        elif self.options.resume_saved:
+            try:
+                with open(self.options.resume_saved, 'rb') as fb:
+                    msg = email.message_from_binary_file(fb,
+                            policy=email.policy.default)
+                body = msg.get_body().get_content()
+                subject = subject or msg.get('subject')
+                sendto = sendto or msg.get('to')
+                dontquery = True
+                check_available = False
+                bugscript = False
+                severity = 'normal'
+            except:
+                efail('Unable to read message from file %s.\n',
+                        self.options.resume_saved)
 
         if body and not body.endswith('\n'):
             body += '\n'
@@ -1284,7 +1304,10 @@ class UI(object):
 
         foundfile = None
         package = None
-        if not len(self.args) and not self.options.searchfor and not notatty and not self.options.buildd_format:
+        if self.options.resume_saved:
+            package = "reportbug"
+            pkgversion = VERSION_NUMBER
+        elif not len(self.args) and not self.options.searchfor and not notatty and not self.options.buildd_format:
             package = get_package_name(bts, mode)
         elif self.options.buildd_format:
             # retrieve package name and version from the input string
@@ -1575,7 +1598,9 @@ class UI(object):
         bugexec = submitas = submitto = presubj = None
         reportwith = []
         supplemental = []
-        if os.path.isfile(buginfo) and os.access(buginfo, os.X_OK):
+        if self.options.resume_saved:
+            pass
+        elif os.path.isfile(buginfo) and os.access(buginfo, os.X_OK):
             bugexec = buginfo
         elif os.path.isdir(buginfo):
             if os.path.isfile(buginfo + '/script') and os.access(buginfo + '/script', os.X_OK):
@@ -1636,7 +1661,7 @@ class UI(object):
         if not pkgversion or usedavail or (not pkgavail and
                                            not self.options.pkgversion and
                                            not self.options.source):
-            if not bugnumber and not (isvirtual or notatty):
+            if not bugnumber and not (isvirtual or notatty) and not self.options.resume_saved:
                 pkgversion = ui.get_string('Please enter the version of the '
                                            'package this report applies to '
                                            '(blank OK)', empty_ok=True, force_prompt=True)
@@ -2135,7 +2160,7 @@ class UI(object):
                 sendto = 'team@security.debian.org'
 
         # Execute bug script
-        if self.options.bugscript and bugexec and not self.options.kudos:
+        if bugscript and bugexec and not self.options.kudos:
             # add a warning, since it can take a while, 587952
             ewrite("Gathering additional data, this may take a while...\n")
             handler = '/usr/share/reportbug/handle_bugscript'
@@ -2195,11 +2220,14 @@ class UI(object):
             # against the src package
             if not p.startswith('src:'):
                 p = p.split(':')[0]
-            message = utils.generate_blank_report(
-                p, pkgversion, severity, justification,
-                depinfo, conftext, foundfile, incfiles, bts, exinfo, rtype,
-                klass, subject, tags, body, mode, pseudos, debsumsoutput,
-                issource=issource, options=self.options)
+            if self.options.resume_saved:
+                message = body
+            else:
+                message = utils.generate_blank_report(
+                    p, pkgversion, severity, justification,
+                    depinfo, conftext, foundfile, incfiles, bts, exinfo, rtype,
+                    klass, subject, tags, body, mode, pseudos, debsumsoutput,
+                    issource=issource, options=self.options)
 
         # Substitute server email address
         if submitto and '@' not in sendto:

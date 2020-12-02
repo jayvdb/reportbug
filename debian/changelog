@@ -3,18 +3,17 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   [ Roderich Schupp ]
   * reportbug/ui/gtk_ui.py: fix crash with Python 3.9 (Closes: #975398)
 
-  [ Nis Martensen ]
-  * bin/reportbug, reportbug/ui/*: unify yes_no question mark handling
-
   [ Guillem Jover ]
   * reportbug/debbugs.py: Only Cc debian-boot on overrides on priority changes
   * reportbug/debbugs.py: Add appropriate usertags for overrides
   * reportbug/debbugs.py: Add golang as a known section for overrides
 
   [ Nis Martensen ]
+  * bin/reportbug, reportbug/ui/*: unify yes_no question mark handling
   * bin/reportbug: wrap exceedingly long string lines
+  * bin/reportbug: add -r / --resume-saved option (Closes: #328531, #702107)
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 05 Dec 2020 22:41:59 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sat, 05 Dec 2020 22:42:37 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 
