@@ -224,7 +224,9 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                 if itp_line in message and itp_line != '':
                     ewrite("Wrong line: %s\n", itp_line)
                     menuopts = "Eq"
-                    prompt = 'ERROR: you have composed a WNPP bug report with fields unchanged from the template; this will NOT be submitted. Please edit all fields so they contain correct values (e to edit)'
+                    prompt = ("ERROR: you have composed a WNPP bug report with fields "
+                              "unchanged from the template; this will NOT be submitted. "
+                              "Please edit all fields so they contain correct values (e to edit)")
 
         if options.outfile:
             yesmessage = 'Save the report into %s .' % options.outfile
@@ -1218,7 +1220,9 @@ class UI(object):
 
         if smtphost and smtphost.lower() in ('master.debian.org', 'bugs.debian.org'):
             ui.long_message(
-                '*** Warning: %s is no longer an appropriate smtphost setting for reportbug: it has been superseded by reportbug.debian.org and this one is forced as smtphost; please update your .reportbugrc file.\n',
+                "*** Warning: %s is no longer an appropriate smtphost setting for reportbug: "
+                "it has been superseded by reportbug.debian.org and this one is forced as "
+                "smtphost; please update your .reportbugrc file.\n",
                 smtphost.lower())
             smtphost = 'reportbug.debian.org'
 
@@ -1792,15 +1796,16 @@ class UI(object):
             mstr = "Maintainer for %s is '%s'.\n" % (package, maintainer)
             ewrite(mstr)
             if 'qa.debian.org' in maintainer:
-                ui.long_message('''\
-This package seems to be currently "orphaned"; it also seems you're a
-bit interested in this package, since you're reporting a bug against
-it, so you might consider being involved in the package maintenance in Debian and/or adopting it.  Please be aware that your
-report may not be resolved for a while, because the package seems to lack an
-active maintainer, but please GO ON and REPORT the bug, if there is
-one.
-
-For more details, please see: http://www.debian.org/devel/wnpp/''')
+                ui.long_message(
+                    "This package seems to be currently \"orphaned\"; it also seems you're a bit "
+                    "interested in this package, since you're reporting a bug against it, so you "
+                    "might consider being involved in the package maintenance in Debian and/or "
+                    "adopting it.  Please be aware that your report may not be resolved for a while, "
+                    "because the package seems to lack an active maintainer, but please GO ON and "
+                    "REPORT the bug, if there is one.\n"
+                    "\n"
+                    "For more details, please see: http://www.debian.org/devel/wnpp/ "
+                )
 
         if self.options.kudos and not self.options.debugmode:
             sendto = '%s@packages.debian.org' % package
@@ -2121,8 +2126,11 @@ For more details, please see: http://www.debian.org/devel/wnpp/''')
 
         if 'security' in taglist:
             if self.options.secteam or (self.options.secteam is None and ui.yes_no(
-                    'Are you reporting an undisclosed vulnerability? If so, in order to responsibly disclose the issue, it should not be sent to the public BTS right now, but instead to the private Security Team mailing list.',
-                    'Yes, it is an undisclosed vulnerability, send this report to the private Security Team mailing list and not to the BTS.',
+                    'Are you reporting an undisclosed vulnerability? If so, in order '
+                    'to responsibly disclose the issue, it should not be sent to the public BTS '
+                    'right now, but instead to the private Security Team mailing list.',
+                    'Yes, it is an undisclosed vulnerability, send this report to the '
+                    'private Security Team mailing list and not to the BTS.',
                     'No, it is already a publicly disclosed vulnerability, send this report to the BTS.', False)):
                 sendto = 'team@security.debian.org'
 

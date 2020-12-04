@@ -6,7 +6,15 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   [ Nis Martensen ]
   * bin/reportbug, reportbug/ui/*: unify yes_no question mark handling
 
- -- Nis Martensen <nis.martensen@web.de>  Wed, 25 Nov 2020 23:35:48 +0100
+  [ Guillem Jover ]
+  * reportbug/debbugs.py: Only Cc debian-boot on overrides on priority changes
+  * reportbug/debbugs.py: Add appropriate usertags for overrides
+  * reportbug/debbugs.py: Add golang as a known section for overrides
+
+  [ Nis Martensen ]
+  * bin/reportbug: wrap exceedingly long string lines
+
+ -- Nis Martensen <nis.martensen@web.de>  Sat, 05 Dec 2020 22:41:59 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 
