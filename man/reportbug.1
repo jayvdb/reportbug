@@ -328,9 +328,7 @@ Instead of sending an email, redirect it to the specified filename.
 
 The output file is a full dump of the email message, so it contains
 both headers and mail body. If you want to use it as a template to
-create a new bug report, then you have to remove all the headers (mind
-the \fBSubject\fP one, though) and start the report at the
-\fBPackage\fP pseudo-header.
+create a new bug report, see the \-\-resume\-saved option.
 .TP
 .B \-O, \-\-offline
 Disable all external queries.  Currently has the same effect as
@@ -397,6 +395,11 @@ are doing.
 .TP
 .B \-\-reply-to=ADDRESS, \-\-replyto=ADDRESS
 Set the \fBReply-To\fP address header in your report.
+.TP
+.B \-r TEMPFILE, \-\-resume\-saved=TEMPFILE
+Use this to resume an unsent report previously saved by reportbug. Note
+that attachments stored in \fITEMPFILE\fP are ignored; if you want to
+attach any files you need to do that again.
 .TP
 .B \-s SUBJECT, \-\-subject=SUBJECT
 Set the subject of the bug report (i.e. a brief explanation of the
