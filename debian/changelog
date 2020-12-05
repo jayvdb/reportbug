@@ -14,8 +14,9 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * bin/reportbug: add -r / --resume-saved option (Closes: #328531, #702107)
   * man/reportbug.1, bin/reportbug: document new --resume-saved option
     (Closes: #712066)
+  * man/reportbug.1: various minor manpage updates
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 06 Dec 2020 01:19:43 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 06 Dec 2020 01:22:00 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 

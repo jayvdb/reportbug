@@ -52,8 +52,8 @@ previous example becomes: 'file.*') else the shell would expand it
 before calling reportbug leading to an error.
 
 Be aware that when using an external MUA to send the message (such
-as mutt), the attachment feature is not available and no file will
-be attached at all: the MUA feature to attach files must be used
+as mutt), the attachment feature is not reliable and no file might
+be attached at all: the MUA feature to attach files should be used
 instead (so from within the MUA).
 .TP
 .B \-b, \-\-no\-query\-bts
@@ -69,13 +69,13 @@ already been reported (default).
 Instead of the Debian bug server (or the bug server specified in
 \fB/etc/reportbug.conf\fP), use the server specified by \fBSYSTEM\fP.
 Use \-\-bts=help to obtain the list of valid values.
-Note that if your \fBHOME/.reportbugrc\fP or \fB/etc/reportbug.conf\fP include an smtphost
+Note that if your \fB$HOME/.reportbugrc\fP or \fB/etc/reportbug.conf\fP include an smtphost
 setting that is specific to your default bug server and not a generic smarthost,
 you may need to override this using \-\-smtphost=<host> to be able to report a
 bug directly to \fBSYSTEM\fP.
 .TP
 .B \-\-body=BODY
-Use the specified \fIBODY\fP as the body of the message.  The body
+Use the specified \fIBODY\fP string as the body of the message.  The body
 text will be wrapped at 70 columns, and the normal \fBreportbug\fP
 headers and footers will be added as appropriate.  The editor prompt
 and any "special" prompting will be bypassed.
@@ -129,7 +129,7 @@ Operate in test mode (maintainer use only).
 .TP
 .B \-\-draftpath=DRAFTPATH
 Save the draft (for example, when exiting and saving the report
-without reporting it) into \fIDRAFTPATH\fP directory(default /tmp).
+without reporting it) into \fIDRAFTPATH\fP directory (default /tmp).
 .TP
 .B \-e EDITOR, \-\-editor=EDITOR
 Specify the editor to use, overriding any \fBEDITOR\fP or \fBVISUAL\fP
@@ -154,10 +154,6 @@ Specify a command to open the bug reports mbox file. You can use
 \fB%s\fP to substitute the mbox file to be used, and \fB%%\fP to insert
 a literal percent sign. If no \fB%s\fP is specified, the mbox file name
 is supplied at the end of the argument list.
-.TP
-.B \-\-exit\-prompt
-Display a prompt before exiting; this is useful if \fBreportbug\fP is
-run in a transient terminal (i.e. from its Debian menu entry).
 .TP
 .B \-f FILENAME, \-\-filename=FILENAME
 Report a bug in the package containing \fIFILENAME\fP so you don't
@@ -480,7 +476,8 @@ specified on the command line.
 .B \-\-template
 Output a template report to standard output. Differently from
 \fP\-p/\-\-print\fP, it tries to be not interactive, and presents a
-template without user's input.
+template without user's input. You may need to combine it with
+\-\-no\-bug\-script if you want to avoid all user interaction.
 .TP
 .B \-u INTERFACE, \-\-interface=INTERFACE, \-\-ui=INTERFACE
 Specify the user interface to use.  Valid options are \fBtext\fP,
