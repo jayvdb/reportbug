@@ -323,7 +323,7 @@ def long_message(message, *args, **kwargs):
         ui = None
 
     # Rewrap the message
-    chunks = re.split('\n\n+', message)
+    chunks = re.split('\n+', message)
     chunks = [re.sub(r'\s+', ' ', x).strip() for x in chunks]
     message = '\n\n'.join(chunks).strip()
 
