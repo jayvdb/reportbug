@@ -17,8 +17,9 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * man/reportbug.1: various minor manpage updates
   * reportbug/submit.py: clarify what to do with saved reports (Closes: #867269)
   * reportbug/ui/text_ui.py: preserve newlines in long_message()
+  * reportbug/ui/gtk_ui.py: unify newlines in long_message()
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 06 Dec 2020 12:45:27 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 06 Dec 2020 12:46:09 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 

@@ -1274,8 +1274,9 @@ class LongMessagePage(Page):
     def execute(self, message, *args):
         _assert_context(ui_context)
         message = message % args
-        # make it all on one line, it will be wrapped at display-time
-        message = ' '.join(message.split())
+        # no need to wrap the message, it will be wrapped at display-time
+        # but separate all paragraphs by an empty line
+        message = '\n\n'.join(par for par in message.splitlines() if par)
         if('nnnnnn' in message):
             message = 'Thank you for your report.\n\n' + message
         GLib.idle_add(self.label.set_text, message)
