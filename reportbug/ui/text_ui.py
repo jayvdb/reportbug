@@ -246,9 +246,16 @@ def yes_no(msg, yeshelp, nohelp, default=True, nowrap=False):
 
 def long_message(text, *args):
     if args:
-        ewrite(indent_wrap_text(text % args))
+        mtext = text % args
     else:
-        ewrite(indent_wrap_text(text))
+        mtext = text
+
+    linelen = columns - 1
+    # we do not use indent_wrap_text here because it does not preserve newlines
+    mtext = '\n'.join(textwrap.fill(par, width=linelen) for par in mtext.splitlines())
+    mtext = mtext.rstrip() + '\n'
+    ewrite(mtext)
+
 
 final_message = long_message
 
