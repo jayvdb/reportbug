@@ -332,15 +332,16 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
     else:
         # we handle here the removal requests
         suite = ui.menu('Is the removal to be done in a suite other than'
-                        ' "unstable"?  Don\'t select anything for "unstable"', {
+                        ' "unstable"?', {
                             'oldstable': "Old stable.",
                             'oldstable-proposed-updates': "Old stable proposed updates.",
                             'stable': "Stable.",
                             'stable-proposed-updates': "Stable proposed updates.",
                             'testing': "Testing only (NOT unstable)",
                             'testing-proposed-updates': "Testing proposed updates",
+                            'unstable': "Unstable",
                             'experimental': "Experimental.",
-                        }, 'Choose the suite: ', empty_ok=True)
+                        }, 'Choose the suite: ', default='unstable', empty_ok=True)
         if not suite:
             suite = 'unstable'
 
@@ -503,8 +504,7 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                 ui.long_message('No architecture specified, skipping...')
 
     if tag == 'binnmu':
-        suite = ui.menu("For which suite are you requesting this binNMU?"
-                        "  Don't select anything for \"unstable\"", {
+        suite = ui.menu("For which suite are you requesting this binNMU?", {
                             stable: "",
                             stable_backports: "",
                             stable_security: "",
@@ -512,8 +512,9 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                             oldstable_backports: "",
                             oldstable_security: "",
                             testing: "",
+                            'unstable': "",
                             'experimental': "",
-                        }, 'Choose the suite: ', empty_ok=True)
+                        }, 'Choose the suite: ', default='unstable', empty_ok=True)
         if not suite:
             suite = 'unstable'
 

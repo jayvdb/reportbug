@@ -19,8 +19,10 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * reportbug/ui/text_ui.py: preserve newlines in long_message()
   * reportbug/ui/gtk_ui.py: unify newlines in long_message()
   * reportbug/ui/urwid_ui.py: unify newlines in long_message()
+  * reportbug/debbugs.py: include and pre-select default in menus
+    (Closes: #855172)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 06 Dec 2020 12:46:42 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 06 Dec 2020 19:09:32 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 
