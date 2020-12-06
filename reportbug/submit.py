@@ -392,7 +392,7 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                         tryagain = False
 
                 # In case of failure, ask to retry or to save & exit
-                if ui.yes_no('SMTP send failure: %s. Do you want to retry (or else save the report and exit)?' % x,
+                if ui.yes_no(f'SMTP send failure: {x}. You can retry, or save the report and exit. Do you want to retry?',
                              'Yes, please retry.',
                              'No, save and exit.'):
                     tryagain = True
@@ -404,7 +404,8 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                     fh.write(message)
                     fh.close()
 
-                    ewrite('Wrote bug report to %s\n', msgname)
+                    ui.long_message(f'Wrote bug report to {msgname}\n'
+                            'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
         # Handle when some recipients are refused.
         if refused:
             for (addr, err) in refused.items():
@@ -414,13 +415,15 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
             fh.write(message)
             fh.close()
 
-            ewrite('Wrote bug report to %s\n', msgname)
+            ui.long_message(f'Wrote bug report to {msgname}\n'
+                    'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
     else:
         try:
             pipe.write(message)
             pipe.flush()
             if msgname:
-                ui.long_message("Bug report written as %s\n", msgname)
+                ui.long_message(f'Bug report written to {msgname}\n'
+                        'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
         except IOError:
             failed = True
             pipe.close()
@@ -431,7 +434,8 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
             fh.write(message)
             fh.close()
             ui.long_message('Error: send/write operation failed, bug report '
-                            'saved to %s\n', msgname)
+                            f'saved to {msgname}\n'
+                            'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
 
     if mua:
         ewrite("Spawning %s...\n", mua.executable)
