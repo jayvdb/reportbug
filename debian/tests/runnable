@@ -1,0 +1,25 @@
+#! /bin/sh
+
+set -e
+
+echo running $0
+
+test_this() {
+	echo
+	echo "running $@"
+	"$@"
+}
+
+WORKDIR=$(mktemp -d)
+trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
+cd $WORKDIR
+
+test_this reportbug --version
+
+test_this reportbug --draftpath . --template reportbug | tee outfile
+
+test_this grep -q "^Subject: reportbug: none$" outfile
+test_this grep -q "^Package: reportbug$" outfile
+test_this grep -q "^Severity: wishlist$" outfile
+test_this grep -q "^-- Package-specific info:$" outfile
+test_this grep -q "^-- System Information:$" outfile

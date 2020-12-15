@@ -1,0 +1,3 @@
+Tests: runnable
+Depends: @
+Restrictions: allow-stderr
