@@ -25,8 +25,10 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * conf/reportbug.conf, man/reportbug.conf.5: do not mention outfile
   * reportbug.conf, utils.py: add draftpath config file option
   * reportbug/submit.py: drop newlines from final_message text
+  * bin/reportbug: error out if reportbug has no way to submit
+    (Closes: #813660)
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 19 Dec 2020 22:52:46 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sat, 19 Dec 2020 23:24:01 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 
