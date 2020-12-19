@@ -28,8 +28,9 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * bin/reportbug: error out if reportbug has no way to submit
     (Closes: #813660)
   * bin/reportbug: clarify comment about offline setting (Closes: #910712)
+  * bin/reportbug: skip tags prompt with -r and mode > NOVICE
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 20 Dec 2020 00:40:01 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 20 Dec 2020 00:41:44 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 

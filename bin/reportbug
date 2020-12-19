@@ -2126,6 +2126,7 @@ class UI(object):
         if (rtype == 'debbugs' and not self.options.tags and
                 not (notatty or self.options.kudos or exinfo) and
                 package not in ('wnpp', 'ftp.debian.org', 'release.debian.org') and
+                not self.options.resume_saved and
                 mode > MODE_NOVICE and self.options.tagsmenu):
             tags = debbugs.get_tags(severity, mode)
 
