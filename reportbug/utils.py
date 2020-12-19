@@ -870,7 +870,8 @@ CONFIG_ARGS = (
     'sign', 'nocc', 'nocompress', 'dontquery', 'noconf', 'mirrors', 'keyid',
     'headers', 'interface', 'template', 'mode', 'check_available', 'query_src',
     'printonly', 'offline', 'check_uid', 'smtptls', 'smtpuser', 'smtppasswd',
-    'paranoid', 'mbox_reader_cmd', 'max_attachment_size', 'listccme', 'outfile')
+    'paranoid', 'mbox_reader_cmd', 'max_attachment_size', 'listccme',
+    'outfile', 'draftpath')
 
 
 def first_run():
@@ -914,7 +915,7 @@ def parse_config_files():
                 elif token in ('email', 'realname', 'replyto', 'http_proxy',
                                'smtphost', 'editor', 'mua', 'mta', 'smtpuser',
                                'smtppasswd', 'justification', 'keyid',
-                               'mbox_reader_cmd', 'outfile'):
+                               'mbox_reader_cmd', 'outfile', 'draftpath'):
                     bit = lex.get_token()
                     args[token] = bit
                 elif token in ('no-smtptls', 'smtptls'):
