@@ -670,7 +670,7 @@ def offer_configuration(options):
     print('mode %s' % mode, file=fp)
     print('# default user interface', file=fp)
     print('ui %s' % interface, file=fp)
-    print('# offline setting - comment out to be online', file=fp)
+    print('# offline disables querying information over the network', file=fp)
     if not online:
         print('offline', file=fp)
     else:

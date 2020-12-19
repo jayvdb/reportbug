@@ -27,8 +27,9 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * reportbug/submit.py: drop newlines from final_message text
   * bin/reportbug: error out if reportbug has no way to submit
     (Closes: #813660)
+  * bin/reportbug: clarify comment about offline setting (Closes: #910712)
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 19 Dec 2020 23:24:01 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 20 Dec 2020 00:40:01 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 
