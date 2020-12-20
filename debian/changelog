@@ -29,8 +29,10 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
     (Closes: #813660)
   * bin/reportbug: clarify comment about offline setting (Closes: #910712)
   * bin/reportbug: skip tags prompt with -r and mode > NOVICE
+  * bin/reportbug: add missing replyto argument when just saving
+    (Closes: #819570)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 20 Dec 2020 00:41:44 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 20 Dec 2020 01:39:44 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 

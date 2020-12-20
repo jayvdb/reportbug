@@ -2338,6 +2338,7 @@ class UI(object):
             submit.send_report(
                 body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                 headers, package, charset, mailing, sysinfo, rtype, exinfo,
+                self.options.replyto,
                 outfile=self.options.outfile or outputfile, mta=None,
                 smtphost=None)
         else:
