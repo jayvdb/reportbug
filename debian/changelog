@@ -31,8 +31,9 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
   * bin/reportbug: skip tags prompt with -r and mode > NOVICE
   * bin/reportbug: add missing replyto argument when just saving
     (Closes: #819570)
+  * bin/reportbug: move MTA check from main() into UI()
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 20 Dec 2020 01:39:44 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Mon, 21 Dec 2020 22:59:11 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 

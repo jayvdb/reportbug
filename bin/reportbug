@@ -1069,13 +1069,6 @@ def main():
         # we want options.mua to be a mailer.Mua instance
         options.mua = mailer.MUA.get(options.mua, options.mua)
 
-    if options.mta and not os.path.exists(options.mta) and not (
-            options.mua or options.template or options.printonly or
-            options.smtphost or options.outfile):
-        ewrite(f"The MTA {options.mta} is not available; exiting.\n")
-        ewrite("Please run 'reportbug --configure' or specify a submission method on the command line.\n")
-        sys.exit(1)
-
     if options.http_proxy:
         os.environ['http_proxy'] = options.http_proxy
         os.environ['https_proxy'] = options.http_proxy
@@ -1304,6 +1297,13 @@ class UI(object):
             offer_configuration(self.options)
             ewrite('To report a bug, please rerun reportbug.\n')
             sys.exit(0)
+
+        if self.options.mta and not os.path.exists(self.options.mta) and not (
+                self.options.mua or self.options.template or self.options.printonly or
+                self.options.smtphost or self.options.outfile):
+            ewrite(f"The MTA {self.options.mta} is not available; exiting.\n")
+            ewrite("Please run 'reportbug --configure' or specify a submission method on the command line.\n")
+            sys.exit(1)
 
         foundfile = None
         package = None
