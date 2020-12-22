@@ -33,8 +33,9 @@ reportbug (7.8.1) UNRELEASED; urgency=medium
     (Closes: #819570)
   * bin/reportbug: move MTA check from main() into UI()
   * debian/control: update standards-version (no changes needed)
+  * reportbug/ui/gtk_ui.py: truncate long messages to avoid crashing
 
- -- Nis Martensen <nis.martensen@web.de>  Mon, 21 Dec 2020 22:59:38 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Tue, 22 Dec 2020 11:20:26 +0100
 
 reportbug (7.8.0) unstable; urgency=medium
 

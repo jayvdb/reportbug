@@ -457,7 +457,10 @@ class BugPage(Gtk.EventBox, threading.Thread):
         for body in bodies:
             view = Gtk.TextView()
             view.set_editable(False)
-            view.get_buffer().set_text(body)
+            # truncate excessively long messages
+            # without the GTK interface can crash, e.g., reportbug -u gtk -N 711404 crashes
+            # TODO: fix this properly
+            view.get_buffer().set_text(body[:10000])
             if odd:
                 view.set_state_flags(Gtk.StateFlags.PRELIGHT, False)
             views.pack_start(view, False, True, 0)
