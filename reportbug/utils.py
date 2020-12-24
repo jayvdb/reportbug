@@ -255,23 +255,25 @@ def find_package_for(filename, pathonly=False):
 
 
 def find_rewritten(username):
-    for filename in ['/etc/email-addresses']:
-        if os.path.exists(filename):
-            try:
-                fp = open(filename, errors='backslashreplace')
-            except IOError:
+    filename = '/etc/email-addresses'
+    try:
+        fp = open(filename, errors='backslashreplace')
+    except (FileNotFoundError, IOError):
+        return None
+    else:
+        for line in fp:
+            line = line.strip().split('#')[0]
+            if not line:
                 continue
-            for line in fp:
-                line = line.strip().split('#')[0]
-                if not line:
-                    continue
-                try:
-                    name, alias = line.split(':')
-                    if name.strip() == username:
-                        return alias.strip()
-                except ValueError:
-                    print('Invalid entry in %s' % filename)
-                    return None
+            try:
+                name, alias = line.split(':')
+                if name.strip() == username:
+                    return alias.strip()
+            except ValueError:
+                print('Invalid entry in %s' % filename)
+                return None
+    finally:
+        fp.close()
 
 
 def check_email_addr(addr):
@@ -307,9 +309,10 @@ def get_user_id(emailaddr='', realname='', charset='utf-8'):
     emailaddr = emailaddr or find_rewritten(info[0]) or info[0]
 
     if '@' not in emailaddr:
-        if os.path.exists('/etc/mailname'):
-            domainname = open('/etc/mailname').readline().strip()
-        else:
+        try:
+            with open('/etc/mailname', 'r') as mf:
+                domainname = mf.readline().strip()
+        except (FileNotFoundError, IOError):
             domainname = socket.getfqdn()
 
         emailaddr = emailaddr + '@' + domainname

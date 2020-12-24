@@ -1,3 +1,13 @@
+reportbug (7.9.1) UNRELEASED; urgency=medium
+
+  [ Logan Rosen ]
+  * Add tags to existing bug (Closes: #694161)
+
+  [ Nis Martensen ]
+  * reportbug/utils.py: minor code cleanups
+
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 10:53:27 +0100
+
 reportbug (7.9.0) unstable; urgency=medium
 
   [ Roderich Schupp ]
