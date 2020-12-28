@@ -5,8 +5,10 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
 
   [ Nis Martensen ]
   * reportbug/utils.py: minor code cleanups
+  * bin/reportbug: recognize 'src:' shortcut for --source option
+    (Closes: #978398)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 10:53:27 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 11:14:31 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 

@@ -420,7 +420,7 @@ def find_package_for(filename, notatty=False, pathonly=False):
 
 
 def validate_package_name(package):
-    if not re.match(r'^[a-z0-9][a-z0-9+.-]+$', package):
+    if not re.match(r'^(src:)?[a-z0-9][a-z0-9+.-]+$', package):
         ui.long_message("%s is not a valid package name.", package)
         package = None
     return package
@@ -1163,6 +1163,15 @@ class UI(object):
         bugnumber = self.options.bugnumber
         bugscript = self.options.bugscript
 
+        pkgavail = maintainer = origin = src_name = state = debsumsoutput = ''
+        depends = []
+        recommends = []
+        suggests = []
+        conffiles = []
+        reportinfo = None
+        issource = installed = usedavail = False
+        status = None
+
         # if user specified a bug number on the command-line, don't query BTS
         if bugnumber:
             dontquery = True
@@ -1335,6 +1344,10 @@ class UI(object):
                 # convert it to the source package if we are reporting for src
                 package = utils.get_source_name(package)
 
+        if package and package.startswith('src:'):
+            package = package[4:]
+            issource = True
+
         others = debbugs.SYSTEMS[bts].get('otherpkgs')
         if package == 'other' and others:
             package = get_other_package_name(others)
@@ -1402,17 +1415,6 @@ class UI(object):
                     sys.exit(1)
             incfiles += '\n'
 
-        pkgavail = maintainer = origin = src_name = state = debsumsoutput = ''
-        depends = []
-        recommends = []
-        suggests = []
-        conffiles = []
-        reportinfo = None
-        isvirtual = (package in list(sysinfo.get('otherpkgs', {}).keys()) and
-                     package not in sysinfo.get('nonvirtual', []))
-        issource = installed = usedavail = False
-        status = None
-
         if self.options.source:
             issource = True
 
@@ -1450,6 +1452,9 @@ class UI(object):
             efail('No such bug report.\n')
         except NoReport:
             efail('Exiting.\n')
+
+        isvirtual = (package in list(sysinfo.get('otherpkgs', {}).keys()) and
+                     package not in sysinfo.get('nonvirtual', []))
 
         if not pkgversion and self.options.querydpkg and \
                 sysinfo.get('query-dpkg', True) and \
