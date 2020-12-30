@@ -148,6 +148,8 @@ class bugreport(object):
 
             report = "%s: %s\n%s\n" % (reportto, self.package, headers)
         else:
+            if hasattr(self, 'tags') and self.tags:
+                headers += f'Control: tags -1 {self.tags}\n'
             report = "Followup-For: Bug #%d\n%s: %s\n%s\n" % (
                 self.followup, reportto, self.package, headers)
 
