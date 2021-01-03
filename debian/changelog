@@ -13,8 +13,10 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
     (Closes: #922626)
   * reportbug/tempfiles.py: make tempfile names include time of day
     (Closes: #929972)
+  * reportbug/debbugs.py: add affects for RFH, RFA, and O wnpp bugs
+    (Closes: #904252)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 17:01:33 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 17:13:12 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 
