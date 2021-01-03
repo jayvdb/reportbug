@@ -847,7 +847,7 @@ def generate_blank_report(package, pkgversion, severity, justification,
     # For now...
     from . import bugreport
 
-    sysinfo = (package not in ('wnpp', 'ftp.debian.org') and (options and not options.buildd_format))
+    sysinfo = (package not in debbugs.debother and (options and not options.buildd_format))
 
     # followup is where bugreport expects the notification of the bug reportbug
     # to follow-up, but reportbug pass this information with 'exinfo'
