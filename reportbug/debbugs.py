@@ -786,7 +786,7 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
                     'The package description is:\n') % (orphstr, package)
             body = body + long_desc + '\n'
 
-        pseudos.append(f'Control: affects -1 {package}')
+        pseudos.append(f'Control: affects -1 src:{package}')
 
     if short_desc:
         subject = '%s: %s -- %s' % (tag, package, short_desc)
