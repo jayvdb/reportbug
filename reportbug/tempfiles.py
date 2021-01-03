@@ -26,16 +26,13 @@ import time
 
 
 def tempfile_prefix(package=None, extra=None):
-    if extra:
-        if package:
-            package = '%s-%s' % (package, extra)
-        else:
-            package = extra
-
+    plist = ['reportbug']
     if package:
-        return 'reportbug-%s-%s-%d-' % (
-            package, time.strftime('%Y%m%d'), os.getpid())
-    return 'reportbug-%s-%d-' % (time.strftime('%Y%m%d'), os.getpid())
+        plist.append(package)
+    if extra:
+        plist.append(extra)
+    plist.append(time.strftime('%Y%m%d%H%M%S-'))
+    return '-'.join(plist)
 
 
 template = tempfile_prefix()
