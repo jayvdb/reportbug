@@ -7,8 +7,10 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
   * reportbug/utils.py: minor code cleanups
   * bin/reportbug: recognize 'src:' shortcut for --source option
     (Closes: #978398)
+  * bin/reportbug, reportbug/utils.py: improve checks for invalid from address
+    (Closes: #933006)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 11:14:31 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 12:19:37 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 

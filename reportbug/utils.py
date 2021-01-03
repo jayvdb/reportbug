@@ -289,6 +289,13 @@ def check_email_addr(addr):
         return False
     if domainpart.startswith('.') or domainpart.endswith('.'):
         return False
+    # known invalid addresses according to rfc2606
+    if domainpart in ('localhost', 'example.com', 'example.net', 'example.org'):
+        return False
+    if domainpart.endswith(('.example', '.invalid', '.localhost', '.test',
+            '.example.com', '.example.net', '.example.org')):
+        return False
+
     return True
 
 

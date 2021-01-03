@@ -33,6 +33,14 @@ class TestEmail(unittest.TestCase):
         self.assertFalse(utils.check_email_addr('nouser@.nodomain'))
         self.assertFalse(utils.check_email_addr('nouser@nodomain.'))
         self.assertFalse(utils.check_email_addr('too@many@at@signs'))
+        self.assertFalse(utils.check_email_addr('dummy@localhost'))
+        self.assertFalse(utils.check_email_addr('dummy@example.com'))
+        self.assertFalse(utils.check_email_addr('dummy@example.net'))
+        self.assertFalse(utils.check_email_addr('dummy@example.org'))
+        self.assertFalse(utils.check_email_addr('dummy@foo.localhost'))
+        self.assertFalse(utils.check_email_addr('dummy@this.is.a.test'))
+        self.assertFalse(utils.check_email_addr('dummy@is.invalid'))
+        self.assertFalse(utils.check_email_addr('dummy@my.example'))
 
     def test_get_email_addr(self):
         email = 'Reportbug Maintainers <debian-reportbug@lists.debian.org>'

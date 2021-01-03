@@ -1381,8 +1381,12 @@ class UI(object):
                    "Please change your locale if this is incorrect.\n\n", charset)
 
         fromaddr = utils.get_user_id(self.options.email, self.options.realname, charset)
+        if not utils.check_email_addr(email.utils.parseaddr(fromaddr)[1]):
+            efail("Unable to identify a valid from address, please run 'reportbug --configure'\n")
         ewrite("Using '%s' as your from address.\n",
                 str(email.header.make_header(email.header.decode_header(fromaddr))))
+        if '@localhost' in fromaddr:
+            ewrite("Please quit and run 'reportbug --configure' if this is not correct.\n")
         if self.options.debugmode:
             sendto = fromaddr
 
