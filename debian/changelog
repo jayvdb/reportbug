@@ -15,8 +15,9 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
     (Closes: #929972)
   * reportbug/debbugs.py: add affects for RFH, RFA, and O wnpp bugs
     (Closes: #904252)
+  * bin/reportbug: exit if specified attachments do not exist (Closes: #671398)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 17:13:12 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Jan 2021 18:37:50 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 

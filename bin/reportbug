@@ -1027,20 +1027,22 @@ def main():
     if options.attachments:
         # support glob
         globbed_attachments = []
-        for attachment in options.attachments:
-            globbed_attachments.extend(sorted(glob(attachment), key=str.casefold))
-        options.attachments = globbed_attachments
         any_missing = False
         for attachment in options.attachments:
-            if not os.path.exists(os.path.expanduser(attachment)):
-                print('The attachment file %s does not exist.' % attachment)
+            globres = sorted(glob(attachment), key=str.casefold)
+            if globres:
+                globbed_attachments.extend(globres)
+            else:
+                ewrite(f"The attachment file '{attachment}' could not be found.\n")
                 any_missing = True
-            elif check_attachment_size(attachment, options.max_attachment_size):
-                print('The attachment file %s size is bigger than the maximum of %d bytes: reduce ' \
-                      'its size else the report cannot be sent' % (attachment, options.max_attachment_size))
+        options.attachments = globbed_attachments
+        for attachment in options.attachments:
+            if check_attachment_size(attachment, options.max_attachment_size):
+                ewrite('The attachment file %s size is bigger than the maximum of %d bytes: reduce '
+                      'its size else the report cannot be sent.\n' % (attachment, options.max_attachment_size))
                 any_missing = True
         if any_missing:
-            print("The above files can't be attached; exiting")
+            ewrite("The above file(s) can't be attached; exiting.\n")
             sys.exit(1)
 
     if options.keyid and not options.sign:
