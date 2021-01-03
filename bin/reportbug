@@ -160,7 +160,7 @@ def include_file_in_report(message, message_filename,
 
 
 def handle_editing(filename, dmessage, options, sendto, attachments, package,
-                   severity, mode, editor=None, charset='utf-8', tags=''):
+                   severity, mode, is_followup, is_source, editor=None, charset='utf-8', tags=''):
     if not editor:
         editor = options.editor
     editor = utils.which_editor(editor)
@@ -345,17 +345,17 @@ def handle_editing(filename, dmessage, options, sendto, attachments, package,
                 'Do any of the following apply to this report?', ntags,
                 'Please select tags: ')
             if newtaglist:
-                oldtags = ''
-                newtags = ''
+                tags_prefix = 'Control: tags -1 ' if is_followup else 'Tags: '
                 if tags:
-                    oldtags = 'Tags: ' + tags
+                    oldtags = tags_prefix + tags
                     newtaglist += tags.split()
                     # suppress twins in the tag list
                     newtaglist = list(set(newtaglist))
-                    newtags = 'Tags: ' + ' '.join(newtaglist)
+                    newtags = tags_prefix + ' '.join(newtaglist)
                 else:
-                    oldtags = 'Severity: ' + severity + '\n'
-                    newtags = oldtags + 'Tags: ' + ' '.join(newtaglist) + '\n'
+                    package_prefix = 'Source: ' if is_source else 'Package: '
+                    oldtags = package_prefix + package + '\n'
+                    newtags = oldtags + tags_prefix + ' '.join(newtaglist) + '\n'
                 if 'patch' in newtaglist:
                     patch = True
                 message = message.replace(oldtags, newtags)
@@ -2272,7 +2272,7 @@ class UI(object):
             if not self.options.body and not self.options.bodyfile:
                 message, haspatch, justsave = handle_editing(
                     filename, message, self.options, sendto, attachments,
-                    package, severity, mode, charset=charset, tags=tags)
+                    package, severity, mode, bool(exinfo), issource, charset=charset, tags=tags)
                 if haspatch:
                     patch = True
 

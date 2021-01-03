@@ -32,11 +32,13 @@ class TestBugreport(unittest.TestCase):
     def test_followup(self):
         self.body = 'test'
         self.package = 'reportbug'
+        self.tags = 'patch ftbfs'
         self.report = bugreport(package=self.package, body=self.body,
-                                followup=123456)
+                                followup=123456, tags=self.tags)
         self.text = self.report.__unicode__()
 
         self.assertIn('Followup-For: Bug #123456', self.text)
+        self.assertIn(f'Control: tags -1 {self.tags}', self.text)
         self.assertNotIn('Severity: ', self.text)
 
         # test also a bugreport instance, and a datatype unconvertible to int
@@ -46,6 +48,7 @@ class TestBugreport(unittest.TestCase):
         self.text = self.report.__unicode__()
 
         self.assertIn('Followup-For: Bug #123456', self.text)
+        self.assertNotIn('Control: tags -1 ', self.text)
         self.assertNotIn('Severity: ', self.text)
 
         with self.assertRaises(TypeError):
