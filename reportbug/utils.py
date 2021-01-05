@@ -558,8 +558,11 @@ def get_source_name(package):
     except KeyError:
         pass
     # check if there is a source package with that name
-    if apt.apt_pkg.SourceRecords().lookup(package):
-        return package
+    try:
+        if apt.apt_pkg.SourceRecords().lookup(package):
+            return package
+    except apt.apt_pkg.Error as e:
+        print(f"Cannot look up source package: '{e}'")
     return None
 
 
