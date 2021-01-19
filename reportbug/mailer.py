@@ -2,8 +2,8 @@
 # mailer module - Mail User Agent interface for reportbug
 #   Written by Chris Lawrence <lawrencc@debian.org>
 #   Copyright (C) 1999-2008 Chris Lawrence
-#   Copyright (C) 2008-2020 Sandro Tosi <morph@debian.org>
-#   Copyright (C) 2020 Nis Martensen <nis.martensen@web.de>
+#   Copyright (C) 2008-2021 Sandro Tosi <morph@debian.org>
+#   Copyright (C) 2020-2021 Nis Martensen <nis.martensen@web.de>
 #
 # This program is freely distributable per the following license:
 #

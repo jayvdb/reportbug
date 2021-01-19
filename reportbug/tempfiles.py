@@ -2,7 +2,7 @@
 # tempfiles module - Temporary file handling for reportbug
 #   Written by Chris Lawrence <lawrencc@debian.org>
 #   (C) 1999-2008 Chris Lawrence
-#   Copyright (C) 2008-2020 Sandro Tosi <morph@debian.org>
+#   Copyright (C) 2008-2021 Sandro Tosi <morph@debian.org>
 #
 # This program is freely distributable per the following license:
 #

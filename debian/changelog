@@ -17,8 +17,9 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
     (Closes: #904252)
   * bin/reportbug: exit if specified attachments do not exist (Closes: #671398)
   * reportbug/utils.py: add try..except in get_source_name() (Closes: #979333)
+  * extend copyright notice to 2021
 
- -- Nis Martensen <nis.martensen@web.de>  Tue, 05 Jan 2021 19:19:40 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 24 Jan 2021 12:55:58 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 
