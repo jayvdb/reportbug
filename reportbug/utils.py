@@ -426,7 +426,7 @@ def get_package_status(package, avail=False):
             (crud, origin) = line.split(": ", 1)
         elif bugsre.match(line):
             (crud, bugs) = line.split(": ", 1)
-        elif descre.match(line):
+        elif descre.match(line) and not fulldesc:
             (crud, desc) = line.split(": ", 1)
             descmode = True
         elif dependsre.match(line):
