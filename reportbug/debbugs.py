@@ -796,6 +796,118 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
     return (subject, severity, headers, pseudos, body, query)
 
 
+def handle_installation_report(package, bts, ui, fromaddr, timeout, online=True, http_proxy=None):
+    short_desc = body = ''
+    headers = []
+    pseudos = []
+    query = True
+    severity = ''
+
+    subject = (ui.get_string('Please enter a brief one-line summary of your report: ')
+               or 'Installation Report')
+
+    bootmethod = (ui.get_string('How did you boot the installer (CD/DVD/USB/network/...)? ')
+                  or '<boot method (CD/DVD, USB stick, network, etc.>')
+
+    image = (ui.get_string('What image did you use to install? (If you can, give its URL and build date) ')
+             or '<Full URL to image you downloaded is best>')
+
+    machine = (ui.get_string('Describe your machine (manufacturer and type): ')
+               or '<Description of machine (manufacturer, type)>')
+
+    body = textwrap.dedent(f"""\
+        (Please provide enough information to help the Debian
+        maintainers evaluate the report efficiently - e.g., by filling
+        in the sections below.)
+
+        Boot method: {bootmethod}
+        Image version: {image}
+        Date: <Date and time of the install>
+
+        Machine: {machine}
+        Partitions: <df -Tl will do; the raw partition table is preferred>
+
+
+        Base System Installation Checklist:
+        [O] = OK, [E] = Error (please elaborate below), [ ] = didn't try it
+
+        Initial boot:           [ ]
+        Detect network card:    [ ]
+        Configure network:      [ ]
+        Detect media:           [ ]
+        Load installer modules: [ ]
+        Clock/timezone setup:   [ ]
+        User/password setup:    [ ]
+        Detect hard drives:     [ ]
+        Partition hard drives:  [ ]
+        Install base system:    [ ]
+        Install tasks:          [ ]
+        Install boot loader:    [ ]
+        Overall install:        [ ]
+
+        Comments/Problems:
+
+        <Description of the install, in prose, and any thoughts, comments
+              and ideas you had during the initial install.>
+
+
+        Please make sure that any installation logs that you think would
+        be useful are attached to this report. Please compress large
+        files using gzip.
+        """)
+
+    return (subject, severity, headers, pseudos, body, query)
+
+
+def handle_upgrade_report(package, bts, ui, fromaddr, timeout, online=True, http_proxy=None):
+    short_desc = body = ''
+    headers = []
+    pseudos = []
+    query = True
+    severity = ''
+
+    subject = (ui.get_string('Please enter a brief one-line summary of your report: ')
+               or 'Upgrade Report')
+
+    body = textwrap.dedent(f"""\
+        (Please provide enough information to help the Debian
+        maintainers evaluate the report efficiently - e.g., by filling
+        in the sections below.)
+
+        My previous release is: <codename or version from which you are upgrading>
+        I am upgrading to: <codename or version of the release you are upgrading to>
+        Archive date: <Timestamp, available as project/trace/ftp-master.debian.org
+             on your mirror or .disk/info on your CD/DVD set>
+        Upgrade date: <Date and time of the upgrade>
+        uname -a before upgrade: <The result of running uname -a on a shell prompt>
+        uname -a after upgrade: <The result of running uname -a on a shell prompt>
+        Method: <How did you upgrade?  Which program did you use?>
+
+        Contents of /etc/apt/sources.list:
+
+
+        - Were there any non-Debian packages installed before the upgrade?  If
+          so, what were they?
+
+        - Was the system pre-update a pure sarge system? If not, which packages
+          were not from sarge?
+
+        - Did any packages fail to upgrade?
+
+        - Were there any problems with the system after upgrading?
+
+
+        Further Comments/Problems:
+
+
+        Please attach the output of "COLUMNS=200 dpkg -l" (or "env COLUMNS ...",
+        depending on your shell) from before and after the upgrade so that we
+        know what packages were installed on your system.
+        """)
+
+    return (subject, severity, headers, pseudos, body, query)
+
+
 def dpkg_infofunc():
     debarch = utils.get_arch()
     utsmachine = os.uname()[4]
@@ -836,7 +948,10 @@ SYSTEMS = {'debian':
             'specials':
                 {'wnpp': handle_wnpp,
                  'ftp.debian.org': handle_debian_ftp,
-                 'release.debian.org': handle_debian_release},
+                 'release.debian.org': handle_debian_release,
+                 'installation-reports': handle_installation_report,
+                 'upgrade-reports': handle_upgrade_report,
+                },
             # Dependency packages
             'deppkgs': ('gcc', 'g++', 'cpp', 'gcj', 'gpc', 'gobjc',
                         'chill', 'gij', 'g77', 'python', 'python-base',

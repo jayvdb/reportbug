@@ -131,6 +131,8 @@ class bugreport(object):
             body = utils.NEWBIELINE + '\n\n' + body
         elif not body:
             body = '\n\n'
+        else:
+            body += '\n'
 
         if self.issource:
             reportto = 'Source'

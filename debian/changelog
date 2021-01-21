@@ -19,8 +19,10 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
   * reportbug/utils.py: add try..except in get_source_name() (Closes: #979333)
   * extend copyright notice to 2021
   * reportbug.utils.get_package_status: use one long description
+  * reportbug/debbugs.py: handle installation and upgrade reports
+    (Closes: #931438)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 24 Jan 2021 12:56:30 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 24 Jan 2021 13:17:39 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 
