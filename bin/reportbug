@@ -2061,6 +2061,9 @@ class UI(object):
                         ewrite("Removing release critical severities, since running in \'%s\' mode.\n" % utils.MODELIST[mode])
                         for sev in ['critical', 'grave', 'serious', 'does-not-build']:
                             del severities[sev]
+                    if isvirtual:
+                        for sev in ['critical', 'does-not-build']:
+                            if sev in severities: del severities[sev]
                     default = 'normal'
                 while not severity or severity not in debbugs.SEVLIST:
                     severity = ui.menu("How would you rate the severity of this "
