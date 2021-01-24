@@ -518,6 +518,9 @@ def get_package_name(bts='debian', mode=MODE_EXPERT):
                              False):
                 return get_package_name(bts, mode)
 
+        if package in ('installation-report', 'upgrade-report'):
+            package += 's'
+
     return package
 
 
@@ -1358,6 +1361,9 @@ class UI(object):
             ui.long_message(
                 "Automatically selecting the package for the running kernel")
             package = utils.get_running_kernel_pkg()
+
+        if package in ('installation-report', 'upgrade-report'):
+            package += 's'
 
         if not package:
             efail("No package specified or we were unable to find it in the apt"

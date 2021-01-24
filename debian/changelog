@@ -23,8 +23,9 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
     (Closes: #931438)
   * bin/reportbug: drop some severities for virtual packages
   * reportbug/ui/gtk_ui.py: don't cut off lines if there is no sysinfo
+  * bin/reportbug: set up upgrade/installation-reports aliases w/o "s"
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 24 Jan 2021 13:18:29 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 24 Jan 2021 13:32:21 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 
