@@ -312,6 +312,7 @@ class BugReport(object):
 
         store = 0
         info = []
+        has_other = False
         while i < len(lines):
             line = lines[i]
             info.append(line)
@@ -320,12 +321,18 @@ class BugReport(object):
                 if store < 2:
                     store += 1
                 continue
-            if store == 2 and(line.startswith('-- ') or line.startswith('** ')):
+            if store == 2 and line == '-- Package-specific info:':
+                has_other = True
                 break
             store = 0
-        self.original_info = '\n'.join(info[:-3])
 
-        self.others = '\n'.join(lines[i - 1:])
+        if has_other:
+            self.original_info = '\n'.join(info[:-3])
+            self.others = '\n'.join(lines[i - 1:])
+        else:
+            self.original_info = '\n'.join(info[:-2])
+            self.others = ''
+
 
     def get_others(self):
         return self.others
@@ -365,12 +372,10 @@ class BugReport(object):
         return body
 
     def create_message(self, info):
-        message = """%s
-%s
+        if self.others:
+            return '{}\n{}\n\n{}'.format('\n'.join(self.headers), self.wrap_bug_body(info), self.others)
 
-
-%s""" % ('\n'.join(self.headers), self.wrap_bug_body(info), self.others)
-        return message
+        return '{}\n{}\n'.format('\n'.join(self.headers), self.wrap_bug_body(info))
 
 
 # BTS GUI
