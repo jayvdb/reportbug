@@ -1362,7 +1362,7 @@ class UI(object):
                 "Automatically selecting the package for the running kernel")
             package = utils.get_running_kernel_pkg()
 
-        if package in ('installation-report', 'upgrade-report'):
+        if package in ('installation-report', 'upgrade-report') and mode < MODE_EXPERT:
             package += 's'
 
         if not package:
