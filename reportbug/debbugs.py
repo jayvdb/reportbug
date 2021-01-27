@@ -802,9 +802,7 @@ def handle_installation_report(package, bts, ui, fromaddr, timeout, online=True,
     pseudos = []
     query = True
     severity = ''
-
-    subject = (ui.get_string('Please enter a brief one-line summary of your report: ')
-               or 'Installation Report')
+    subject = ''
 
     bootmethod = (ui.get_string('How did you boot the installer (CD/DVD/USB/network/...)? ')
                   or '<boot method (CD/DVD, USB stick, network, etc.>')
@@ -865,9 +863,7 @@ def handle_upgrade_report(package, bts, ui, fromaddr, timeout, online=True, http
     pseudos = []
     query = True
     severity = ''
-
-    subject = (ui.get_string('Please enter a brief one-line summary of your report: ')
-               or 'Upgrade Report')
+    subject = ''
 
     body = textwrap.dedent(f"""\
         (Please provide enough information to help the Debian
