@@ -1,4 +1,4 @@
-reportbug (7.9.1) UNRELEASED; urgency=medium
+reportbug (7.10.0) unstable; urgency=medium
 
   [ Logan Rosen ]
   * Add tags to existing bug (Closes: #694161)
@@ -26,7 +26,7 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
   * reportbug/utils.py: fix source package lookup for udebs.
     Thanks to David Kalnischkies for advice (Closes: #982281)
 
- -- Nis Martensen <nis.martensen@web.de>  Mon, 08 Feb 2021 18:27:22 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Mon, 08 Feb 2021 18:47:18 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 
