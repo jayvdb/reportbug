@@ -945,7 +945,7 @@ SYSTEMS = {'debian':
                 {'wnpp': handle_wnpp,
                  'ftp.debian.org': handle_debian_ftp,
                  'release.debian.org': handle_debian_release,
-                 'installation-reports': handle_installation_report,
+                 # 'installation-reports': handle_installation_report,
                  'upgrade-reports': handle_upgrade_report,
                 },
             # Dependency packages
