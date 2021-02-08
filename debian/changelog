@@ -23,8 +23,10 @@ reportbug (7.9.1) UNRELEASED; urgency=medium
   * bin/reportbug: drop some severities for virtual packages
   * reportbug/ui/gtk_ui.py: don't cut off lines if there is no sysinfo
   * bin/reportbug: set up upgrade/installation-reports aliases w/o "s"
+  * reportbug/utils.py: fix source package lookup for udebs.
+    Thanks to David Kalnischkies for advice (Closes: #982281)
 
- -- Nis Martensen <nis.martensen@web.de>  Mon, 08 Feb 2021 18:20:49 +0100
+ -- Nis Martensen <nis.martensen@web.de>  Mon, 08 Feb 2021 18:27:22 +0100
 
 reportbug (7.9.0) unstable; urgency=medium
 
