@@ -260,7 +260,7 @@ def find_rewritten(username):
         fp = open(filename, errors='backslashreplace')
     except (FileNotFoundError, IOError):
         return None
-    else:
+    try:
         for line in fp:
             line = line.strip().split('#')[0]
             if not line:
