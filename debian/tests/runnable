@@ -14,6 +14,9 @@ WORKDIR=$(mktemp -d)
 trap "rm -rf $WORKDIR" 0 INT QUIT ABRT PIPE TERM
 cd $WORKDIR
 
+REPORTBUGEMAIL=debian-reportbug@lists.debian.org
+export REPORTBUGEMAIL
+
 test_this reportbug --version
 
 test_this reportbug --draftpath . --template reportbug | tee outfile
