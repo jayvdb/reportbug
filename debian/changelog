@@ -1,3 +1,9 @@
+reportbug (7.10.3) UNRELEASED; urgency=medium
+
+  * reportbug/debbugs.py: handle installation-reports (Closes: #931438)
+
+ -- Nis Martensen <nis.martensen@web.de>  Wed, 24 Feb 2021 22:30:34 +0100
+
 reportbug (7.10.2) unstable; urgency=medium
 
   * autopkgtest: set a valid sender address
