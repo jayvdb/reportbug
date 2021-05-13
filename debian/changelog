@@ -1,3 +1,9 @@
+reportbug (7.11.0) UNRELEASED; urgency=medium
+
+  * man/reportbug.1: advise -H users to use --list-cc (Closes: #988391)
+
+ -- Nis Martensen <nis.martensen@web.de>  Thu, 13 May 2021 10:34:53 +0200
+
 reportbug (7.10.3) unstable; urgency=medium
 
   * reportbug/debbugs.py: handle installation-reports (Closes: #931438)

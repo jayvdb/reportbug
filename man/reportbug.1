@@ -184,10 +184,11 @@ Use the Gnus mail and news reader to send your report, rather than
 using the editor.
 .TP
 .B \-H HEADER, \-\-header=HEADER
-Add a custom RFC2822 header to your email; for example, to send a
-carbon copy of the report to \fBdebian-68k@lists.linux-m68k.org\fP you
-could use
-.I \-H 'X\-Debbugs\-CC: debian\-68k@lists.linux\-m68k.org'
+Add a custom RFC2822 header to your email. Do not use this option if you
+want to submit the report using your MUA, because custom headers cannot
+be passed from reportbug to the MUA reliably. To send a carbon copy of
+the report to another recipient using \fIX\-Debbugs\-CC\fP, please see
+the \fB\-\-list\-cc\fP option.
 .TP
 .B \-i FILE, \-\-include=FILE
 Include the specified \fIFILE\fP as part of the body of the message to

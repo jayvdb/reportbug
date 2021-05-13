@@ -1257,10 +1257,14 @@ class UI(object):
             smtphost = 'reportbug.debian.org'
 
         if any(hd.startswith('X-Debbugs-CC: ') for hd in headers):
-            ui.long_message("*** Warning: Your ~/.reportbugrc is setting an X-Debbugs-CC header in a 'header' command. "
-                "This is an old default setting that no longer works reliably. "
-                "You may want to re-run 'reportbug --configure', or edit your configuration file "
-                "to use the 'list-cc-me' command (without recipient address) instead.\n")
+            ui.long_message("*** Warning: You are trying to set an X-Debbugs-CC header. "
+                "This is possibly an old default setting from your ~/.reportbugrc. "
+                "In that case you may want to re-run 'reportbug --configure', or edit "
+                "your configuration file to use the 'list-cc-me' command (without recipient "
+                "address) instead. If you used the -H option on the command line, please "
+                "see the '--list-cc' option. "
+                "Reportbug cannot handle custom headers reliably with its MUA support, it is "
+                "therefore recommended to use pseudoheaders instead where possible.\n")
 
         #if attachments and mua:
         #    ewrite('Attachments are incompatible with using an MUA.  They will be ignored.\n')
