@@ -6,8 +6,10 @@ reportbug (7.11.0) UNRELEASED; urgency=medium
   [ Sandro Tosi ]
   * debian/control
     - run wrap-and-sort
+    - switch Suggests to debconf, since we're using the binary debconf-show,
+      included in that package; Closes: #990267
 
- -- Sandro Tosi <morph@debian.org>  Thu, 24 Jun 2021 23:03:30 -0400
+ -- Sandro Tosi <morph@debian.org>  Thu, 24 Jun 2021 23:04:13 -0400
 
 reportbug (7.10.3) unstable; urgency=medium
 
