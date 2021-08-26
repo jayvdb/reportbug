@@ -25,7 +25,7 @@ SOFTWARE."""
 __all__ = ['bugreport', 'utils', 'urlutils', 'checkbuildd', 'checkversions',
            'debbugs', 'exceptions', 'submit', 'tempfile', 'mailer']
 
-VERSION_NUMBER = "7.10.3"
+VERSION_NUMBER = "11.0.0"
 
 VERSION = "reportbug " + VERSION_NUMBER
 COPYRIGHT = VERSION + '\nCopyright (C) 1999-2008 Chris Lawrence <lawrencc@debian.org>' + \

@@ -1,4 +1,4 @@
-reportbug (7.11.0) UNRELEASED; urgency=medium
+reportbug (11.0.0) unstable; urgency=medium
 
   [ Thomas Goirand ]
   * Update suite names vs stable/oldstable, so it's possible to request for
@@ -8,12 +8,13 @@ reportbug (7.11.0) UNRELEASED; urgency=medium
   * man/reportbug.1: advise -H users to use --list-cc (Closes: #988391)
 
   [ Sandro Tosi ]
+  * Release reportbug 11, matching Debian Bullseye release number
   * debian/control
     - run wrap-and-sort
     - switch Suggests to debconf, since we're using the binary debconf-show,
       included in that package; Closes: #990267
 
- -- Sandro Tosi <morph@debian.org>  Thu, 24 Jun 2021 23:04:13 -0400
+ -- Sandro Tosi <morph@debian.org>  Wed, 25 Aug 2021 23:54:19 -0400
 
 reportbug (7.10.3) unstable; urgency=medium
 
