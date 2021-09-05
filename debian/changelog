@@ -1,3 +1,10 @@
+reportbug (11.1.0) UNRELEASED; urgency=medium
+
+  * checkversions.get_versions_available(): distinguish src and bin pkg versions
+    (Closes: #873493)
+
+ -- Nis Martensen <nis.martensen@web.de>  Thu, 16 Sep 2021 22:45:59 +0200
+
 reportbug (11.0.0) unstable; urgency=medium
 
   [ Thomas Goirand ]

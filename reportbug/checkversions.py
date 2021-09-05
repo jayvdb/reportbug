@@ -155,16 +155,20 @@ def get_versions_available(package, timeout, dists=None, http_proxy=None, arch='
 
     versions = {}
     for line in content.split('\n'):
-        l = line.split('|')
+        try:
+            p, v, d, a = line.split('|')
         # skip lines not having the right number of fields
-        if len(l) != 4:
+        except ValueError:
+            continue
+
+        if a == 'source':
             continue
 
         # map suites name (returned by madison, e.g. "bullseye") to
         # dist name (e.g. "testing").
-        dist = utils.CODENAME2SUITE.get(l[2], l[2])
+        dist = utils.CODENAME2SUITE.get(d, d)
 
-        versions[dist] = l[1]
+        versions[dist] = v
 
     return versions
 
