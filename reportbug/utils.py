@@ -568,6 +568,17 @@ def get_source_name(package):
     return None
 
 
+def get_source_version(srcname):
+    try:
+        srcrecords = apt.apt_pkg.SourceRecords()
+        while srcrecords.lookup(srcname):
+            if srcrecords.package == srcname:
+                return srcrecords.version
+    except apt.apt_pkg.Error:
+        pass
+    return None
+
+
 def get_source_package(package):
     packages = []
     retlist = []

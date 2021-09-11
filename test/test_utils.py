@@ -305,6 +305,14 @@ class TestSourcePackages(unittest.TestCase):
         src = utils.get_source_name('astroid')
         self.assertEqual(src, 'astroidmail')
 
+    def test_get_source_version(self):
+        srcpkg = 'reportbug'
+        vers = utils.get_source_version(srcpkg)
+        self.assertIsNotNone(vers)
+
+        vers = utils.get_source_version('reportbug-bugfree')
+        self.assertIsNone(vers)
+
     def test_get_source_package(self):
         src = 'reportbug'
         binpkgs = utils.get_source_package(src)
