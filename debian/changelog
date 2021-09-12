@@ -2,8 +2,10 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
 
   * checkversions.get_versions_available(): distinguish src and bin pkg versions
     (Closes: #873493)
+  * reportbug/utils.py: add get_source_version()
+  * bin/reportbug: improve version lookup for source packages (Closes: #984904)
 
- -- Nis Martensen <nis.martensen@web.de>  Thu, 16 Sep 2021 22:45:59 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Thu, 16 Sep 2021 23:26:30 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

@@ -1472,6 +1472,10 @@ class UI(object):
         isvirtual = (package in list(sysinfo.get('otherpkgs', {}).keys()) and
                      package not in sysinfo.get('nonvirtual', []))
 
+        if issource and not pkgversion:
+            # package is already ok here, just need the version
+            pkgversion = utils.get_source_version(package)
+
         if not pkgversion and self.options.querydpkg and \
                 sysinfo.get('query-dpkg', True) and \
                 package not in list(debbugs.SYSTEMS[bts].get('otherpkgs').keys()):
@@ -1514,18 +1518,7 @@ class UI(object):
             if not pkgavail and not isvirtual:
                 # Look for a matching source package
                 packages = utils.get_source_package(package)
-                if self.options.source:
-                    issource = True
-                    # package is already ok here, just need the version
-                    # so we loop over the bin pkgs looking for one installed
-                    # and then get its version
-                    if len(packages) > 0:
-                        for p in packages:
-                            v = utils.get_package_status(p[0])[0]
-                            if v:
-                                pkgversion = v
-                                break
-                elif len(packages) > 0:
+                if len(packages) > 0:
                     src = utils.get_source_name(package)
                     if len(packages) and not notatty:
                         packages.sort()
@@ -1683,8 +1676,7 @@ class UI(object):
                     efail("Package integrity check failed; stopping.\n")
 
         if not pkgversion or usedavail or (not pkgavail and
-                                           not self.options.pkgversion and
-                                           not self.options.source):
+                                           not issource):
             if not bugnumber and not (isvirtual or notatty) and not self.options.resume_saved:
                 pkgversion = ui.get_string('Please enter the version of the '
                                            'package this report applies to '
