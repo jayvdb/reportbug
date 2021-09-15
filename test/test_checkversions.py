@@ -95,3 +95,30 @@ class TestVersionAvailable(unittest.TestCase):
         vers = checkversions.get_versions_available('reportbug', 60, ['sid'])
         self.assertEqual(1, len(vers))
         self.assertEqual(list(vers.keys())[0], 'unstable')
+
+    def test_nosourceversion(self):
+        mixedpkg = """astroid    | 0.14-2.1      | oldstable       | amd64, arm64, armel, armhf, i386, mips, mips64el, mipsel, ppc64el, s390x
+astroid    | 0.15-7        | stable          | amd64, arm64, armel, armhf, i386, mips64el, mipsel, ppc64el, s390x
+astroid    | 0.16-1        | testing         | amd64, arm64, armel, armhf, i386, mips64el, mipsel, ppc64el, s390x
+astroid    | 0.16-1        | unstable        | amd64, arm64, armel, armhf, i386, mips64el, mipsel, ppc64el, s390x
+astroid    | 1.2.1-3       | oldoldoldstable | source
+astroid    | 1.4.9-1       | oldoldstable    | source
+astroid    | 2.1.0-2       | oldstable       | source
+astroid    | 2.5.1-1       | stable          | source
+astroid    | 2.5.1-1       | testing         | source
+astroid    | 2.5.1-1       | unstable        | source
+"""
+        # save the original checkversions.open_url() method
+        save_open_url = checkversions.open_url
+
+        checkversions.open_url = mock.MagicMock(return_value=mixedpkg)
+
+        res = checkversions.get_versions_available('astroid', 60)
+
+        self.assertEqual(res, {'oldstable': '0.14-2.1',
+            'stable': '0.15-7',
+            'testing': '0.16-1',
+            'unstable': '0.16-1'})
+
+        # restore the original checkversions.open_url() method
+        checkversions.open_url = save_open_url
