@@ -1326,6 +1326,9 @@ class UI(object):
         foundfile = None
         package = None
         if self.options.resume_saved:
+            # dummy values for package and pkgversion; we use ones known
+            # to exist to avoid any further questions. The real ones
+            # will be taken from the resumed report anyway.
             package = "reportbug"
             pkgversion = VERSION_NUMBER
         elif not len(self.args) and not self.options.searchfor and not notatty and not self.options.buildd_format:
