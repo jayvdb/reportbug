@@ -1522,29 +1522,25 @@ class UI(object):
                 # Look for a matching source package
                 packages = utils.get_source_package(package)
                 if len(packages) > 0:
-                    src = utils.get_source_name(package)
-                    if len(packages) and not notatty:
-                        packages.sort()
-                        if src not in [x[0] for x in packages]:
-                            packages.append((src, 'Source package'))
-
-                        if len(packages) > 1:
-                            package = ui.menu(
-                                'Which of the following packages is the bug in?',
-                                packages, empty_ok=True,
-                                prompt='Select one of these packages: ')
-                        else:
-                            package = packages[0][0]
+                    if not notatty and len(packages) > 1:
+                        package = ui.menu(
+                            'Which of the following packages is the bug in?',
+                            packages, empty_ok=True,
+                            prompt='Select one of these packages: ')
+                    else:
+                        package = packages[0][0]
 
                     if not package:
                         efail("No package specified; stopping.\n")
 
-                    if package != src:
+                    if package.startswith('src:'):
+                        package = package[4:]
+                        issource = True
+                        pkgversion = utils.get_source_version(package)
+                    else:
                         ewrite("Getting status for %s...\n", package)
                         status = utils.get_package_status(package)
                         pkgavail, installed = status[1], status[6]
-                    elif 'Source package' in [x[1] for x in packages]:
-                        issource = True
                 else:
                     ewrite('No matching source or binary packages.\n')
 
