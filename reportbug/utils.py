@@ -602,6 +602,8 @@ def get_source_package(package):
             if desc:
                 packages += [(bp, desc)]
 
+        packages += [('src:' + srcrecords.package, 'Source package')]
+
     return packages
 
 
