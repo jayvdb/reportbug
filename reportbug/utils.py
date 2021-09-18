@@ -574,8 +574,8 @@ def get_source_version(srcname):
         while srcrecords.lookup(srcname):
             if srcrecords.package == srcname:
                 return srcrecords.version
-    except apt.apt_pkg.Error:
-        pass
+    except apt.apt_pkg.Error as e:
+        print(f"Cannot look up source package: '{e}'")
     return None
 
 
