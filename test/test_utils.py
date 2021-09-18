@@ -314,13 +314,23 @@ class TestSourcePackages(unittest.TestCase):
         self.assertIsNone(vers)
 
     def test_get_source_package(self):
-        src = 'reportbug'
-        binpkgs = utils.get_source_package(src)
-        self.assertCountEqual([bin[0] for bin in binpkgs], ['python3-reportbug', 'reportbug', 'reportbug-gtk'])
+        pkg = 'reportbug'
+        ret = utils.get_source_package(pkg)
+        self.assertEqual([p[0] for p in ret], ['python3-reportbug', 'reportbug', 'reportbug-gtk', 'src:reportbug'])
 
-        bin = 'python3-reportbug'
-        binpkgs_frombin = utils.get_source_package(bin)
-        self.assertEqual(binpkgs, binpkgs_frombin)
+        pkg = 'python3-reportbug'
+        ret = utils.get_source_package(pkg)
+        self.assertEqual([p[0] for p in ret], ['python3-reportbug', 'reportbug', 'reportbug-gtk', 'src:reportbug'])
+
+        pkg = 'astroid'
+        ret = utils.get_source_package(pkg)
+        self.assertEqual([p[0] for p in ret], ['python3-astroid', 'src:astroid', 'astroid', 'src:astroidmail'])
+        ret = utils.get_source_package(pkg, only_source=True)
+        self.assertEqual([p[0] for p in ret], ['python3-astroid', 'src:astroid'])
+
+        pkg = 'reportbug-nonexistent'
+        ret = utils.get_source_package(pkg)
+        self.assertEqual(ret, [])
 
 
 class TestSystemInformation(unittest.TestCase):
