@@ -581,29 +581,28 @@ def get_source_version(srcname):
 
 def get_source_package(package):
     packages = []
-    retlist = []
-    found = {}
+    found = set()
+    try:
+        srcrecords = apt.apt_pkg.SourceRecords()
+    except apt.apt_pkg.Error as e:
+        print(f"Cannot look up source package: '{e}'")
+        return packages
 
-    data = get_command_output('apt-cache showsrc ' + shlex.quote(package))
-    binre = re.compile(r'^Binary: (.*)$')
-    for line in data.split('\n'):
-        m = binre.match(line)
-        if m:
-            packs = m.group(1)
-            packlist = re.split(r',\s*', packs)
-            packages += packlist
-
-    for p in packages:
-        try:
-            desc = _apt_cache[p].versions[0].summary
-        except KeyError:
+    while srcrecords.lookup(package):
+        if srcrecords.package in found:
             continue
-        if desc and (p not in found):
-            retlist += [(p, desc)]
-            found[p] = desc
 
-    retlist.sort()
-    return retlist
+        found.add(srcrecords.package)
+
+        for bp in sorted(srcrecords.binaries):
+            try:
+                desc = _apt_cache[bp].versions[0].summary
+            except KeyError:
+                continue
+            if desc:
+                packages += [(bp, desc)]
+
+    return packages
 
 
 def get_package_info(packages, skip_notfound=False):
