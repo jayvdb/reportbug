@@ -579,7 +579,7 @@ def get_source_version(srcname):
     return None
 
 
-def get_source_package(package):
+def get_source_package(package, only_source=False):
     packages = []
     found = set()
     try:
@@ -590,6 +590,9 @@ def get_source_package(package):
 
     while srcrecords.lookup(package):
         if srcrecords.package in found:
+            continue
+
+        if only_source and srcrecords.package != package:
             continue
 
         found.add(srcrecords.package)
