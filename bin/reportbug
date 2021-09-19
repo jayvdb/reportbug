@@ -1584,11 +1584,23 @@ class UI(object):
                             'with this report?', 'Ignore this problem and continue.',
                             'Exit without filing a report.', False):
                         efail("Package not installed; stopping.\n")
-                elif (len(packages) > 1) or (packages[0][0] != package):
-                    this_package = [(package, 'Uninstalled/non-existent package')]
+                elif (len(packages) == 1) and (packages[0][0] != package):
+                    if not ui.yes_no(
+                            'This package does not appear to be installed: {}.\n '
+                            'Do you want to file the report on package {} instead?'
+                            .format(package, packages[0][0]),
+                            'Yes, use the other package.',
+                            'Exit without filing a report.',
+                            True):
+                        efail("Package not installed; stopping.\n")
+                    else:
+                        package = packages[0][0]
+                        ewrite("Getting status for %s...\n", package)
+                        status = utils.get_package_status(package)
+                elif len(packages) > 1:
                     packages.sort()
                     package = ui.menu('Which of the following installed packages '
-                                      'is the bug in?', packages + this_package,
+                                      'is the bug in?', packages,
                                       'Select one of these packages: ',
                                       empty_ok=True)
                     if not package:
