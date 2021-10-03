@@ -46,11 +46,6 @@ import urllib
 from .urlutils import open_url
 from .mailer import MUA
 
-# Paths for dpkg
-DPKGLIB = '/var/lib/dpkg'
-AVAILDB = os.path.join(DPKGLIB, 'available')
-STATUSDB = os.path.join(DPKGLIB, 'status')
-
 # Headers other than these become email headers for debbugs servers
 PSEUDOHEADERS = ('Package', 'Source', 'Version', 'Severity', 'File', 'Tags',
                  'Justification', 'Followup-For', 'Owner', 'User', 'Usertags',
@@ -538,13 +533,8 @@ class AvailDB(object):
 
 
 def get_dpkg_database():
-    try:
-        fp = open(STATUSDB, errors="backslashreplace")
-        if fp:
-            return AvailDB(fp=fp)
-    except IOError:
-        print('Unable to open', STATUSDB, file=sys.stderr)
-        sys.exit(1)
+    subp = subprocess.Popen(('dpkg-query', '--status'), errors="backslashreplace", stdout=subprocess.PIPE)
+    return AvailDB(popenob=subp)
 
 
 def get_avail_database():

@@ -14,8 +14,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * bin/reportbug: Do not ask for nonexistent packages (Closes: #431402)
   * reportbug/debbugs.py: try apt-cache after dpkg to get package info
     (Closes: #599290, #721212)
+  * reportbug/utils.py: use dpkg-query instead of dpkg-internal database files
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Oct 2021 19:25:25 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Oct 2021 20:29:31 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 
