@@ -5,8 +5,15 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/utils.py: add get_source_version()
   * bin/reportbug: improve version lookup for source packages (Closes: #984904)
   * man/reportbug.1: add hint about "src:" prefix
+  * reportbug/utils.py: print apt error in get_source_version()
+  * reportbug.utils.get_source_package: switch to python apt
+  * reportbug.utils.get_source_package: also return source package
+  * reportbug.utils.get_source_package: add option to match only src packages
+  * test/test_utils.py: update and extend test for get_source_package
+  * bin/reportbug: adapt to new version of utils.get_source_package
+  * bin/reportbug: Do not ask for nonexistent packages (Closes: #431402)
 
- -- Nis Martensen <nis.martensen@web.de>  Sat, 18 Sep 2021 12:58:52 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 19 Sep 2021 11:08:18 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 
