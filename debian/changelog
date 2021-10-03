@@ -12,8 +12,10 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * test/test_utils.py: update and extend test for get_source_package
   * bin/reportbug: adapt to new version of utils.get_source_package
   * bin/reportbug: Do not ask for nonexistent packages (Closes: #431402)
+  * reportbug/debbugs.py: try apt-cache after dpkg to get package info
+    (Closes: #599290, #721212)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 19 Sep 2021 11:08:18 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Oct 2021 19:25:25 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

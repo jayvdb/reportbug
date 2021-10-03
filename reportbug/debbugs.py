@@ -208,6 +208,28 @@ progenyother = {
 }
 
 
+def check_package_info(package):
+        # check dpkg database
+        info = utils.get_package_status(package)
+        if info[1]:
+            return info
+
+        # check apt cache
+        info = utils.get_package_status(package, avail=True)
+        if info[1]:
+            return info
+
+        # check if this is a source package and get the info for one of
+        # its binary packages
+        pkgs = utils.get_source_package(package, only_source=True)
+        if pkgs:
+            info = check_package_info(pkgs[0][0])
+            if info[1]:
+                return info
+
+        return None
+
+
 def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=None):
     body = reason = archs = section = priority = ''
     suite = 'unstable'
@@ -244,15 +266,10 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
             ui.log_message('You seem to want to report a generic bug, not request a removal\n')
             return
 
-        ui.log_message('Checking status database...\n')
-        info = utils.get_package_status(package)
-        available = info[1]
+        ui.log_message('Checking package information...\n')
+        info = check_package_info(package)
 
         query = False
-        if not available:
-            info = utils.get_source_package(package)
-            if info:
-                info = utils.get_package_status(info[0][0])
 
         if not info:
             cont = ui.select_options(
@@ -444,15 +461,10 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
             ui.log_message('You seem to want to report a generic bug.\n')
             return
 
-        ui.log_message('Checking status database...\n')
-        info = utils.get_package_status(package)
-        available = info[1]
+        ui.log_message('Checking package information...\n')
+        info = check_package_info(package)
 
         query = False
-        if not available:
-            info = utils.get_source_package(package)
-            if info:
-                info = utils.get_package_status(info[0][0])
 
         if not info:
             cont = ui.select_options(
@@ -710,9 +722,9 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
             ui.long_message('Invalid package name')
             package = ""
 
-    ui.log_message('Checking status database...\n')
-    info = utils.get_package_status(package, avail=True)
-    available = info[1]
+    ui.log_message('Checking package information...\n')
+    info = check_package_info(package)
+    available = info and info[1]
 
     severity = 'normal'
     if tag in ('ITP', 'RFP'):
@@ -748,10 +760,6 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
     elif tag in ('O', 'RFA', 'RFH'):
         severity = 'normal'
         query = False
-        if not available:
-            info = utils.get_source_package(package)
-            if info:
-                info = utils.get_package_status(info[0][0])
 
         if not info:
             cont = ui.select_options(
