@@ -402,8 +402,8 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
                 subject = 'RM: %s -- %s; %s' % (package, tag, reason)
 
         if suite == 'testing':
-            ui.long_message('Please use release.debian.org pseudo-package and '
-                            'report a bug there.')
+            ui.long_message('Removals from testing are handled by the release team. '
+                            'Please file a bug against the release.debian.org pseudo-package.')
             sys.exit(1)
 
     return (subject, severity, headers, pseudos, body, query)
@@ -661,6 +661,24 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                 (Anything else the release team should know.)
                 """)
     elif tag == 'rm':
+        suite = ui.menu('Is the removal to be done in a suite other than'
+                        ' "stable" or "testing"?', {
+                            'oldstable': "Old stable.",
+                            'oldstable-proposed-updates': "Old stable proposed updates.",
+                            'stable': "Stable.",
+                            'stable-proposed-updates': "Stable proposed updates.",
+                            'testing': "Testing only (NOT unstable)",
+                            'testing-proposed-updates': "Testing proposed updates",
+                            'unstable': "Unstable",
+                            'experimental': "Experimental.",
+                        }, 'Choose the suite: ', default='testing', empty_ok=True)
+        if not suite:
+            suite = 'testing'
+
+        if suite in ('unstable', 'experimental'):
+            ui.long_message('Removal requests for unstable and experimental are handled by the FTP team. '
+                            'Please file a bug against the ftp.debian.org pseudo-package.')
+            sys.exit(1)
         subject = 'RM: %s/%s' % (package, version)
         body = '(explain the reason for the removal here)\n'
 

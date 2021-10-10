@@ -15,8 +15,10 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/debbugs.py: try apt-cache after dpkg to get package info
     (Closes: #599290, #721212)
   * reportbug/utils.py: use dpkg-query instead of dpkg-internal database files
+  * reportbug/debbugs.py: direct rm requests to the right pseudo-package
+    (Closes: #994221)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 03 Oct 2021 20:29:31 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 10 Oct 2021 12:31:47 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 
