@@ -1,5 +1,6 @@
 reportbug (11.1.0) UNRELEASED; urgency=medium
 
+  [ Nis Martensen ]
   * checkversions.get_versions_available(): distinguish src and bin pkg versions
     (Closes: #873493)
   * reportbug/utils.py: add get_source_version()
@@ -18,7 +19,11 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/debbugs.py: direct rm requests to the right pseudo-package
     (Closes: #994221)
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 10 Oct 2021 12:31:47 +0200
+  [ Nelson A. de Oliveira ]
+  * reportbug/submit.py: include temp filename in resume message
+    (Closes: #985727)
+
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 10 Oct 2021 13:49:34 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

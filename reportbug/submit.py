@@ -405,7 +405,8 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
                     fh.close()
 
                     ui.long_message(f'Wrote bug report to {msgname}\n'
-                            'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
+                            'You can resume the unsent report using:\n'
+                            f'  reportbug -r {msgname}')
         # Handle when some recipients are refused.
         if refused:
             for (addr, err) in refused.items():
@@ -416,14 +417,16 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
             fh.close()
 
             ui.long_message(f'Wrote bug report to {msgname}\n'
-                    'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
+                    'You can resume the unsent report using:\n'
+                    f'  reportbug -r {msgname}')
     else:
         try:
             pipe.write(message)
             pipe.flush()
             if msgname:
                 ui.long_message(f'Bug report written to {msgname}\n'
-                        'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
+                        'You can resume the unsent report using:\n'
+                        f'  reportbug -r {msgname}')
         except IOError:
             failed = True
             pipe.close()
@@ -435,7 +438,8 @@ def send_report(body, attachments, mua, fromaddr, sendto, ccaddr, bccaddr,
             fh.close()
             ui.long_message('Error: send/write operation failed, bug report '
                             f'saved to {msgname}\n'
-                            'Hint: You can resume an unsent report using reportbug -r TEMPFILE')
+                            'You can resume the unsent report using:\n'
+                            f'  reportbug -r {msgname}')
 
     if mua:
         ewrite("Spawning %s...\n", mua.executable)
