@@ -1,5 +1,9 @@
 reportbug (11.1.0) UNRELEASED; urgency=medium
 
+  [ Nelson A. de Oliveira ]
+  * reportbug/submit.py: include temp filename in resume message
+    (Closes: #985727)
+
   [ Nis Martensen ]
   * checkversions.get_versions_available(): distinguish src and bin pkg versions
     (Closes: #873493)
@@ -18,12 +22,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/utils.py: use dpkg-query instead of dpkg-internal database files
   * reportbug/debbugs.py: direct rm requests to the right pseudo-package
     (Closes: #994221)
+  * reportbug/ui/gtk_ui.py: switch from spawn_sync to spawn_async
 
-  [ Nelson A. de Oliveira ]
-  * reportbug/submit.py: include temp filename in resume message
-    (Closes: #985727)
-
- -- Nis Martensen <nis.martensen@web.de>  Sun, 10 Oct 2021 13:49:34 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:38:14 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

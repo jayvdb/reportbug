@@ -1501,7 +1501,7 @@ class SystemPage(Page):
 
     def execute(self, cmdline):
         _assert_context(ui_context)
-        self.terminal.spawn_sync(Vte.PtyFlags.DEFAULT, os.environ['HOME'], ['/bin/bash', '-c', cmdline], [], GLib.SpawnFlags.DO_NOT_REAP_CHILD, None, None)
+        self.terminal.spawn_async(Vte.PtyFlags.DEFAULT, os.environ['HOME'], ['/bin/bash', '-c', cmdline], None, GLib.SpawnFlags.DEFAULT, None, None, -1, None)
 
 
 class ProgressPage(Page):
