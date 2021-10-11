@@ -27,8 +27,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/debbugs.py: drop unused msgfactory and parse_mbox_report
   * reportbug/debbugs.py: drop broken parse_html_report()
   * reportbug/debbugs.py: remove old fallback code
+  * reportbug/debbugs.py: more broken code removal
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:43:42 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:43:59 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

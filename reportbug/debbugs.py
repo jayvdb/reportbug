@@ -1172,33 +1172,7 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
 
         return (len(bugs), 'Bug reports for %s' % package, hier)
 
-    # XXX: is the code below used at all now? can we remove it?
-    if isinstance(package, str):
-        if SYSTEMS[system].get('cgiroot'):
-            try:
-                result = get_cgi_reports(package, timeout, system, http_proxy, archived,
-                                         source, version=version)
-            except:
-                raise NoNetwork
-            if result:
-                return result
-
-    # A list of bug numbers
-    this_hierarchy = []
-    package = [int(x) for x in package]
-    package.sort()
-    for bug in package:
-        result = get_report(bug, timeout, system, mirrors, http_proxy, archived)
-        if result:
-            title, body = result
-            this_hierarchy.append(title)
-            # print title
-
-    title = "Multiple bug reports"
-    bugcount = len(this_hierarchy)
-    hierarchy = [('Reports', this_hierarchy)]
-
-    return bugcount, title, hierarchy
+    raise Error(f"Getting bugs from {system} is not supported")
 
 
 def get_report(number, timeout, system='debian', mirrors=None,
@@ -1221,11 +1195,5 @@ def get_report(number, timeout, system='debian', mirrors=None,
 
         # returns the bug status and a list of mail bodies
         return (status, bodies)
-
-    if SYSTEMS[system].get('cgiroot'):
-        result = get_cgi_report(number, timeout, system, http_proxy,
-                                archived, followups)
-        if result:
-            return result
 
     return None
