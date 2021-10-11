@@ -23,25 +23,17 @@
 
 from . import utils
 import sys
-import mailbox
 import email
 import email.errors
-import io
 import glob
 import os
-import re
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 import textwrap
 # SOAP interface to Debian BTS
 import debianbts
 from collections import defaultdict
 
 from . import checkversions
-from .exceptions import (
-    NoNetwork,
-    QuertBTSError,
-)
-from .urlutils import open_url
 
 
 class Error(Exception):

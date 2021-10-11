@@ -29,8 +29,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/debbugs.py: remove old fallback code
   * reportbug/debbugs.py: more broken code removal
   * test/test_debbugs.py: add tests for handle_* functions
+  * reportbug/debbugs.py: drop unused imports
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:44:15 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:44:43 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 
