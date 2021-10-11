@@ -43,30 +43,30 @@ class Error(Exception):
 # Severity levels
 SEVERITIES = {
     'critical': """makes unrelated software on the system (or the
-    whole system) break, or causes serious data loss, or introduces a
-    security hole on systems where you install the package.""",
+        whole system) break, or causes serious data loss, or introduces a
+        security hole on systems where you install the package.""",
     'grave': """makes the package in question unusable by most or all users,
-    or causes data loss, or introduces a security hole allowing access
-    to the accounts of users who use the package.""",
+        or causes data loss, or introduces a security hole allowing access
+        to the accounts of users who use the package.""",
     'serious': """is a severe violation of Debian policy (that is,
-    the problem is a violation of a 'must' or 'required' directive);
-    may or may not affect the usability of the package.  Note that non-severe
-    policy violations may be 'normal,' 'minor,' or 'wishlist' bugs.
-    (Package maintainers may also designate other bugs as 'serious' and thus
-    release-critical; however, end users should not do so.). For the canonical
-    list of issues deserving a serious severity you can refer to this webpage:
-    http://release.debian.org/testing/rc_policy.txt .""",
+        the problem is a violation of a 'must' or 'required' directive);
+        may or may not affect the usability of the package.  Note that non-severe
+        policy violations may be 'normal,' 'minor,' or 'wishlist' bugs.
+        (Package maintainers may also designate other bugs as 'serious' and thus
+        release-critical; however, end users should not do so.). For the canonical
+        list of issues deserving a serious severity you can refer to this webpage:
+        http://release.debian.org/testing/rc_policy.txt .""",
     'important': """a bug which has a major effect on the usability
-    of a package, without rendering it completely unusable to
-    everyone.""",
+        of a package, without rendering it completely unusable to
+        everyone.""",
     'does-not-build': """a bug that stops the package from being built
-    from source.  (This is a 'virtual severity'.)""",
+        from source.  (This is a 'virtual severity'.)""",
     'normal': """a bug that does not undermine the usability of the
-    whole package; for example, a problem with a particular option or
-    menu item.""",
+        whole package; for example, a problem with a particular option or
+        menu item.""",
     'minor': """things like spelling mistakes and other minor
-    cosmetic errors that do not affect the core functionality of the
-    package.""",
+        cosmetic errors that do not affect the core functionality of the
+        package.""",
     'wishlist': "suggestions and requests for new features.",
 }
 
@@ -74,25 +74,25 @@ SEVERITIES = {
 JUSTIFICATIONS = {
     'critical': (
         ('breaks unrelated software', """breaks unrelated software on the system
-    (packages that have a dependency relationship are not unrelated)"""),
+            (packages that have a dependency relationship are not unrelated)"""),
         ('breaks the whole system', """renders the entire system unusable (e.g.,
-    unbootable, unable to reach a multiuser runlevel, etc.)"""),
+            unbootable, unable to reach a multiuser runlevel, etc.)"""),
         ('causes serious data loss', """causes loss of important, irreplaceable
-    data"""),
+            data"""),
         ('root security hole', """introduces a security hole allowing access to
-    root (or another privileged system account), or data normally
-    accessible only by such accounts"""),
+            root (or another privileged system account), or data normally
+            accessible only by such accounts"""),
         ('unknown', """not sure, or none of the above"""),
     ),
     'grave': (
         ('renders package unusable', """renders the package unusable, or mostly
-    so, on all or nearly all possible systems on which it could be installed
-    (i.e., not a hardware-specific bug); or renders package uninstallable
-    or unremovable without special effort"""),
+            so, on all or nearly all possible systems on which it could be installed
+            (i.e., not a hardware-specific bug); or renders package uninstallable
+            or unremovable without special effort"""),
         ('causes non-serious data loss', """causes the loss of data on the system
-    that is unimportant, or restorable without resorting to backup media"""),
+            that is unimportant, or restorable without resorting to backup media"""),
         ('user security hole', """introduces a security hole allowing access to
-    user accounts or data not normally accessible"""),
+            user accounts or data not normally accessible"""),
         ('unknown', """not sure, or none of the above"""),
     )
 }
@@ -192,25 +192,25 @@ progenyother = {
 
 
 def check_package_info(package):
-        # check dpkg database
-        info = utils.get_package_status(package)
+    # check dpkg database
+    info = utils.get_package_status(package)
+    if info[1]:
+        return info
+
+    # check apt cache
+    info = utils.get_package_status(package, avail=True)
+    if info[1]:
+        return info
+
+    # check if this is a source package and get the info for one of
+    # its binary packages
+    pkgs = utils.get_source_package(package, only_source=True)
+    if pkgs:
+        info = check_package_info(pkgs[0][0])
         if info[1]:
             return info
 
-        # check apt cache
-        info = utils.get_package_status(package, avail=True)
-        if info[1]:
-            return info
-
-        # check if this is a source package and get the info for one of
-        # its binary packages
-        pkgs = utils.get_source_package(package, only_source=True)
-        if pkgs:
-            info = check_package_info(pkgs[0][0])
-            if info[1]:
-                return info
-
-        return None
+    return None
 
 
 def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=None):
@@ -693,11 +693,23 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
                   'things mean anything to you, or you are trying to report '
                   'a bug in an existing package, please press Enter to '
                   'exit reportbug.)', {
-                      'O': "The package has been `Orphaned'. It needs a new maintainer as soon as possible.",
-                      'RFA': "This is a `Request for Adoption'. Due to lack of time, resources, interest or something similar, the current maintainer is asking for someone else to maintain this package. They will maintain it in the meantime, but perhaps not in the best possible way. In short: the package needs a new maintainer.",
-                      'RFH': "This is a `Request For Help'. The current maintainer wants to continue to maintain this package, but they need some help to do this because their time is limited or the package is quite big and needs several maintainers.",
-                      'ITP': "This is an `Intent To Package'. Please submit a package description along with copyright and URL in such a report.",
-                      'RFP': "This is a `Request For Package'. You have found an interesting piece of software and would like someone else to maintain it for Debian. Please submit a package description along with copyright and URL in such a report.",
+                      'O': "The package has been `Orphaned'. "
+                           "It needs a new maintainer as soon as possible.",
+                      'RFA': "This is a `Request for Adoption'. "
+                             "Due to lack of time, resources, interest or something similar, "
+                             "the current maintainer is asking for someone else to maintain this package. "
+                             "They will maintain it in the meantime, but perhaps not in the best possible way. "
+                             "In short: the package needs a new maintainer.",
+                      'RFH': "This is a `Request For Help'. "
+                             "The current maintainer wants to continue to maintain this package, "
+                             "but they need some help to do this because their time is limited "
+                             "or the package is quite big and needs several maintainers.",
+                      'ITP': "This is an `Intent To Package'. "
+                             "Please submit a package description along with copyright and URL in such a report.",
+                      'RFP': "This is a `Request For Package'. "
+                             "You have found an interesting piece of software and would like someone "
+                             "else to maintain it for Debian. Please submit a package description "
+                             "along with copyright and URL in such a report.",
                   }, 'Choose the request type: ', empty_ok=True)
     if not tag:
         ui.long_message('To report a bug in a package, use the name of the package, not wnpp.\n')
@@ -938,34 +950,40 @@ def generic_infofunc():
 
 # Supported servers
 # Theoretically support for GNATS and Jitterbug could be added here.
-SYSTEMS = {'debian':
-           {'name': 'Debian', 'email': '%s@bugs.debian.org',
-            'btsroot': 'http://www.debian.org/Bugs/',
-            'otherpkgs': debother,
-            'nonvirtual': ['linux-image', 'kernel-image'],
-            'specials':
-                {'wnpp': handle_wnpp,
-                 'ftp.debian.org': handle_debian_ftp,
-                 'release.debian.org': handle_debian_release,
-                 'installation-reports': handle_installation_report,
-                 'upgrade-reports': handle_upgrade_report,
-                },
-            # Dependency packages
-            'deppkgs': ('gcc', 'g++', 'cpp', 'gcj', 'gpc', 'gobjc',
-                        'chill', 'gij', 'g77', 'python', 'python-base',
-                        'x-window-system-core', 'x-window-system'),
-            'cgiroot': 'https://bugs.debian.org/cgi-bin/',
-            'infofunc': debian_infofunc,
-            },
-           'ubuntu':
-               {'name': 'Ubuntu', 'email': 'ubuntu-users@lists.ubuntu.com',
-                'type': 'mailto',
-                'infofunc': ubuntu_infofunc,
-                },
-           'guug':
-               {'name': 'GUUG (German Unix User Group)',
-                'email': '%s@bugs.guug.de', 'query-dpkg': False},
-           }
+SYSTEMS = {
+    'debian': {
+        'name': 'Debian',
+        'email': '%s@bugs.debian.org',
+        'btsroot': 'http://www.debian.org/Bugs/',
+        'otherpkgs': debother,
+        'nonvirtual': ['linux-image', 'kernel-image'],
+        'specials': {
+            'wnpp': handle_wnpp,
+            'ftp.debian.org': handle_debian_ftp,
+            'release.debian.org': handle_debian_release,
+            'installation-reports': handle_installation_report,
+            'upgrade-reports': handle_upgrade_report,
+        },
+        # Dependency packages
+        'deppkgs': (
+            'gcc', 'g++', 'cpp', 'gcj', 'gpc', 'gobjc',
+            'chill', 'gij', 'g77', 'python', 'python-base',
+            'x-window-system-core', 'x-window-system'
+        ),
+        'cgiroot': 'https://bugs.debian.org/cgi-bin/',
+        'infofunc': debian_infofunc,
+    },
+    'ubuntu': {
+        'name': 'Ubuntu',
+        'email': 'ubuntu-users@lists.ubuntu.com',
+        'type': 'mailto',
+        'infofunc': ubuntu_infofunc,
+    },
+    'guug': {
+        'name': 'GUUG (German Unix User Group)',
+        'email': '%s@bugs.guug.de',
+        'query-dpkg': False},
+}
 
 CLASSES = {
     'sw-bug': 'The problem is a bug in the software or code.  For'
