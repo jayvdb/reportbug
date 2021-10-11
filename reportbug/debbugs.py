@@ -1144,44 +1144,6 @@ for origin in glob.glob('/etc/dpkg/origins/*'):
         pass
 
 
-# TODO: to be removed
-def parse_html_report(number, url, http_proxy, timeout, followups=False, cgi=True):
-    page = open_url(url, http_proxy, timeout)
-    if not page:
-        return None
-
-    parser = BTSParser(cgi=cgi, followups=followups)
-    for line in page.splitlines():
-        parser.feed(line + '\n')
-    parser.close()
-
-    items = parser.preblock
-    title = "#%d: %s" % (number, parser.title)
-
-    if not followups:
-        items = [items]
-
-    output = []
-    for stuff in items:
-        parts = stuff.split('\n\n')
-        match = re.search('^Date: (.*)$', parts[0], re.M | re.I)
-        date_submitted = ''
-        if match:
-            date_submitted = 'Date: %s\n' % match.group(1)
-
-        stuff = ('\n\n'.join(parts[1:])).rstrip()
-        if not stuff:
-            continue
-
-        item = date_submitted + stuff + os.linesep
-        output.append(item)
-
-    if not output:
-        return None
-
-    return (title, output)
-
-
 def get_btsroot(system, mirrors=None):
     if mirrors:
         alternates = SYSTEMS[system].get('mirrors')
@@ -1314,8 +1276,4 @@ def get_report(number, timeout, system='debian', mirrors=None,
         if result:
             return result
 
-    url = report_url(system, number, mirrors)
-    if not url:
-        return None
-
-    return parse_html_report(number, url, http_proxy, timeout, followups, cgi=False)
+    return None
