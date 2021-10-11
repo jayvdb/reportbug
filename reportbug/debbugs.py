@@ -499,7 +499,8 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                 ui.long_message('No architecture specified, skipping...')
 
     if tag == 'binnmu':
-        suite = ui.menu("For which suite are you requesting this binNMU?", {
+        suite = ui.menu("For which suite are you requesting this binNMU?",
+                        {
                             stable: "",
                             stable_backports: "",
                             stable_security: "",
@@ -509,7 +510,8 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                             testing: "",
                             'unstable': "",
                             'experimental': "",
-                        }, 'Choose the suite: ', default='unstable', empty_ok=True)
+                        },
+                        'Choose the suite: ', default='unstable', empty_ok=True)
         if not suite:
             suite = 'unstable'
 
@@ -553,7 +555,8 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
             # Compute a ben file from this.
 
             # (quote if x does not start with a "/")
-            quote = lambda x: (x[0] == '/' and x) or '"%s"' % x
+            def quote(x):
+                return (x[0] == '/' and x) or '"%s"' % x
 
             listbad = [quote(x) for x in tfrom.strip().split()]
             listgood = [quote(x) for x in tto.strip().split()]
@@ -796,7 +799,7 @@ def handle_wnpp(package, bts, ui, fromaddr, timeout, online=True, http_proxy=Non
 
 
 def handle_installation_report(package, bts, ui, fromaddr, timeout, online=True, http_proxy=None):
-    short_desc = body = ''
+    body = ''
     headers = []
     pseudos = []
     query = True
@@ -857,14 +860,14 @@ def handle_installation_report(package, bts, ui, fromaddr, timeout, online=True,
 
 
 def handle_upgrade_report(package, bts, ui, fromaddr, timeout, online=True, http_proxy=None):
-    short_desc = body = ''
+    body = ''
     headers = []
     pseudos = []
     query = True
     severity = ''
     subject = ''
 
-    body = textwrap.dedent(f"""\
+    body = textwrap.dedent("""\
         (Please provide enough information to help the Debian
         maintainers evaluate the report efficiently - e.g., by filling
         in the sections below.)
@@ -1122,7 +1125,7 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
         if isinstance(package, str):
             if source:
                 bugs = debianbts.get_bugs(src=package)
-                bugs += debianbts.get_bugs(affects='src:'+package)
+                bugs += debianbts.get_bugs(affects='src:' + package)
             else:
                 bugs = debianbts.get_bugs(package=package)
                 bugs += debianbts.get_bugs(affects=package)
@@ -1130,14 +1133,14 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
             bugs = []
             for pkg in package:
                 try:
-                    bugs += [ int(pkg) ]
+                    bugs += [int(pkg)]
                 except ValueError:
                     if pkg.startswith('src:'):
                         bugs += debianbts.get_bugs(src=pkg[4:])
                         bugs += debianbts.get_bugs(affects=pkg)
                     elif source:
                         bugs += debianbts.get_bugs(src=pkg)
-                        bugs += debianbts.get_bugs(affects='src:'+pkg)
+                        bugs += debianbts.get_bugs(affects='src:' + pkg)
                     else:
                         bugs += debianbts.get_bugs(package=pkg)
                         bugs += debianbts.get_bugs(affects=pkg)
@@ -1177,13 +1180,13 @@ def get_report(number, timeout, system='debian', mirrors=None,
 
         # add Date/Subject/From headers to the msg bodies
         bodies = []
-        for l in log:
-            h = l['message']
+        for lm in log:
+            h = lm['message']
             hdrs = []
             for i in ['Date', 'Subject', 'From']:
                 if i in h:
                     hdrs.append(i + ': ' + h.get(i))
-            bodies.append('\n'.join(sorted(hdrs)) + '\n\n' + l['body'])
+            bodies.append('\n'.join(sorted(hdrs)) + '\n\n' + lm['body'])
 
         # returns the bug status and a list of mail bodies
         return (status, bodies)
