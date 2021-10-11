@@ -24,8 +24,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
     (Closes: #994221)
   * reportbug/ui/gtk_ui.py: switch from spawn_sync to spawn_async
   * reportbug/debbugs.py: replace menu by yes/no question
+  * reportbug/debbugs.py: drop unused msgfactory and parse_mbox_report
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:41:45 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:43:04 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

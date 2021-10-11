@@ -44,15 +44,6 @@ from .exceptions import (
 from .urlutils import open_url
 
 
-def msgfactory(fp):
-    try:
-        return email.message_from_file(fp)
-    except email.errors.MessageParseError:
-        # Don't return None since that will
-        # stop the mailbox iterator
-        return ''
-
-
 class Error(Exception):
     pass
 
@@ -1188,58 +1179,6 @@ def parse_html_report(number, url, http_proxy, timeout, followups=False, cgi=Tru
     if not output:
         return None
 
-    return (title, output)
-
-
-# XXX: Need to handle charsets properly
-def parse_mbox_report(number, url, http_proxy, timeout, followups=False):
-    page = open_url(url, http_proxy, timeout)
-    if not page:
-        return None
-
-    # Make this seekable
-    wholefile = io.StringIO(page)
-
-    mbox = mailbox.UnixMailbox(wholefile, msgfactory)
-    title = ''
-
-    output = []
-    for message in mbox:
-        if not message:
-            pass
-
-        subject = message.get('Subject')
-        if not title:
-            title = subject
-
-        date = message.get('Date')
-        fromhdr = message.get('From')
-
-        body = entry = ''
-        for part in message.walk():
-            if part.get_content_type() == 'text/plain' and not body:
-                body = part.get_payload(None, True)
-
-        if fromhdr:
-            entry += 'From: %s%s' % (fromhdr, os.linesep)
-
-        if subject and subject != title:
-            entry += 'Subject: %s%s' % (subject, os.linesep)
-
-        if date:
-            entry += 'Date: %s%s' % (date, os.linesep)
-
-        if entry:
-            entry += os.linesep
-
-        entry += body.rstrip('\n') + os.linesep
-
-        output.append(entry)
-
-    if not output:
-        return None
-
-    title = "#%d: %s" % (number, title)
     return (title, output)
 
 
