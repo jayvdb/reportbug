@@ -23,8 +23,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/debbugs.py: direct rm requests to the right pseudo-package
     (Closes: #994221)
   * reportbug/ui/gtk_ui.py: switch from spawn_sync to spawn_async
+  * reportbug/debbugs.py: replace menu by yes/no question
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:38:14 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:41:45 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 

@@ -661,21 +661,11 @@ def handle_debian_release(package, bts, ui, fromaddr, timeout, online=True, http
                 (Anything else the release team should know.)
                 """)
     elif tag == 'rm':
-        suite = ui.menu('Is the removal to be done in a suite other than'
-                        ' "stable" or "testing"?', {
-                            'oldstable': "Old stable.",
-                            'oldstable-proposed-updates': "Old stable proposed updates.",
-                            'stable': "Stable.",
-                            'stable-proposed-updates': "Stable proposed updates.",
-                            'testing': "Testing only (NOT unstable)",
-                            'testing-proposed-updates': "Testing proposed updates",
-                            'unstable': "Unstable",
-                            'experimental': "Experimental.",
-                        }, 'Choose the suite: ', default='testing', empty_ok=True)
-        if not suite:
-            suite = 'testing'
-
-        if suite in ('unstable', 'experimental'):
+        cont = ui.select_options("Is the removal you are asking for really to be done in "
+                                 "stable/testing and not in unstable/experimental?",
+                                 "Yn", {"y": "Yes, the package should be removed from stable/testing.",
+                                        "n": "No, I want to request removal from unstable or experimental."})
+        if cont != "y":
             ui.long_message('Removal requests for unstable and experimental are handled by the FTP team. '
                             'Please file a bug against the ftp.debian.org pseudo-package.')
             sys.exit(1)
