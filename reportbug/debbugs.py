@@ -1067,33 +1067,13 @@ def cgi_package_url(system, package, archived=False, source=False,
     return '%spkgreport.cgi?%s' % (root, qstr)
 
 
-# TODO: to be removed
-def package_url(system, package, mirrors=None, source=False,
-                repeatmerged=True):
-    btsroot = get_btsroot(system, mirrors)
-    package = urllib.parse.quote_plus(package.lower())
-    return btsroot + ('db/pa/l%s.html' % package)
-
-
-# TODO: to be removed
-def report_url(system, number, mirrors=None):
-
-    number = str(number)
-    if len(number) < 2:
-        return None
-    btsroot = get_btsroot(system, mirrors)
-    return btsroot + ('db/%s/%s.html' % (number[:2], number))
-
-
 def get_package_url(system, package, mirrors=None, source=False,
                     archived=False, repeatmerged=True):
-    return (cgi_package_url(system, package, archived, source, repeatmerged) or
-            package_url(system, package, mirrors, source, repeatmerged))
+    return cgi_package_url(system, package, archived, source, repeatmerged)
 
 
 def get_report_url(system, number, mirrors=None, archived=False, mbox=False, mboxmaint=True):
-    return (cgi_report_url(system, number, archived, mbox) or
-            report_url(system, number, mirrors))
+    return cgi_report_url(system, number, archived, mbox)
 
 
 def parse_bts_url(url):
@@ -1142,15 +1122,6 @@ for origin in glob.glob('/etc/dpkg/origins/*'):
         fp.close()
     except IOError:
         pass
-
-
-def get_btsroot(system, mirrors=None):
-    if mirrors:
-        alternates = SYSTEMS[system].get('mirrors')
-        for mirror in mirrors:
-            if mirror in alternates:
-                return alternates[mirror]
-    return SYSTEMS[system].get('btsroot', '')
 
 
 def get_reports(package, timeout, system='debian', mirrors=None, version=None,
@@ -1211,25 +1182,6 @@ def get_reports(package, timeout, system='debian', mirrors=None, version=None,
                 raise NoNetwork
             if result:
                 return result
-
-        url = package_url(system, package, mirrors, source)
-        try:
-            page = open_url(url, http_proxy, timeout)
-        except:
-            raise NoNetwork
-        if not page:
-            return (0, None, None)
-
-        # content = page.read()
-        # if 'Maintainer' not in content:
-        #    return (0, None, None)
-
-        parser = BTSParser()
-        for line in page.splitlines():
-            parser.feed(line + '\n')
-        parser.close()
-
-        return parser.bugcount, parser.title, parser.hierarchy
 
     # A list of bug numbers
     this_hierarchy = []
