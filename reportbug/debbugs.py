@@ -333,14 +333,14 @@ def handle_debian_ftp(package, bts, ui, fromaddr, timeout, online=True, http_pro
         # we handle here the removal requests
         suite = ui.menu('Is the removal to be done in a suite other than'
                         ' "unstable"?', {
-                            'oldstable': "Old stable.",
-                            'oldstable-proposed-updates': "Old stable proposed updates.",
-                            'stable': "Stable.",
-                            'stable-proposed-updates': "Stable proposed updates.",
+                            'oldstable': "Old stable",
+                            'oldstable-proposed-updates': "Old stable proposed updates",
+                            'stable': "Stable",
+                            'stable-proposed-updates': "Stable proposed updates",
                             'testing': "Testing only (NOT unstable)",
                             'testing-proposed-updates': "Testing proposed updates",
                             'unstable': "Unstable",
-                            'experimental': "Experimental.",
+                            'experimental': "Experimental",
                         }, 'Choose the suite: ', default='unstable', empty_ok=True)
         if not suite:
             suite = 'unstable'
