@@ -10,6 +10,168 @@ from reportbug import urlutils
 import re
 
 
+class MockUI:
+    def __init__(self, *args):
+        self.ret = list(args)
+
+    def get_string(self, *args, **kwargs):
+        return self.ret.pop(0)
+
+    def log_message(self, *args, **kwargs):
+        return
+
+    def long_message(self, *args, **kwargs):
+        return
+
+    def menu(self, *args, **kwargs):
+        return self.ret.pop(0)
+
+    def select_options(self, *args, **kwargs):
+        return self.ret.pop(0)
+
+    def yes_no(self, *args, **kwargs):
+        return self.ret.pop(0)
+
+
+class TestSpecials(unittest.TestCase):
+    def test_handle_debian_ftp(self):
+        with self.assertRaises(SystemExit) as cm:
+            debbugs.handle_debian_ftp('reportbug', '', MockUI(None), None, 60)
+        self.assertIsNone(debbugs.handle_debian_ftp('reportbug', '', MockUI('other'), None, 60))
+        self.assertEqual(
+                debbugs.handle_debian_ftp('reportbug', '', MockUI('RoQA', 'reportbug', None, 'is broken', 'n'), None, 60),
+                ('RM: reportbug -- RoQA; is broken', 'normal', [], [], '', False))
+        self.assertEqual(
+                debbugs.handle_debian_ftp('reportbug', '', MockUI('override', 'reportbug', 'utils', 'important', None), None, 60),
+                ('override: reportbug:utils/important', 'normal', [],
+                    ['User: ftp.debian.org@packages.debian.org', 'Usertags: override', 'X-Debbugs-Cc: debian-boot@lists.debian.org'],
+                    '(Describe here the reason for this change)', False))
+
+    def test_handle_debian_release(self):
+        with self.assertRaises(SystemExit) as cm:
+            debbugs.handle_debian_release('reportbug', '', MockUI(None), None, 60)
+
+        self.assertIsNone(debbugs.handle_debian_release('reportbug', '', MockUI('other'), None, 60))
+
+    def test_handle_debian_release_binnmu(self):
+        ret = debbugs.handle_debian_release('reportbug', '',
+                MockUI('binnmu', 'reportbug', 'y', 'n', None, 'no change'),
+                None, 60)
+        self.assertTrue(ret[0].startswith('nmu: reportbug_'))
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['User: release.debian.org@packages.debian.org', 'Usertags: binnmu'])
+        self.assertTrue(ret[4].startswith('nmu reportbug_'))
+        self.assertIn('unstable', ret[4])
+        self.assertTrue(ret[4].endswith('"no change"\n'))
+        self.assertFalse(ret[5])
+
+    def test_handle_debian_release_britney(self):
+        ret = debbugs.handle_debian_release('reportbug', '',
+                MockUI('britney', 'mysubject'),
+                None, 60)
+        self.assertEqual(ret[0], 'mysubject')
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['User: release.debian.org@packages.debian.org', 'Usertags: britney'])
+        self.assertEqual(ret[4], '')
+        self.assertTrue(ret[5])
+
+    def test_handle_debian_release_transition(self):
+        ret = debbugs.handle_debian_release('reportbug', '',
+                MockUI('transition', 'reportbug', 'oldname', 'newname'),
+                None, 60)
+        self.assertEqual(ret[0], 'transition: reportbug')
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['User: release.debian.org@packages.debian.org', 'Usertags: transition'])
+        self.assertTrue(ret[4].startswith('(please explain'))
+        self.assertIn('Ben file:', ret[4])
+        self.assertTrue(ret[4].endswith('"oldname";\n\n'))
+        self.assertFalse(ret[5])
+
+    def test_handle_debian_release_unblock(self):
+        ret = debbugs.handle_debian_release('reportbug', '',
+                MockUI('unblock', 'reportbug', 'y'),
+                None, 60)
+        self.assertTrue(ret[0].startswith('unblock: reportbug/'))
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['User: release.debian.org@packages.debian.org', 'Usertags: unblock'])
+        self.assertTrue(ret[4].startswith('Please unblock package reportbug\n\n'))
+        self.assertFalse(ret[5])
+
+    def test_handle_debian_release_rm(self):
+        ret = debbugs.handle_debian_release('reportbug', '',
+                MockUI('rm', 'reportbug', 'y', 'n', 'y'),
+                None, 60)
+        self.assertTrue(ret[0].startswith('RM: reportbug/'))
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['User: release.debian.org@packages.debian.org', 'Usertags: rm'])
+        self.assertEqual(ret[4], '(explain the reason for the removal here)\n')
+        self.assertFalse(ret[5])
+        with self.assertRaises(SystemExit) as cm:
+            debbugs.handle_debian_release('reportbug', '',
+                    MockUI('rm', 'reportbug', 'y', 'n', 'n'),
+                    None, 60)
+
+    def test_handle_debian_release_pu(self):
+        ret = debbugs.handle_debian_release('reportbug', '',
+                MockUI('oldstable-pu', 'reportbug'),
+                None, 60)
+        self.assertTrue(ret[0].startswith('oldstable-pu: package reportbug/'))
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['User: release.debian.org@packages.debian.org', 'Usertags: pu', 'Tags: oldstable'])
+        self.assertTrue(ret[4].startswith('(Please provide enough information'))
+        self.assertFalse(ret[5])
+
+    def test_handle_wnpp(self):
+        with self.assertRaises(SystemExit) as cm:
+            debbugs.handle_wnpp('reportbug', '', MockUI(None), None, 60)
+
+        ret = debbugs.handle_wnpp('reportbug', '',
+                MockUI('RFA', 'reportbug'),
+                None, 60)
+        self.assertTrue(ret[0].startswith('RFA: reportbug'))
+        self.assertEqual(ret[1], 'normal')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], ['Control: affects -1 src:reportbug'])
+        self.assertTrue(ret[4].startswith('I request an adopter'))
+        self.assertFalse(ret[5])
+
+        ret = debbugs.handle_wnpp('reportbug', '',
+                MockUI('RFP', 'reportbug-bugfree', 'bug-free version of reportbug'),
+                None, 60, online=False)
+        self.assertEqual(ret[0], "RFP: reportbug-bugfree -- bug-free version of reportbug")
+        self.assertEqual(ret[1], 'wishlist')
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], [])
+        self.assertTrue(ret[4].startswith('* Package name'))
+        self.assertTrue(ret[5])
+
+    def test_handle_installation_report(self):
+        ret = debbugs.handle_installation_report('reportbug', '',
+                MockUI('roboot', 'image url', None),
+                None, 60)
+        self.assertEqual(ret[0], "")
+        self.assertEqual(ret[1], "")
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], [])
+        self.assertTrue(ret[4].startswith('(Please provide'))
+        self.assertTrue(ret[5])
+
+    def test_handle_upgrade_report(self):
+        ret = debbugs.handle_upgrade_report('reportbug', '', MockUI(), None, 60)
+        self.assertEqual(ret[0], "")
+        self.assertEqual(ret[1], "")
+        self.assertEqual(ret[2], [])
+        self.assertEqual(ret[3], [])
+        self.assertTrue(ret[4].startswith('(Please provide'))
+        self.assertTrue(ret[5])
+
+
 class TestDebianbts(unittest.TestCase):
     def test_get_tags(self):
         # for each severity, for each mode
