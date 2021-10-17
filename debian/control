@@ -79,7 +79,7 @@ Package: reportbug-gtk
 Architecture: all
 Priority: optional
 Depends: gir1.2-gtk-3.0,
-         gir1.2-gtksource-3.0,
+         gir1.2-gtksource-4,
          gir1.2-vte-2.91,
          python3-gi,
          python3-gi-cairo,
