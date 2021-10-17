@@ -899,8 +899,9 @@ def handle_upgrade_report(package, bts, ui, fromaddr, timeout, online=True, http
         - Were there any non-Debian packages installed before the upgrade?  If
           so, what were they?
 
-        - Was the system pre-update a pure sarge system? If not, which packages
-          were not from sarge?
+        - Was the system pre-update a 'pure' system only containing packages
+          from the previous release? If not, which packages were not from that
+          release?
 
         - Did any packages fail to upgrade?
 
