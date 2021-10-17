@@ -321,7 +321,7 @@ class BugReport(object):
                 if store < 2:
                     store += 1
                 continue
-            if store == 2 and line == '-- Package-specific info:':
+            if store == 2 and (line == '-- Package-specific info:' or line == '-- System Information:'):
                 has_other = True
                 break
             store = 0

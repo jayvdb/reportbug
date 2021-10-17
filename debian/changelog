@@ -31,8 +31,9 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * test/test_debbugs.py: add tests for handle_* functions
   * reportbug/debbugs.py: drop unused imports
   * reportbug/debbugs.py: pep8 fixes
+  * reportbug/ui/gtk_ui.py: recognize system information as "other info"
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 11:45:33 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 12:36:11 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 
