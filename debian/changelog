@@ -1,4 +1,4 @@
-reportbug (11.1.0) UNRELEASED; urgency=medium
+reportbug (11.1.0) unstable; urgency=medium
 
   [ Nelson A. de Oliveira ]
   * reportbug/submit.py: include temp filename in resume message
@@ -35,7 +35,7 @@ reportbug (11.1.0) UNRELEASED; urgency=medium
   * reportbug/debbugs.py: do not mention sarge release (Closes: #996654)
   * Gtk UI: switch from gtksourceview3 to gtksourceview4
 
- -- Nis Martensen <nis.martensen@web.de>  Sun, 17 Oct 2021 17:54:44 +0200
+ -- Nis Martensen <nis.martensen@web.de>  Mon, 18 Oct 2021 19:45:55 +0200
 
 reportbug (11.0.0) unstable; urgency=medium
 
