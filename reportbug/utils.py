@@ -39,7 +39,11 @@ import email
 import email.policy
 import socket
 import subprocess
-import apt
+
+try:
+    import apt
+except ImportError:
+    apt = None
 import gzip
 import urllib
 
@@ -101,7 +105,10 @@ CODENAME2SUITE = {'wheezy': 'oldoldoldoldstable',
                   'experimental': 'experimental'}
 SUITE2CODENAME = dict([(suite, codename) for codename, suite in list(CODENAME2SUITE.items())])
 
-_apt_cache = apt.Cache()
+if apt:
+    _apt_cache = apt.Cache()
+else:
+    _apt_cache = None
 
 def realpath(filename):
     filename = os.path.abspath(filename)
@@ -544,6 +551,9 @@ def get_avail_database():
 
 
 def get_source_name(package):
+    if not apt:
+        return None
+
     try:
         return _apt_cache[package].versions[0].source_name
     except KeyError:
@@ -559,6 +569,9 @@ def get_source_name(package):
 
 
 def get_source_version(srcname):
+    if not apt:
+        return None
+
     try:
         srcrecords = apt.apt_pkg.SourceRecords()
         while srcrecords.lookup(srcname):
@@ -570,6 +583,9 @@ def get_source_version(srcname):
 
 
 def get_source_package(package, only_source=False):
+    if not apt:
+        return []
+
     packages = []
     found = set()
     try:
